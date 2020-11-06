@@ -1,2 +1,2 @@
 # cub3d
-me siento el bill gates de mi familia
+me siento el Steve Jobs de mi familia
