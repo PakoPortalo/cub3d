@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 12:44:22 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/13 12:10:37 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/13 13:07:14 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int parse_test(char *file)
 {
 	int		fd;
-	int		i;
 	char	*line;
+	int		i;
 
 	i = 0;
-	fd = open(file, O_WRONLY);
+	fd = open(file, O_RDONLY);
 
 	if (fd == -1)
 	{
@@ -32,11 +32,13 @@ int parse_test(char *file)
 		while ((i = get_next_line(fd, &line)) > 0)
 		{
 			printf("%s\n", line);
-			//free(line);
+			free(line);
 		}
 	}
+
+	printf("%d\n", i);
 	printf("%s\n", line);
 	//free(line);
 	close(fd);
-	return (i);
+	return (0);
 }
