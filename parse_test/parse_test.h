@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/13 12:05:34 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/16 11:31:52 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@
 
 //po eso'
 # include "gnl/get_next_line_bonus.h"
+
+typedef struct mapdef {
+	char	*res;
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
+	char	*sprite;
+	char	*floor;
+	char	*ceil;
+	char	*map;
+} mapdef;
+
 
 int			parse_test(char *file);
 
