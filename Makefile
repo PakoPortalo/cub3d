@@ -5,31 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/06 11:56:58 by fportalo          #+#    #+#              #
-#    Updated: 2020/11/06 12:05:24 by fportalo         ###   ########.fr        #
+#    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
+#    Updated: 2020/11/17 13:29:29 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS = -Wall -Wextra -Werror
+CC = -gcc
 
-CC = gcc
+FLAGS = -Werror -Wextra -Wall
 
-OBJ = $(SRC:.c=.o)
+PARSE = main.c -g parse_map.c gnl/get_next_line.c gnl/get_next_line_utils.c
 
-all: $(NAME)
-
-$(NAME):
-		-@$(CC) -g $(FLAGS) -I. -c $(SRC)
-		-@ar rc $(NAME) $(OBJ)
-		-@ranlib $(NAME)
-
-x:
-		-@$(CC) -g -I. main.c libftprintf.a
-
-clean:
-		@rm -f $(OBJ)
-
-fclean: clean
-		@rm -f $(NAME)
-
-re: fclean all
+parse:
+	@$(CC) $(FLAGS) $(PARSE)
