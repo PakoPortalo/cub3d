@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:23:46 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/16 12:38:15 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/19 11:53:25 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int			main(int argc, char **argv)
 {
 	if (argc == 2)
-		parse_map(argv[1]);
+		get_map_line(argv[1]);
 	return(0);
 }
