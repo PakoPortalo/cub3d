@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 10:53:43 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/23 12:19:56 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,19 @@ mapstr		get_map(mapstr raw, char *line, char *file)
 	return (raw);
 }
 
-mapstr		iniraw()
+void		iniraw(mapstr *raw)
 {
-	mapstr raw;
-
-	raw.res = NULL;
-	raw.north = NULL;
-	raw.south = NULL;
-	raw.west = NULL;
-	raw.east = NULL;
-	raw.sprite = NULL;
-	raw.floor = NULL;
-	raw.ceil = NULL;
-	raw.map = NULL;
-	raw.rows = 0;
-	raw.err = 0;
-	return (raw);
+	raw->res = NULL;
+	raw->north = NULL;
+	raw->south = NULL;
+	raw->west = NULL;
+	raw->east = NULL;
+	raw->sprite = NULL;
+	raw->floor = NULL;
+	raw->ceil = NULL;
+	raw->map = NULL;
+	raw->rows = 0;
+	raw->err = 0;
 }
 
 mapstr		get_raw_line(mapstr raw, char *file)
@@ -112,10 +109,19 @@ mapstr		get_raw_line(mapstr raw, char *file)
 int			raw_info(char *file)
 {
 	mapstr	raw;
+	int i = 0;
 
-	raw = iniraw();
+	iniraw(&raw);
 	raw = get_raw_line(raw, file);
 	if (check_number_lines(raw) == -1)
 		return (-1);
+
+	while (raw.rows != 0)
+	{
+		raw.rows--;
+		printf("%s\n", raw.map[i]);
+		i++;
+	}
+
 	return (1);
 }
