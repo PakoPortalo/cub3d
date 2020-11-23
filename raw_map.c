@@ -6,17 +6,17 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 12:26:11 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/23 12:29:16 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-int			check_number_lines(mapstr raw)
+int			check_number_lines(mapstr *raw)
 {
-	if (!raw.res || !raw.north || !raw.south || !raw.west || !raw.east ||\
-		!raw.sprite || !raw.floor || !raw.ceil || !raw.map || !raw.rows)
+	if (!raw->res || !raw->north || !raw->south || !raw->west || !raw->east ||\
+		!raw->sprite || !raw->floor || !raw->ceil || !raw->map || !raw->rows)
 		{
 			printf("Map file error.\nPlease introduce a correct number of arguments\n");
 			return (-1);
@@ -104,20 +104,20 @@ void		get_raw_line(mapstr *raw, char *file)
 	get_map(raw, line, file);
 }
 
-int			raw_info(char *file)
+int			raw_info(char *file, mapstr *raw)
 {
 	mapstr	raw;
 	int i = 0;
 
 	iniraw(&raw);
 	get_raw_line(&raw, file);
-	if (check_number_lines(raw) == -1)
+	if (check_number_lines(&raw) == -1)
 		return (-1);
 
-	while (raw.rows != 0)
+	while (raw->rows != 0)
 	{
-		raw.rows--;
-		printf("%s\n", raw.map[i]);
+		raw->rows--;
+		printf("%s\n", raw->map[i]);
 		i++;
 	}
 
