@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 11:23:46 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/20 11:11:49 by fportalo         ###   ########.fr       */
+/*   Created: 2020/11/20 11:04:24 by fportalo          #+#    #+#             */
+/*   Updated: 2020/11/23 10:52:22 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			main(int argc, char **argv)
+int		cub3d(int argc, char **argv)
 {
-	cub3d(argc, argv);
-	return(0);
+	if (check_ini_errors(argc, argv) == -1)
+		return (-1);
+	if (raw_info(argv[1]) == -1)
+		return (-1);
+
+	return (0);
 }

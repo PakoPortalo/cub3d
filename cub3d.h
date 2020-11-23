@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/19 12:39:29 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/23 10:54:11 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 //po eso'
 # include "gnl/get_next_line.h"
 
-typedef struct mapinf {
+typedef struct mapstr {
 	char	*res;
 	char	*north;
 	char	*south;
@@ -36,9 +36,10 @@ typedef struct mapinf {
 	char	*ceil;
 	char	**map;
 	int		rows;
-} mapinf;
+	int		err;
+} mapstr;
 
-typedef struct exportmap {
+typedef struct mapclean {
 	int		w;
 	int		h;
 	char	*north;
@@ -49,10 +50,12 @@ typedef struct exportmap {
 	int		*floor;
 	int		*ceil;
 	char	**map;
-} exportmap;
+} mapclean;
 
-int			get_map_line(char *file);
-int			map_elements(mapinf map);
-int			check_map(mapinf map);
+int		cub3d(int argc, char **argv);
+int		check_ini_errors(int argc, char **argv);
+int		raw_info(char *file);
+//int	save_map_info()
+
 
 #endif

@@ -6,15 +6,15 @@
 #    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2020/11/19 12:38:20 by fportalo         ###   ########.fr        #
+#    Updated: 2020/11/23 10:53:31 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = -gcc
 
-FLAGS = -Werror -Wextra -Wall
+FLAGS = -Werror -Wextra -Wall -g
 
-PARSE = main.c -g parse_map.c check_map.c gnl/get_next_line.c gnl/get_next_line_utils.c
+PARSE =  cub3d.c cub3d.h ini_errors.c raw_map.c main.c gnl/get_next_line.c gnl/get_next_line_utils.c
 
 parse:
 	@$(CC) $(FLAGS) $(PARSE)
