@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 12:31:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/23 12:39:36 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct mapclean {
 int		cub3d(int argc, char **argv);
 int		check_ini_errors(int argc, char **argv);
 int		raw_info(char *file, mapstr *raw);
-//int	save_map_info()
+int		save_map_info(mapstr *raw);
 
 
 #endif

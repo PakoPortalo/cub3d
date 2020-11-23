@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 12:33:51 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/23 13:08:12 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,9 @@ void		get_raw_line(mapstr *raw, char *file)
 
 int			raw_info(char *file, mapstr *raw)
 {
-	int i = 0;
-
 	iniraw(raw);
 	get_raw_line(raw, file);
 	if (check_number_lines(raw) == -1)
 		return (-1);
-
-	while (raw->rows != 0)
-	{
-		raw->rows--;
-		printf("%s\n", raw->map[i]);
-		i++;
-	}
-
 	return (1);
 }
