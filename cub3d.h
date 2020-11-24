@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 12:39:36 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/24 12:14:00 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 //po eso'
 # include "gnl/get_next_line.h"
+# include "libft/libft.h"
 
 typedef struct mapstr {
 	char	*res;
@@ -39,6 +40,7 @@ typedef struct mapstr {
 	int		err;
 } mapstr;
 
+
 typedef struct mapclean {
 	int		w;
 	int		h;
@@ -52,10 +54,15 @@ typedef struct mapclean {
 	char	**map;
 } mapclean;
 
+
 int		cub3d(int argc, char **argv);
 int		check_ini_errors(int argc, char **argv);
 int		raw_info(char *file, mapstr *raw);
-int		save_map_info(mapstr *raw);
+int		save_map_info(mapstr *raw, mapclean *map);
+void	iniraw(mapstr *raw);
+void	inimap(mapclean *map);
+int		ft_nbrdigit(int i);
+int		check_res(mapstr *raw, mapclean *map);
 
 
 #endif

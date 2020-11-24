@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 13:08:12 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/24 09:19:03 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,6 @@ void		get_map(mapstr *raw, char *line, char *file)
 	}
 	free(line);
 	close(fd);
-}
-
-void		iniraw(mapstr *raw)
-{
-	raw->res = NULL;
-	raw->north = NULL;
-	raw->south = NULL;
-	raw->west = NULL;
-	raw->east = NULL;
-	raw->sprite = NULL;
-	raw->floor = NULL;
-	raw->ceil = NULL;
-	raw->map = NULL;
-	raw->rows = 0;
-	raw->err = 0;
 }
 
 void		get_raw_line(mapstr *raw, char *file)

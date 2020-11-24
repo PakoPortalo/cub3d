@@ -6,32 +6,17 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 13:06:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 13:09:52 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/24 12:15:17 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_res(mapstr *raw)
+int		save_map_info(mapstr *raw, mapclean *map)
 {
-	int i;
-
-	i = 0;
-	while (raw->res[i] != '\0')
-	{
-		if (!ft_strchr("R 0123456789", raw->res[i]))
-		{
-			printf("Resolution Error.\nPlease introduce a valid resolution");
-			return (-1);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int		save_map_info(mapstr *raw)
-{
-	if (check_res(raw) == -1)
+	inimap(map);
+	if (check_res(raw, map) == -1)
 		return (-1);
+	if (check_texture)
 	return (1);
 }
