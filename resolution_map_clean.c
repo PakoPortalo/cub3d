@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_clean.c                                  :+:      :+:    :+:   */
+/*   resolution_map_clean.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/24 12:11:12 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/24 13:10:56 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_nbrdigit (int i)
 	return (d);
 }
 
-int		check_res(mapstr *raw, mapclean *map)
+int		check_resolution(mapstr *raw, mapclean *map)
 {
 	int i;
 

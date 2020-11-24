@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/24 12:14:00 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/24 13:28:23 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int		save_map_info(mapstr *raw, mapclean *map);
 void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
 int		ft_nbrdigit(int i);
-int		check_res(mapstr *raw, mapclean *map);
-
+int		check_resolution(mapstr *raw, mapclean *map);
+int		check_texture(mapstr *raw, mapclean *map);
+int		check_north(mapstr *raw, mapclean *map);
 
 #endif
