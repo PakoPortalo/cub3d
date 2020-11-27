@@ -6,44 +6,85 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/24 13:30:00 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/27 12:48:55 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int		check_north(mapstr *raw, mapclean *map)
+/*
+int		check_texture_path(mapclean *map)
 {
-	int		i;
-	int		j;
-	char	*ext;
 
-	i = ft_strlen(raw->north) - 4;
-	j = 0;
-	ext = ".xpm";
-	if (!(raw->north[0] == 'N' && raw->north[1] == 'O' && raw->north[1] == ' ') &&\
-	raw->north[2] == '.' && raw->north[3] == '/')
+}
+*/
+int		check_texture_extension(mapclean *map)
+{
+	if (check_extension(map->north, ".xpm") == -1)
+		return (-1);
+	if (check_extension(map->south, ".xpm") == -1)
+		return (-1);
+	if (check_extension(map->west, ".xpm") == -1)
+		return (-1);
+	if (check_extension(map->east, ".xpm") == -1)
+		return (-1);
+	if (check_extension(map->sprite, ".xpm") == -1)
+		return (-1);
+	return (1);
+}
+
+int		number_textures(char **texture)
+{
+	if (texture[2])
 	{
-		printf("Error. Introduce a correct North Texture\n");
+		printf("Error. Number of texture arguments wrong\n");
 		return (-1);
 	}
-	while (raw->north[i] != '\0')
-	{
-		if (raw->north[i] != ext[j])
-		{
-			printf("Error. The north texture file extension is not correct\n");
-			return (-1);
-		}
-		i++;
-		j++;
-	}
-	raw->north += 3;
-	map->north = raw->north;
+	return (1);
+}
+
+int		get_texture(mapstr *raw, mapclean *map)
+{
+	char **texture;
+
+	texture = ft_split(raw->north, ' ');
+	if (number_textures(texture) == -1)
+		return(-1);
+	map->north = texture[1];
+	texture = ft_split(raw->south, ' ');
+	if (number_textures(texture) == -1)
+		return(-1);
+	map->south = texture[1];
+	texture = ft_split(raw->west, ' ');
+	if (number_textures(texture) == -1)
+		return(-1);
+	map->west = texture[1];
+	texture = ft_split(raw->east, ' ');
+	if (number_textures(texture) == -1)
+		return(-1);
+	map->east = texture[1];
+	texture = ft_split(raw->sprite, ' ');
+	if (number_textures(texture) == -1)
+		return(-1);
+	map->sprite = texture[1];
+
 	return (1);
 }
 
 int		check_texture(mapstr *raw, mapclean *map)
 {
-	check_north(raw, map);
-	return (1);
+		if (get_texture(raw, map) == -1)
+			return (-1);
+		if (check_texture_extension(map) == -1)
+			return (-1);
+		/*if (check_texture_path(map) == -1)
+			return (-1);
+*/
+
+
+		printf("%s\n", map->north);
+		printf("%s\n", map->south);
+		printf("%s\n", map->west);
+		printf("%s\n", map->east);
+		printf("%s\n", map->sprite);
+		return (1);
 }

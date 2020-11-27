@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/24 09:19:03 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/27 11:08:10 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,21 @@ void		get_raw_line(mapstr *raw, char *file)
 	line = NULL;
 	while ((get_next_line(fd, &line)) > 0)
 	{
-		if (line[0] == 'R')
+		if (line[0] == 'R' && line[1] == ' ')
 			raw->res = ft_strdup(line);
-		else if(line[0] == 'N')
+		else if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
 			raw->north = ft_strdup(line);
-		else if(line[0] == 'S' && line[1] == 'O')
+		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
 			raw->south = ft_strdup(line);
-		else if (line[0] == 'W')
+		else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
 			raw->west = ft_strdup(line);
-		else if (line[0] == 'E')
+		else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
 			raw->east = ft_strdup(line);
-		else if (line[0] == 'S')
+		else if (line[0] == 'S' && line[1] == ' ')
 			raw->sprite = ft_strdup(line);
-		else if (line[0] == 'F')
+		else if (line[0] == 'F' && line[1] == ' ')
 			raw->floor = ft_strdup(line);
-		else if (line[0] == 'C')
+		else if (line[0] == 'C' && line[1] == ' ')
 			raw->ceil = ft_strdup(line);
 		else if (line[0] == '0' || line[0] == '1' || line[0] == '2')
 			raw->rows++;

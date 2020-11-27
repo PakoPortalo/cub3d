@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/23 10:02:59 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/27 12:34:38 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,28 @@ int		check_save_flag(char **argv)
 	return (1);
 }
 
-int		check_map_extension(char **argv)
+int		check_extension(char *file, char *ext)
 {
-	char	*mapext;
 	int		i;
 	int		j;
+	char	*fext;
 
-	mapext = ".cub";
-	i = ft_strlen(mapext);
-	j = ft_strlen(argv[1]);
-
-	while (i != -1)
+	i = 0;
+	j = 0;
+	fext = malloc(4);
+	while (file[i] != '0' && ((file[i] != '.') || (file[i] == '.' && file[i + 1] == '/')))
+		i++;
+	while(file[i] != '\0')
 	{
-		if (argv[1][j] != mapext[i])
-		{
-			printf("Arg error.\nPlease introduce a valid map file\n");
-			return(-1);
-		}
-		i--;
-		j--;
+		fext[j] = file[i];
+		i++;
+		j++;
+	}
+	fext[j] = '\0';
+	if (ft_strncmp(fext, ext, 5) != 0)
+	{
+		printf("Error. Please introduce a valid extension");
+		return (-1);
 	}
 	return (1);
 }
@@ -68,7 +71,7 @@ int		check_ini_errors(int argc, char **argv)
 {
 	if (check_number_arguments(argc) == -1)
 		return (-1);
-	if (check_map_extension(argv) == -1)
+	if (check_extension(argv[1], ".cub") == -1)
 		return (-1);
 	if (argc == 3 && check_save_flag(argv) == -1)
 		return (-1);
