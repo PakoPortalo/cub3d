@@ -6,17 +6,28 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/27 12:48:55 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/30 08:43:37 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-/*
-int		check_texture_path(mapclean *map)
-{
 
+int		check_texture_path(char *texturepath)
+{
+	int fd;
+
+	fd = open(texturepath, O_RDONLY);
+	if ((fd = open(texturepath, O_RDONLY)) == -1)
+	{
+		printf("Error. Cannot find textures");
+		close(fd);
+		return (-1);
+	}
+	close(fd);
+	return (1);
 }
-*/
+
+
 int		check_texture_extension(mapclean *map)
 {
 	if (check_extension(map->north, ".xpm") == -1)
@@ -76,15 +87,15 @@ int		check_texture(mapstr *raw, mapclean *map)
 			return (-1);
 		if (check_texture_extension(map) == -1)
 			return (-1);
-		/*if (check_texture_path(map) == -1)
+		if (check_texture_path(map->north) == -1)
 			return (-1);
-*/
-
-
-		printf("%s\n", map->north);
-		printf("%s\n", map->south);
-		printf("%s\n", map->west);
-		printf("%s\n", map->east);
-		printf("%s\n", map->sprite);
+		if (check_texture_path(map->south) == -1)
+			return (-1);
+		if (check_texture_path(map->west) == -1)
+			return (-1);
+		if (check_texture_path(map->east) == -1)
+			return (-1);
+		if (check_texture_path(map->sprite) == -1)
+			return (-1);
 		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/24 11:18:02 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/30 09:41:14 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ void		inimap(mapclean *map)
 	map->west = NULL;
 	map->east = NULL;
 	map->sprite = NULL;
-	map->floor = 0;
-	map->ceil = 0;
+	map->floor[0] = -1;
+	map->floor[1] = -1;
+	map->floor[2] = -1;
+	map->ceil[0] = -1;
+	map->ceil[1] = -1;
+	map->ceil[2] = -1;
 	map->map = NULL;
 }
 

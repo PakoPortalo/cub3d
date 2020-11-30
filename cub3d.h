@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/27 10:36:59 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/11/30 10:33:45 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct mapclean {
 	char	*west;
 	char	*east;
 	char	*sprite;
-	int		*floor;
-	int		*ceil;
+	int		floor[3];
+	int		ceil[3];
 	char	**map;
 } mapclean;
 
@@ -66,5 +66,8 @@ int		ft_nbrdigit(int i);
 int		check_resolution(mapstr *raw, mapclean *map);
 int		check_texture(mapstr *raw, mapclean *map);
 int		check_north(mapstr *raw, mapclean *map);
+int		check_floor_ceil(mapstr *raw, mapclean *map);
+int		check_map(mapstr *raw, mapclean *map);
+
 
 #endif
