@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/30 10:33:45 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/01 10:52:34 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct mapstr {
 	char	**map;
 	int		rows;
 	int		err;
+	int x;
+	int y;
 } mapstr;
 
 
