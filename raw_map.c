@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/27 11:08:10 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/03 11:36:14 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		get_raw_line(mapstr *raw, char *file)
 			raw->floor = ft_strdup(line);
 		else if (line[0] == 'C' && line[1] == ' ')
 			raw->ceil = ft_strdup(line);
-		else if (line[0] == '0' || line[0] == '1' || line[0] == '2')
+		else if (line[0] == '0' || line[0] == '1' || line[0] == '2' || line[0] == ' ')
 			raw->rows++;
 	}
 	free(line);
