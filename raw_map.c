@@ -6,22 +6,21 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/03 11:36:14 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/04 12:27:45 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-int			check_number_lines(mapstr *raw)
+void			check_number_lines(mapstr *raw)
 {
 	if (!raw->res || !raw->north || !raw->south || !raw->west || !raw->east ||\
 		!raw->sprite || !raw->floor || !raw->ceil || !raw->map || !raw->rows)
 		{
-			printf("Map file error.\nPlease introduce a correct number of arguments\n");
-			return (-1);
+			perror("Map file error. Please introduce a correct number of arguments\n");
+			exit (2);
 		}
-	return (1);
 }
 
 void		get_map(mapstr *raw, char *line, char *file)
@@ -89,11 +88,9 @@ void		get_raw_line(mapstr *raw, char *file)
 	get_map(raw, line, file);
 }
 
-int			raw_info(char *file, mapstr *raw)
+void			raw_info(char *file, mapstr *raw)
 {
 	iniraw(raw);
 	get_raw_line(raw, file);
-	if (check_number_lines(raw) == -1)
-		return (-1);
-	return (1);
+	check_number_lines(raw);
 }

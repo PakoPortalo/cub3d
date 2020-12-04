@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 10:21:38 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/04 13:08:52 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ typedef struct mapclean {
 
 
 int		cub3d(int argc, char **argv);
-int		check_ini_errors(int argc, char **argv);
-int		check_extension(char *file, char *ext);
-int		raw_info(char *file, mapstr *raw);
-int		save_map_info(mapstr *raw, mapclean *map);
+void	check_ini_errors(int argc, char **argv);
+void	check_extension(char *file, char *ext);
+void	raw_info(char *file, mapstr *raw);
+void	save_map_info(mapstr *raw, mapclean *map);
 void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
 int		ft_nbrdigit(int i);
-int		check_resolution(mapstr *raw, mapclean *map);
-int		check_texture(mapstr *raw, mapclean *map);
+void	check_resolution(mapstr *raw, mapclean *map);
+void		check_texture(mapstr *raw, mapclean *map);
 int		check_north(mapstr *raw, mapclean *map);
-int		check_floor_ceil(mapstr *raw, mapclean *map);
-int		check_map(mapstr *raw, mapclean *map);
+void		check_floor_ceil(mapstr *raw, mapclean *map);
+void		check_map(mapstr *raw, mapclean *map);
 
 
 #endif

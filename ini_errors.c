@@ -6,32 +6,34 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 10:21:43 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/04 12:25:19 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_save_flag(char **argv)
+void		check_save_flag(int argc, char **argv)
 {
 	char	*savecheck;
 	int		i;
 
-	savecheck = "--save";
-	i = 0;
-	while (savecheck[i])
+	if (argc == 3)
 	{
-		if (argv[2][i] != savecheck[i])
+		savecheck = "--save";
+		i = 0;
+		while (savecheck[i])
 		{
-			printf("Arg error.\nPlease introduce \"--save\" after map's name\n");
-			return (-1);
+			if (argv[2][i] != savecheck[i])
+			{
+				perror("Please introduce \"--save\" after map's name");
+				exit (1);
+			}
+			i++;
 		}
-		i++;
 	}
-	return (1);
 }
 
-int		check_extension(char *file, char *ext)
+void		check_extension(char *file, char *ext)
 {
 	int		i;
 	int		j;
@@ -51,29 +53,23 @@ int		check_extension(char *file, char *ext)
 	fext[j] = '\0';
 	if (ft_strncmp(fext, ext, 5) != 0)
 	{
-		printf("Error. Please introduce a valid extension");
-		return (-1);
+		perror("Error. Please introduce a valid extension");
+		exit (1);
 	}
-	return (1);
 }
 
-int		check_number_arguments(argc)
+void		check_number_arguments(argc)
 {
 	if (argc != 2 && argc != 3)
 	{
-		printf("Arg error.\nPlease introduce a correct number of arguments\n");
-		return (-1);
+		perror("Please introduce a correct number of arguments");
+		exit (1);
 	}
-	return (1);
 }
 
-int		check_ini_errors(int argc, char **argv)
+void		check_ini_errors(int argc, char **argv)
 {
-	if (check_number_arguments(argc) == -1)
-		return (-1);
-	if (check_extension(argv[1], ".cub") == -1)
-		return (-1);
-	if (argc == 3 && check_save_flag(argv) == -1)
-		return (-1);
-	return (1);
+	check_number_arguments(argc);
+	check_extension(argv[1], ".cub");
+	check_save_flag(argc, argv);
 }

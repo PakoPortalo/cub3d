@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 09:50:17 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/04 13:11:35 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,23 @@ void	get_coordinates(int *x, int *y, mapstr *raw)
 	}
 }
 
-int	check_origin_errors(int i, int x, int y, mapstr *raw)
+void	check_origin_errors(int i, int x, int y, mapstr *raw)
 {
 	if (i == 0)
 	{
-		printf("Error. There is no player. Map need an origin point (N, S, W, E)\n");
-		return (-1);
+		perror("Error. There is no player. Map need an origin point (N, S, W, E)\n");
+		exit (6);
 	}
 	if (i > 1)
 	{
-		printf("Error. There is more than one player. Map need just one origin point \n");
-		return (-1);
+		perror("Error. There is more than one player. Map need just one origin point \n");
+		exit (-1);
 	}
 	raw->x = x;
 	raw->y = y;
-	return(1);
 }
 
-int	find_origin(mapstr *raw)
+void	find_origin(mapstr *raw)
 {
 	int i;
 	int x;
@@ -61,26 +60,22 @@ int	find_origin(mapstr *raw)
 		raw->y++;
 		raw->x = 0;
 	}
-	if (check_origin_errors(i, x, y, raw) == -1)
-		return(-1);
-	return (1);
+	check_origin_errors(i, x, y, raw);
 }
 
-int		check_border(mapstr *raw, int y, int x)
+void		check_border(mapstr *raw, int y, int x)
 {
 	if (y == 0 || y == (raw->rows - 1) || x == 0  || x == ((int)ft_strlen(raw->map[y]) - 1))
 	{
 		printf("Opened in %dx, %dy\n", x, y);
-		printf("ERROR. You need to introduce a correct map\n");
-		return (-1);
+		perror("ERROR. You need to introduce a correct map\n");
+		exit (6);
 	}
-	return (1);
 }
 
-int		flood_fill(mapstr *raw, int y, int x)
+void		flood_fill(mapstr *raw, int y, int x)
 {
-	if (check_border(raw, y, x) == -1)
-		return (-1);
+	check_border(raw, y, x);
 	if (ft_strchr("NSWE0 ", raw->map[y][x]))
 		raw->map[y][x] = '3';
 
@@ -103,21 +98,14 @@ int		flood_fill(mapstr *raw, int y, int x)
 
 	if (raw->map[y][x] == '\0')
 	{
-		printf("ERROR. You need to introduce a correct map");
-		return (-1);
+		perror("ERROR. You need to introduce a correct map");
+		exit (6);
 	}
-
-	return (1);
 }
 
-int		check_map(mapstr *raw, mapclean *map)
+void		check_map(mapstr *raw, mapclean *map)
 {
 	map = NULL;
-	if (find_origin(raw) == -1)
-		return (-1);
-	// if (check_border(raw) == -1)
-	// 	return (-1);
-	if (flood_fill(raw, raw->y , raw->x) == -1)
-		return (-1);
-	return (1);
+	find_origin(raw);
+	flood_fill(raw, raw->y , raw->x);
 }
