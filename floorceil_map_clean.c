@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 13:07:41 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/07 09:07:46 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		check_number_variables(char **rgb, int i)
 {
 	if (rgb[i])
 	{
-		perror("Error. Number of floor/ceil arguments wrong\n");
+		perror("Error\nNumber of floor/ceil arguments wrong\n");
 		exit (5);
 	}
 }

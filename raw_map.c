@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 12:27:45 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:03:55 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,23 @@ void			check_number_lines(mapstr *raw)
 	if (!raw->res || !raw->north || !raw->south || !raw->west || !raw->east ||\
 		!raw->sprite || !raw->floor || !raw->ceil || !raw->map || !raw->rows)
 		{
-			perror("Map file error. Please introduce a correct number of arguments\n");
+			perror("Error\nMap file error. Please introduce a correct number of arguments\n");
 			exit (2);
 		}
+}
+
+char *			handle_spaces(mapstr *raw, char *line, int i)
+{
+	char *temp;
+
+	temp = ft_strtrim(line, " ");
+	if ((temp[0] == '0' || temp[0] == '1'))
+	{
+		if (i == 0)
+			raw->rows++;
+		return(line);
+	}
+	return(temp);
 }
 
 void		get_map(mapstr *raw, char *line, char *file)
@@ -34,6 +48,8 @@ void		get_map(mapstr *raw, char *line, char *file)
 	fd = open(file, O_RDONLY);
 	while((get_next_line(fd, &line)) > 0)
 	{
+		line = handle_spaces(raw, line, 1);
+		printf("%s\n", line);
 		if (!ft_strchr("RNSWESFC", *line))
 		{
 			if (!raw->map)
@@ -55,6 +71,7 @@ void		get_map(mapstr *raw, char *line, char *file)
 	close(fd);
 }
 
+
 void		get_raw_line(mapstr *raw, char *file)
 {
 	char *line;
@@ -64,9 +81,11 @@ void		get_raw_line(mapstr *raw, char *file)
 	line = NULL;
 	while ((get_next_line(fd, &line)) > 0)
 	{
+		if (line[0] == ' ')
+			line = handle_spaces(raw, line, 0);
 		if (line[0] == 'R' && line[1] == ' ')
 			raw->res = ft_strdup(line);
-		else if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
+		else if ((line[0] == 'N' && line[1] == 'O' && line[2] == ' '))
 			raw->north = ft_strdup(line);
 		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
 			raw->south = ft_strdup(line);
@@ -80,7 +99,7 @@ void		get_raw_line(mapstr *raw, char *file)
 			raw->floor = ft_strdup(line);
 		else if (line[0] == 'C' && line[1] == ' ')
 			raw->ceil = ft_strdup(line);
-		else if (line[0] == '0' || line[0] == '1' || line[0] == '2' || line[0] == ' ')
+		else if (line[0] == '0' || line[0] == '1' || line[0] == '2')
 			raw->rows++;
 	}
 	free(line);

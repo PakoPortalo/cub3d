@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 13:12:05 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/07 09:54:24 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		check_texture_path(char *texturepath)
 	fd = open(texturepath, O_RDONLY);
 	if ((fd = open(texturepath, O_RDONLY)) == -1)
 	{
-		perror("Error. Cannot find textures");
+		perror("Error\nCannot find textures");
 		close(fd);
 		exit (4);
 	}
@@ -27,20 +27,26 @@ void		check_texture_path(char *texturepath)
 }
 
 
-void		check_texture_extension(mapclean *map)
+int		check_texture_extension(mapclean *map)
 {
-	check_extension(map->north, ".xpm");
-	check_extension(map->south, ".xpm");
-	check_extension(map->west, ".xpm");
-	check_extension(map->east, ".xpm");
-	check_extension(map->sprite, ".xpm");
+	if (!check_extension(map->north, ".xpm") && !check_extension(map->north, ".png"))
+		return (-1);
+	if (!check_extension(map->south, ".xpm") && !check_extension(map->south, ".png"))
+		return (-1);
+	if (!check_extension(map->west, ".xpm") && !check_extension(map->west, ".png"))
+		return (-1);
+	if (!check_extension(map->east, ".xpm") && !check_extension(map->east, ".png"))
+		return (-1);
+	if (!check_extension(map->sprite, ".xpm") && !check_extension(map->sprite, ".png"))
+		return (-1);
+	return (1);
 }
 
 void	number_textures(char **texture)
 {
 	if (texture[2])
 	{
-		perror("Error. Number of texture arguments wrong\n");
+		perror("Error\nNumber of texture arguments wrong\n");
 		exit (4);
 	}
 }
@@ -69,7 +75,11 @@ void		get_texture(mapstr *raw, mapclean *map)
 void		check_texture(mapstr *raw, mapclean *map)
 {
 		get_texture(raw, map);
-		check_texture_extension(map);
+		if (check_texture_extension(map) == -1)
+		{
+			perror("Error\nPlease introduce a valid extension");
+			exit (1);
+		}
 		check_texture_path(map->north);
 		check_texture_path(map->south);
 		check_texture_path(map->west);

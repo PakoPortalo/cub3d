@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/04 13:11:35 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/07 12:34:26 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ void	check_origin_errors(int i, int x, int y, mapstr *raw)
 {
 	if (i == 0)
 	{
-		perror("Error. There is no player. Map need an origin point (N, S, W, E)\n");
+
+		perror("Error\nThere is no player. Map need an origin point (N, S, W, E)\n");
 		exit (6);
 	}
 	if (i > 1)
 	{
-		perror("Error. There is more than one player. Map need just one origin point \n");
+		perror("Error\nThere is more than one player. Map need just one origin point \n");
 		exit (-1);
 	}
 	raw->x = x;
@@ -42,11 +43,13 @@ void	find_origin(mapstr *raw)
 	int i;
 	int x;
 	int y;
+	int j = 0;
 
 	i = 0;
 	x = 0;
 	y = 0;
-	while (raw->x < (int)ft_strlen(raw->map[raw->y]) && raw->y < (raw->rows - 1))
+
+	while (raw->x < ((int)ft_strlen(raw->map[raw->y]) - 1) && raw->y < (raw->rows - 1))
 	{
 		while (raw->map[raw->y][raw->x])
 		{
@@ -60,6 +63,12 @@ void	find_origin(mapstr *raw)
 		raw->y++;
 		raw->x = 0;
 	}
+		while (raw->rows != 0)
+	{
+		printf("%s\n", raw->map[j]);
+		j++;
+		raw->rows--;
+	}
 	check_origin_errors(i, x, y, raw);
 }
 
@@ -68,7 +77,7 @@ void		check_border(mapstr *raw, int y, int x)
 	if (y == 0 || y == (raw->rows - 1) || x == 0  || x == ((int)ft_strlen(raw->map[y]) - 1))
 	{
 		printf("Opened in %dx, %dy\n", x, y);
-		perror("ERROR. You need to introduce a correct map\n");
+		perror("Error\nYou need to introduce a correct map\n");
 		exit (6);
 	}
 }
@@ -87,18 +96,18 @@ void		flood_fill(mapstr *raw, int y, int x)
 		flood_fill(raw, y + 1, x);
 	if(raw->map[y][x - 1] == '0' || raw->map[y][x - 1] == ' ')
 		flood_fill(raw, y, x - 1);
-	// if(raw->map[y + 1][x + 1] == '0' || raw->map[y + 1][x + 1] == ' ')
-	// 	flood_fill(raw, y + 1, x + 1);
-	// if(raw->map[y - 1][x + 1] == '0' || raw->map[y - 1][x + 1] == ' ')
-	// 	flood_fill(raw, y - 1, x + 1);
-	// if(raw->map[y - 1][x - 1] == '0' || raw->map[y - 1][x - 1] == ' ')
-	// 	flood_fill(raw, y - 1, x - 1);
-	// if(raw->map[y + 1][x - 1] == '0' || raw->map[y + 1][x - 1] == ' ')
-	//	flood_fill(raw, y + 1, x - 1);
+	if(raw->map[y + 1][x + 1] == '0' || raw->map[y + 1][x + 1] == ' ')
+		flood_fill(raw, y + 1, x + 1);
+	if(raw->map[y - 1][x + 1] == '0' || raw->map[y - 1][x + 1] == ' ')
+		flood_fill(raw, y - 1, x + 1);
+	if(raw->map[y - 1][x - 1] == '0' || raw->map[y - 1][x - 1] == ' ')
+		flood_fill(raw, y - 1, x - 1);
+	if(raw->map[y + 1][x - 1] == '0' || raw->map[y + 1][x - 1] == ' ')
+		flood_fill(raw, y + 1, x - 1);
 
 	if (raw->map[y][x] == '\0')
 	{
-		perror("ERROR. You need to introduce a correct map");
+		perror("Error\nYou need to introduce a correct map");
 		exit (6);
 	}
 }
