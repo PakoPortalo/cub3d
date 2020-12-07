@@ -1,5 +1,5 @@
 R 1000 1000
-NO ./textures/stone.xpm
+NO ./textures/stonep.png
 SO ./textures/stone.xpm
 WE ./textures/stone.xpm
 EA ./textures/stone.xpm
