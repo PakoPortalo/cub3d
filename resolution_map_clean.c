@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/07 09:06:43 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:38:22 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		check_resolution(mapstr *raw, mapclean *map)
 	}
 	map->w = ft_atoi(&raw->res[i]);
 	i += ft_nbrdigit(map->w);
-	if (!(raw->res[i] = ' ' && ft_strchr("1234567890", raw->res[i + 1])))
+	if (!(raw->res[i] == ' ' && ft_strchr("1234567890", raw->res[i + 1])))
 	{
 		perror("Error\nIntroduced bad resolution");
 		exit (3);

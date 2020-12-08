@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/07 09:54:24 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:32:14 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		check_texture_path(char *texturepath)
 {
 	int fd;
 
-	fd = open(texturepath, O_RDONLY);
 	if ((fd = open(texturepath, O_RDONLY)) == -1)
 	{
 		perror("Error\nCannot find textures");
@@ -29,15 +28,15 @@ void		check_texture_path(char *texturepath)
 
 int		check_texture_extension(mapclean *map)
 {
-	if (!check_extension(map->north, ".xpm") && !check_extension(map->north, ".png"))
+	if (check_extension(map->north, ".xpm") == -1 && check_extension(map->north, ".png") == - 1)
 		return (-1);
-	if (!check_extension(map->south, ".xpm") && !check_extension(map->south, ".png"))
+	if (check_extension(map->south, ".xpm") == -1 && check_extension(map->south, ".png") == - 1)
 		return (-1);
-	if (!check_extension(map->west, ".xpm") && !check_extension(map->west, ".png"))
+	if (check_extension(map->west, ".xpm") == -1 && check_extension(map->west, ".png") == -1 )
 		return (-1);
-	if (!check_extension(map->east, ".xpm") && !check_extension(map->east, ".png"))
+	if (check_extension(map->east, ".xpm") == -1 && check_extension(map->east, ".png") == -1)
 		return (-1);
-	if (!check_extension(map->sprite, ".xpm") && !check_extension(map->sprite, ".png"))
+	if (check_extension(map->sprite, ".xpm") == -1 && check_extension(map->sprite, ".png") == -1)
 		return (-1);
 	return (1);
 }

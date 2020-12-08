@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/07 10:23:43 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:36:07 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		check_extension(char *file, char *ext)
 	i = 0;
 	j = 0;
 	fext = malloc(4);
-	while (file[i] != '0' && ((file[i] != '.') || (file[i] == '.' && file[i + 1] == '/')))
+	while (file[i] != '\0' && ((file[i] != '.') || (file[i] == '.' && file[i + 1] == '/')))
 		i++;
 	while(file[i] != '\0')
 	{
