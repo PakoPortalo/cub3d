@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/07 13:19:34 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/08 09:47:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 
 void			check_number_lines(mapstr *raw)
 {
+	int i = 0;
+
 	if (!raw->res || !raw->north || !raw->south || !raw->west || !raw->east ||\
 		!raw->sprite || !raw->floor || !raw->ceil || !raw->map || !raw->rows)
 		{
+			while (raw->rows != 0)
+			{
+				printf("%s\n", raw->map[i]);
+				i++;
+				raw->rows--;
+			}
 			perror("Error\nMap file error. Please introduce a correct number of arguments\n");
 			exit (2);
 		}
@@ -27,7 +35,14 @@ char *			handle_spaces(mapstr *raw, char *line, int i)
 {
 	char *temp;
 
-	temp = ft_strtrim(line, " ");
+	temp = line;
+	while (temp[0] == ' ' || temp[0] == '\t')
+	{
+		if (temp[0] == ' ')
+			temp = ft_strtrim(temp, " ");
+		if (temp[0] == '\t')
+			temp = ft_strtrim(temp, "\t");
+	}
 	if ((temp[0] == '0' || temp[0] == '1'))
 	{
 		if (i == 0)
@@ -80,7 +95,7 @@ void		get_raw_line(mapstr *raw, char *file)
 	line = NULL;
 	while ((get_next_line(fd, &line)) > 0)
 	{
-		if (line[0] == ' ')
+		if (line[0] == ' ' || line[0] == '\t')
 			line = handle_spaces(raw, line, 0);
 		if (line[0] == 'R' && line[1] == ' ')
 			raw->res = ft_strdup(line);
