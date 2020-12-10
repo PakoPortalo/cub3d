@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/08 13:17:56 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/10 09:25:44 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,18 @@ void	find_origin(mapstr *raw)
 
 void		check_border(mapstr *raw, int y, int x)
 {
+	int i = 0;
+
 	if (y == 0 || y == (raw->rows - 1) || x == 0  || x == ((int)ft_strlen(raw->map[y]) - 1))
 	{
+
+	while (raw->rows != 0)
+	{
+		printf("%s\n", raw->map[i]);
+		i++;
+		raw->rows--;
+	}
+
 		perror("Error\nYou need to introduce a correct map\n");
 		exit (6);
 	}

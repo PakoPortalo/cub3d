@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/08 13:18:56 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/10 09:38:20 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		get_map(mapstr *raw, char *line, char *file)
 	}
 	if (line[0] != '\0')
 	{
-		raw->map[i] = line;
+		raw->map[i] = "\0";
 		raw->rows++;
 	}
 	free(line);
