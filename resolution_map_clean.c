@@ -6,47 +6,56 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/08 13:38:22 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:08:30 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_nbrdigit (int i)
-{
-	int		d;
 
-	d = 0;
-	while (i != 0)
+void		check_res_arguments (char **resolution)
+{
+	if (resolution[3])
 	{
-		i = i / 10;
-		d++;
+		perror("Error\nIntroduced bad resolution.\n");
+		exit (3);
 	}
-	return (d);
+	if (ft_atoi(resolution[1]) <= 0 || ft_atoi(resolution[2]) <= 0)
+	{
+		perror("Error\nResolution can't be negative, zero or massive.\n");
+		exit (3);
+	}
 }
 
-void		check_resolution(mapstr *raw, mapclean *map)
+void		check_res_isdigit(char **resolution)
 {
 	int i;
+	int j;
 
-	i = 2;
-	if (!(raw->res[0] == 'R' && raw->res[1] == ' ') && ft_strchr("1234567890", raw->res[2]))
+	i = 1;
+	j = 0;
+		while(resolution[i] != '\0')
 	{
-		perror("Error\nIntroduced bad resolution");
-		exit (3);
+		j = 0;
+		while (resolution[i][j] != '\0')
+		{
+			if (!ft_isdigit(resolution[i][j]))
+			{
+				perror("Error\nResolution is not a valid number.\n");
+				exit (3);
+			}
+			j++;
+		}
+		i++;
 	}
-	map->w = ft_atoi(&raw->res[i]);
-	i += ft_nbrdigit(map->w);
-	if (!(raw->res[i] == ' ' && ft_strchr("1234567890", raw->res[i + 1])))
-	{
-		perror("Error\nIntroduced bad resolution");
-		exit (3);
-	}
-	map->h = ft_atoi(&raw->res[i + 1]);
-	i += ft_nbrdigit(map->h);
-	if (!(raw->res[i + 1] == '\0'))
-	{
-		perror("Error\nIntroduced bad resolution\n");
-		exit (3);
-	}
+}
+void		check_resolution(mapstr *raw, mapclean *map)
+{
+	char **resolution;
+	resolution = ft_split(raw->res, ' ');
+	check_res_arguments(resolution);
+	check_res_isdigit(resolution);
+	map->w = ft_atoi(resolution[1]);
+	map->h = ft_atoi(resolution[2]);
+
 }

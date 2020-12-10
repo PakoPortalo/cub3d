@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/07 09:48:38 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/10 09:55:01 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,17 @@ typedef struct mapclean {
 	char	**map;
 } mapclean;
 
+typedef struct mapconfig
+{
+	int res;
+	int north;
+	int south;
+	int west;
+	int east;
+	int sprite;
+	int floor;
+	int ceil;
+} mapconfig;
 
 int		cub3d(int argc, char **argv);
 void	check_ini_errors(int argc, char **argv);
@@ -64,6 +75,7 @@ void	raw_info(char *file, mapstr *raw);
 void	save_map_info(mapstr *raw, mapclean *map);
 void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
+void	ininum(mapconfig *num);
 int		ft_nbrdigit(int i);
 void	check_resolution(mapstr *raw, mapclean *map);
 void		check_texture(mapstr *raw, mapclean *map);

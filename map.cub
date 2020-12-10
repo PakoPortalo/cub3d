@@ -1,13 +1,12 @@
 WE ./destroyer/wolftex/wood.png
 
-                        SO ./destroyer/wolftex/redbrick.png
-                                                F 122,122,122
-                                                                    NO ./destroyer/wolftex/greystone.png
-                                                                             S ./destroyer/wolftex/barrel.png
-                                                                                                    R 1080 720
-                                                            EA ./destroyer/wolftex/wood.png
-                                    C 255,200,160
-WE ./destroyer/wolftex/wood.png
+SO ./destroyer/wolftex/redbrick.png
+F 122     ,122,122
+NO      ./destroyer/wolftex/greystone.png
+S ./destroyer/wolftex/barrel.png
+R 1080 720
+EA ./destroyer/wolftex/wood.png
+C 255,200,160
 
 11111111111111111
 10000000000000001

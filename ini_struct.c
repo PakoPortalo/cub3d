@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/08 13:04:19 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/10 09:51:51 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,14 @@ void		inimap(mapclean *map)
 	map->map = NULL;
 }
 
+void		ininum(mapconfig *num)
+{
+	num->res = 0;
+	num->north = 0;
+	num->south = 0;
+	num->west = 0;
+	num->east = 0;
+	num->sprite = 0;
+	num->floor = 0;
+	num->ceil = 0;
+}
