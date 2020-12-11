@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_clean.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/10 09:25:44 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/11 09:06:38 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void		flood_fill(mapstr *raw, int y, int x)
 
 void		check_map(mapstr *raw, mapclean *map)
 {
-	map = NULL;
+	inimap(map);
 	find_origin(raw);
 	flood_fill(raw, raw->y , raw->x);
 }

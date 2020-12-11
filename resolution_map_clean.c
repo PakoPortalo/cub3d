@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resolution_map_clean.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/10 13:08:30 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/11 09:05:31 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		check_res_isdigit(char **resolution)
 
 	i = 1;
 	j = 0;
-		while(resolution[i] != '\0')
+		while(resolution[i] != NULL)
 	{
 		j = 0;
 		while (resolution[i][j] != '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ini_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/08 13:36:07 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/11 09:17:45 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		check_save_flag(int argc, char **argv)
 	{
 		savecheck = "--save";
 		i = 0;
-		while (savecheck[i])
+		while (argv[2][i])
 		{
 			if (argv[2][i] != savecheck[i])
 			{
@@ -56,7 +56,7 @@ int		check_extension(char *file, char *ext)
 	return (1);
 }
 
-void		check_number_arguments(argc)
+void		check_number_arguments(int argc)
 {
 	if (argc != 2 && argc != 3)
 	{

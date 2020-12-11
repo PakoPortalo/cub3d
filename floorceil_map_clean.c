@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floorceil_map_clean.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/10 13:25:25 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/11 09:25:48 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,47 +21,6 @@ void		check_number_variables(char **rgb, int i)
 	}
 }
 
-
-
-// void		get_floor_clean(mapstr *raw, mapclean *map)
-// {
-// 	char **temp;
-
-// 	temp = ft_split(raw->floor, ',');
-// 	check_number_variables(temp, 3);
-// 	map->floor[0] = ft_atoi(temp[0]);
-// 	map->floor[1] = ft_atoi(temp[1]);
-// 	map->floor[2] = ft_atoi(temp[2]);
-// 	free(temp);
-// }
-
-// void		get_ceil_clean(mapstr *raw, mapclean *map)
-// {
-// 	char **temp;
-
-// 	temp = ft_split(raw->ceil, ',');
-// 	check_number_variables(temp, 3);
-// 	map->ceil[0] = ft_atoi(temp[0]);
-// 	map->ceil[1] = ft_atoi(temp[1]);
-// 	map->ceil[2] = ft_atoi(temp[2]);
-// 	free(temp);
-// }
-
-// void		check_floor_ceil(mapstr *raw, mapclean *map)
-// {
-// 	char **temp;
-
-// 	temp = ft_split(raw->floor, ' ');
-// 	check_number_variables(temp, 2);
-// 	raw->floor = temp[1];
-// 	free(temp);
-// 	get_floor_clean(raw, map);
-// 	temp = ft_split(raw->ceil, ' ');
-// 	check_number_variables(temp, 2);
-// 	raw->ceil = temp[1];
-// 	free(temp);
-// 	get_ceil_clean(raw, map);
-// }
 
 void		comma_counter(char *str)
 {
@@ -109,7 +68,7 @@ void		check_number(char **args, int *rgb)
 	rgb[2] = ft_atoi(args[2]);
 	//checkarg[1], args[1], args[2]
 	if ( !(rgb[0] >= 0 && rgb[0] <= 255) || !(rgb[1] >= 0 && rgb[1] <= 255) || \
-	!(rgb[1] >= 0 && rgb[1] <= 255))
+	!(rgb[1] >= 0 && rgb[1] <= 255) || !(rgb[2] >= 0 && rgb[2] <= 255))
 	{
 		perror("Error\nFloor and Ceil parametrers must be between 0 and 255\n");
 		exit (5);
