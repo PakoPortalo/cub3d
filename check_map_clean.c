@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/11 09:06:38 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/11 10:17:31 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,17 @@ void		flood_fill(mapstr *raw, int y, int x)
 void		check_map(mapstr *raw, mapclean *map)
 {
 	inimap(map);
+	
+	if (raw->map[0][0] == '0' || raw->map[0][0] == '2' || \
+		raw->map[0][ft_strlen(raw->map[0]) -1] == '0' || raw->map[0][ft_strlen(raw->map[0]) -1] == '2')  /* || \
+		raw->map[raw->rows - 1][0] == '0' || raw->map[raw->rows - 1][0] == '2' || \
+		raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows])] == '0' || raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows])] == '2')*/
+	{
+		perror("Error\nYou need to introduce a correct map");
+		exit (6);
+	}
+
+
 	find_origin(raw);
 	flood_fill(raw, raw->y , raw->x);
 }
