@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floorceil_map_clean.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/11 09:25:48 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/15 11:37:52 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 void		check_number_variables(char **rgb, int i)
 {
+	int j;
+
+	j = 0;
+	while (j < i)
+	{
+		if (!rgb[j])
+		{
+			perror("Error\nNumber of floor/ceil arguments wrong\n");
+			exit (5);
+		}
+		j++;
+	}
 	if (rgb[i])
 	{
 		perror("Error\nNumber of floor/ceil arguments wrong\n");

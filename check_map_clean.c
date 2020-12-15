@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_clean.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/11 10:17:31 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/15 12:35:13 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,15 @@ void		flood_fill(mapstr *raw, int y, int x)
 void		check_map(mapstr *raw, mapclean *map)
 {
 	inimap(map);
-	
+	printf("ultima row: %s\n", raw->map[raw->rows - 1]);
+	printf("raw->rows =  %d\n", raw->rows);
+	printf("last character =  %c\n", raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows - 1]) - 1]);
+
 	if (raw->map[0][0] == '0' || raw->map[0][0] == '2' || \
-		raw->map[0][ft_strlen(raw->map[0]) -1] == '0' || raw->map[0][ft_strlen(raw->map[0]) -1] == '2')  /* || \
-		raw->map[raw->rows - 1][0] == '0' || raw->map[raw->rows - 1][0] == '2' || \
-		raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows])] == '0' || raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows])] == '2')*/
+		raw->map[0][ft_strlen(raw->map[0]) -1] == '0' || raw->map[0][ft_strlen(raw->map[0]) -1] == '2' || \
+		raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows - 1]) - 1] == '0' || raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows - 1]) - 1] == '2' || \
+		raw->map[raw->rows - 1][0] == '0' || raw->map[raw->rows - 1][0] == '2')
+
 	{
 		perror("Error\nYou need to introduce a correct map");
 		exit (6);
