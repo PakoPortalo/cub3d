@@ -83,7 +83,6 @@ void		get_map(mapstr *raw, char *line, char *file)
 		}
 	}
 	raw->map[i] = ft_strdup(line);
-	printf("raw map[i]: %s\n", raw->map[i]);
 	if (line[0] != '\0')
 		raw->rows++;
 	free(line);
@@ -95,12 +94,11 @@ void		get_raw_line(mapstr *raw, char *file, mapconfig *num)  // TIO HE INTENTADO
 {
 	char *line;
 	int	fd;
-
+	int i;
 	fd = open(file, O_RDONLY);
 	line = NULL;
-	while ((get_next_line(fd, &line)) > 0)
-	{
-		if (line[0] == ' ' || line[0] == '\t')
+	while ((i = get_next_line(fd, &line)) > 0)
+	{		if (line[0] == ' ' || line[0] == '\t')
 			line = handle_spaces(raw, line, 0);
 		if (line[0] == 'R' && line[1] == ' ')
 		{
@@ -144,6 +142,11 @@ void		get_raw_line(mapstr *raw, char *file, mapconfig *num)  // TIO HE INTENTADO
 		}
 		else if (line[0] == '0' || line[0] == '1' || line[0] == '2')
 			raw->rows++;
+		else if(line[1])
+		{
+			perror("Error\nMap file error. Please introduce valid arguments\n");
+			exit (2);
+		}
 	}
 	free(line);
 	close(fd);

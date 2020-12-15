@@ -118,9 +118,6 @@ void		flood_fill(mapstr *raw, int y, int x)
 void		check_map(mapstr *raw, mapclean *map)
 {
 	inimap(map);
-	printf("ultima row: %s\n", raw->map[raw->rows - 1]);
-	printf("raw->rows =  %d\n", raw->rows);
-	printf("last character =  %c\n", raw->map[raw->rows - 1][ft_strlen(raw->map[raw->rows - 1]) - 1]);
 
 	if (raw->map[0][0] == '0' || raw->map[0][0] == '2' || \
 		raw->map[0][ft_strlen(raw->map[0]) -1] == '0' || raw->map[0][ft_strlen(raw->map[0]) -1] == '2' || \
