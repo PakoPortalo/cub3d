@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/11 09:17:45 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/16 17:16:38 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		check_extension(char *file, char *ext)
 	}
 	fext[j] = file[i];
 
-	if (ft_strncmp(fext, ext, 5) != 0)
+	if (ft_strncmp(fext, ext, 4) != 0)
 		return(-1);
 	return (1);
 }

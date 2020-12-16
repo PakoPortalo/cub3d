@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_map_clean.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/08 13:32:14 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/16 18:44:41 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 void		check_texture_path(char *texturepath)
 {
 	int fd;
-
-	while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
-		texturepath[ft_strlen(texturepath) - 1] == ' ' || texturepath[ft_strlen(texturepath) - 1] == '\t')
-	{
-		if (texturepath[0] == ' ')
-			texturepath = ft_strtrim(texturepath, " ");
-		if (texturepath[0] == '\t')
-			texturepath = ft_strtrim(texturepath, "\t");
-	}
 
 	if ((fd = open(texturepath, O_RDONLY)) == -1)
 	{
@@ -60,23 +51,42 @@ void	number_textures(char **texture)
 
 }
 
+char	*check_spaces(char *texturepath)
+{
+	while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
+	texturepath[ft_strlen(texturepath) - 1] == ' ' || texturepath[ft_strlen(texturepath) - 1] == '\t')
+	{
+		texturepath = ft_strtrim(texturepath, " ");
+		texturepath = ft_strtrim(texturepath, "\t");
+	}
+	return(texturepath);
+}
+
 void		get_texture(mapstr *raw, mapclean *map)
 {
 	char **texture;
 
-
+	raw->north = check_spaces(raw->north);
 	texture = ft_split(raw->north, ' ');
 	number_textures(texture);
 	map->north = texture[1];
+	
+	raw->south = check_spaces(raw->south);
 	texture = ft_split(raw->south, ' ');
 	number_textures(texture);
 	map->south = texture[1];
+
+	raw->west = check_spaces(raw->west);
 	texture = ft_split(raw->west, ' ');
 	number_textures(texture);
 	map->west = texture[1];
+
+	raw->east = check_spaces(raw->east);
 	texture = ft_split(raw->east, ' ');
 	number_textures(texture);
 	map->east = texture[1];
+
+	raw->sprite = check_spaces(raw->sprite);
 	texture = ft_split(raw->sprite, ' ');
 	number_textures(texture);
 	map->sprite = texture[1];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floorceil_map_clean.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/15 11:37:52 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/16 18:48:45 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,23 @@ void		check_floor(mapstr *raw, mapclean *map)
 	map->floor[2] = ft_atoi(argsfloor[2]);
 }
 
+char		*floor_ceil_spaces(char *rgb)
+{
+	while (rgb[0] == ' ' || rgb[0] == '\t' || \
+	rgb[ft_strlen(rgb) - 1] == ' ' || rgb[ft_strlen(rgb) - 1] == '\t')
+	{
+		rgb = ft_strtrim(rgb, " ");
+		rgb = ft_strtrim(rgb, "\t");
+	}
+	return(rgb);
+}
+
 void		check_floor_ceil(mapstr *raw, mapclean *map)
 {
 	comma_counter(raw->floor);
 	comma_counter(raw->ceil);
+	raw->floor = floor_ceil_spaces(raw->floor);
+	raw->ceil = floor_ceil_spaces(raw->ceil);
 	check_floor(raw, map);
 	check_ceil(raw, map);
 
