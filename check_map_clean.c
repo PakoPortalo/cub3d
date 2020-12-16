@@ -68,18 +68,8 @@ void	find_origin(mapstr *raw)
 
 void		check_border(mapstr *raw, int y, int x)
 {
-	int i = 0;
-
-	if (y == 0 || y == (raw->rows - 1) || x == 0  || x == ((int)ft_strlen(raw->map[y]) - 1))
+	if (y <= 0 || y >= (raw->rows - 1) || x <= 0  || x >= ((int)ft_strlen(raw->map[y]) - 1))
 	{
-
-	while (raw->rows != 0)
-	{
-		printf("%s\n", raw->map[i]);
-		i++;
-		raw->rows--;
-	}
-
 		perror("Error\nYou need to introduce a correct map\n");
 		exit (6);
 	}
@@ -91,21 +81,21 @@ void		flood_fill(mapstr *raw, int y, int x)
 	if (ft_strchr("NSWE0 ", raw->map[y][x]))
 		raw->map[y][x] = '3';
 
-	if(raw->map[y - 1][x] == '0' || raw->map[y - 1][x] == ' ')
+	if(raw->map[y - 1][x] != '1' && raw->map[y - 1][x] != '3')
 		flood_fill(raw, y - 1, x);
-	if(raw->map[y][x + 1] == '0' || raw->map[y][x + 1] == ' ')
+	if(raw->map[y][x + 1] != '1' && raw->map[y][x + 1] != '3')
 		flood_fill(raw, y, x + 1);
-	if(raw->map[y + 1][x] == '0' || raw->map[y + 1][x] == ' ')
+	if(raw->map[y + 1][x] != '1' && raw->map[y + 1][x] != '3')
 		flood_fill(raw, y + 1, x);
-	if(raw->map[y][x - 1] == '0' || raw->map[y][x - 1] == ' ')
+	if(raw->map[y][x - 1] != '1' && raw->map[y][x - 1] != '3')
 		flood_fill(raw, y, x - 1);
-	if(raw->map[y + 1][x + 1] == '0' || raw->map[y + 1][x + 1] == ' ')
+	if(raw->map[y + 1][x + 1] != '1' && raw->map[y + 1][x + 1] != '3')
 		flood_fill(raw, y + 1, x + 1);
-	if(raw->map[y - 1][x + 1] == '0' || raw->map[y - 1][x + 1] == ' ')
+	if(raw->map[y - 1][x + 1] != '1' && raw->map[y - 1][x + 1] != '3')
 		flood_fill(raw, y - 1, x + 1);
-	if(raw->map[y - 1][x - 1] == '0' || raw->map[y - 1][x - 1] == ' ')
+	if(raw->map[y - 1][x - 1] != '1' && raw->map[y - 1][x - 1] != '3')
 		flood_fill(raw, y - 1, x - 1);
-	if(raw->map[y + 1][x - 1] == '0' || raw->map[y + 1][x - 1] == ' ')
+	if(raw->map[y + 1][x - 1] != '1' && raw->map[y + 1][x - 1] != '3')
 		flood_fill(raw, y + 1, x - 1);
 
 	if (raw->map[y][x] == '\0')

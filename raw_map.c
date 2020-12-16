@@ -33,7 +33,7 @@ void			check_number_lines(mapstr *raw, mapconfig *num)
 		}
 }
 
-char *			handle_spaces(mapstr *raw, char *line, int i)
+char *			handle_spaces(char *line)
 {
 	char *temp;
 
@@ -47,8 +47,7 @@ char *			handle_spaces(mapstr *raw, char *line, int i)
 	}
 	if ((temp[0] == '0' || temp[0] == '1'))
 	{
-		if (i == 0)
-			raw->rows++;
+
 		return(line);
 	}
 	return(temp);
@@ -65,7 +64,7 @@ void		get_map(mapstr *raw, char *line, char *file)
 	fd = open(file, O_RDONLY);
 	while((get_next_line(fd, &line)) > 0)
 	{
-		line = handle_spaces(raw, line, 1);
+		line = handle_spaces(line);
 		if (!ft_strchr("RNSWESFC", *line))
 		{
 
@@ -90,7 +89,7 @@ void		get_map(mapstr *raw, char *line, char *file)
 }
 
 
-void		get_raw_line(mapstr *raw, char *file, mapconfig *num)  // TIO HE INTENTADO METER num->loquesea dentro de los if pero no me funcionaba
+void		get_raw_line(mapstr *raw, char *file, mapconfig *num)
 {
 	char *line;
 	int	fd;
@@ -99,50 +98,50 @@ void		get_raw_line(mapstr *raw, char *file, mapconfig *num)  // TIO HE INTENTADO
 	line = NULL;
 	while ((i = get_next_line(fd, &line)) > 0)
 	{		if (line[0] == ' ' || line[0] == '\t')
-			line = handle_spaces(raw, line, 0);
-		if (line[0] == 'R' && line[1] == ' ')
+			line = handle_spaces(line);
+		if (!ft_strncmp(line, "R ", 2))
 		{
 			raw->res = ft_strdup(line);
 			num->res += 1;
 		}
-		else if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
+		else if (!ft_strncmp(line, "NO ", 3))
 		{
 			raw->north = ft_strdup(line);
 			num->north += 1;
 		}
-		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
+		else if (!ft_strncmp(line, "SO ", 3))
 		{
 			raw->south = ft_strdup(line);
 			num->south += 1;
 		}
-		else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
+		else if (!ft_strncmp(line, "WE ", 3))
 		{
 			raw->west = ft_strdup(line);
 			num->west += 1;
 		}
-		else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
+		else if (!ft_strncmp(line, "EA ", 3))
 		{
 			raw->east = ft_strdup(line);
 			num->east += 1;
 		}
-		else if (line[0] == 'S' && line[1] == ' ')
+		else if (!ft_strncmp(line, "S ", 2))
 		{
 			raw->sprite = ft_strdup(line);
 			num->sprite += 1;
 		}
-		else if (line[0] == 'F' && line[1] == ' ')
+		else if (!ft_strncmp(line, "C ", 2))
 		{
 			raw->floor = ft_strdup(line);
 			num->floor += 1;
 		}
-		else if (line[0] == 'C' && line[1] == ' ')
+		else if (!ft_strncmp(line, "F ", 2))
 		{
 			raw->ceil = ft_strdup(line);
 			num->ceil += 1;
 		}
-		else if (line[0] == '0' || line[0] == '1' || line[0] == '2')
+		else if (line[0] == '0' || line[0] == '1' || line[0] == '2' || line[0] == ' ')
 			raw->rows++;
-		else if(line[1])
+		else if (line[0] != '\0')
 		{
 			perror("Error\nMap file error. Please introduce valid arguments\n");
 			exit (2);

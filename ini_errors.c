@@ -39,18 +39,19 @@ int		check_extension(char *file, char *ext)
 	int		j;
 	char	*fext;
 
-	i = 0;
-	j = 0;
+	i = ft_strlen(file) - 1;
+	j = 4;
 	fext = malloc(4);
-	while (file[i] != '\0' && ((file[i] != '.') || (file[i] == '.' && file[i + 1] == '/')))
-		i++;
-	while(file[i] != '\0')
+	fext[j] = '\0';
+	j--;
+	while( j > 0)
 	{
 		fext[j] = file[i];
-		i++;
-		j++;
+		i--;
+		j--;
 	}
-	fext[j] = '\0';
+	fext[j] = file[i];
+
 	if (ft_strncmp(fext, ext, 5) != 0)
 		return(-1);
 	return (1);

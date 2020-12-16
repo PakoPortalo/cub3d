@@ -16,6 +16,15 @@ void		check_texture_path(char *texturepath)
 {
 	int fd;
 
+	while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
+		texturepath[ft_strlen(texturepath) - 1] == ' ' || texturepath[ft_strlen(texturepath) - 1] == '\t')
+	{
+		if (texturepath[0] == ' ')
+			texturepath = ft_strtrim(texturepath, " ");
+		if (texturepath[0] == '\t')
+			texturepath = ft_strtrim(texturepath, "\t");
+	}
+
 	if ((fd = open(texturepath, O_RDONLY)) == -1)
 	{
 		perror("Error\nCannot find textures");
@@ -48,11 +57,13 @@ void	number_textures(char **texture)
 		perror("Error\nNumber of texture arguments wrong\n");
 		exit (4);
 	}
+
 }
 
 void		get_texture(mapstr *raw, mapclean *map)
 {
 	char **texture;
+
 
 	texture = ft_split(raw->north, ' ');
 	number_textures(texture);
