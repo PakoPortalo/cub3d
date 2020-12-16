@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/16 18:44:41 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/16 19:01:42 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,31 @@ void		get_texture(mapstr *raw, mapclean *map)
 	raw->north = check_spaces(raw->north);
 	texture = ft_split(raw->north, ' ');
 	number_textures(texture);
+	texture[1] = check_spaces(texture[1]);
 	map->north = texture[1];
 	
 	raw->south = check_spaces(raw->south);
 	texture = ft_split(raw->south, ' ');
 	number_textures(texture);
+	texture[1] = check_spaces(texture[1]);
 	map->south = texture[1];
 
 	raw->west = check_spaces(raw->west);
 	texture = ft_split(raw->west, ' ');
 	number_textures(texture);
+	texture[1] = check_spaces(texture[1]);
 	map->west = texture[1];
 
 	raw->east = check_spaces(raw->east);
 	texture = ft_split(raw->east, ' ');
 	number_textures(texture);
+	texture[1] = check_spaces(texture[1]);
 	map->east = texture[1];
 
 	raw->sprite = check_spaces(raw->sprite);
 	texture = ft_split(raw->sprite, ' ');
 	number_textures(texture);
+	texture[1] = check_spaces(texture[1]);
 	map->sprite = texture[1];
 }
 
