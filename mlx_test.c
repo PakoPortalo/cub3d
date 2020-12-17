@@ -6,11 +6,11 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/17 12:09:47 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/17 13:31:09 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
+#include "cub3d.h"
 
 typedef struct  s_data {
     void        *img;
@@ -47,7 +47,7 @@ void            print_square(t_data *data, int color)
 }
 
 
-int             main(void)
+int		printer_cub3d(void)
 {
     void    *mlx;
     void    *mlx_win;
@@ -62,4 +62,5 @@ int             main(void)
     // my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
     mlx_loop(mlx);
+    return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/17 12:28:51 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/17 13:28:05 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <mlx.h>
 
 //para utilizar close
 # include <unistd.h>
@@ -82,6 +83,9 @@ void		check_texture(mapstr *raw, mapclean *map);
 int		check_north(mapstr *raw, mapclean *map);
 void		check_floor_ceil(mapstr *raw, mapclean *map);
 void		check_map(mapstr *raw, mapclean *map);
+
+
+int		printer_cub3d(void);
 
 
 #endif

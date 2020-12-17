@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:04:24 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/17 12:41:44 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/17 13:30:35 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ int		cub3d(int argc, char **argv)
 	raw_info(argv[1], &raw);
 	save_map_info(&raw, &map);
 	map.map = raw.map;
+	printer_cub3d();
 	return (0);
 }
