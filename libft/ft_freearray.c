@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   ft_freearray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 11:04:24 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/18 11:47:53 by fportalo         ###   ########.fr       */
+/*   Created: 2020/12/18 11:54:23 by fportalo          #+#    #+#             */
+/*   Updated: 2020/12/18 12:19:18 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-
-int		cub3d(int argc, char **argv)
+int     ft_freearray(char **array)
 {
-	mapstr raw;
-	mapclean map;
-	check_ini_errors(argc, argv);
-	raw_info(argv[1], &raw);
-	save_map_info(&raw, &map);
-	map.map = raw.map;
-	// printer_cub3d(&map);
-	system("leaks cub3D");
-	return (0);
+    int i;
+
+    i = 0;
+    if (!array)
+        return(-1);
+    while (array[i])
+    {
+        free(array[i]);
+        i++;
+    }
+    free(array);
+    return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resolution_map_clean.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/11 09:05:31 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/18 12:01:27 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void		check_resolution(mapstr *raw, mapclean *map)
 	check_res_isdigit(resolution);
 	map->w = ft_atoi(resolution[1]);
 	map->h = ft_atoi(resolution[2]);
-
+	ft_freearray(resolution);
 }

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/17 13:31:09 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/18 09:14:24 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,21 @@ void            print_square(t_data *data, int color)
 }
 
 
-int		printer_cub3d(void)
+int		printer_cub3d(mapclean *map)
 {
     void    *mlx;
     void    *mlx_win;
     t_data  img;
 
     mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    img.img = mlx_new_image(mlx, 1920, 1080);
+    mlx_win = mlx_new_window(mlx, map->w, map->h, "Hello world!");
+    img.img = mlx_new_image(mlx, map->w, map->h);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
                                  &img.endian);
     print_square(&img, 0x00FF0000);
     // my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+    
     mlx_loop(mlx);
     return(0);
 }

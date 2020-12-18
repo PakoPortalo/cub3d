@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/17 12:28:47 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/18 11:08:51 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,20 @@ void		get_map(mapstr *raw, char *line, char *file)
 	int i;
 
 	i = 0;
-	raw->map = (char **)malloc(sizeof(char *) * raw->rows + 1);
-	raw->map[raw->rows + 1] = NULL;
+	raw->map = (char **)ft_calloc(sizeof(char *), (raw->rows + 2));
 	fd = open(file, O_RDONLY);
 	while((get_next_line(fd, &line)) > 0)
 	{
 		line = handle_spaces(line);
 		if (!ft_strchr("RNSWESFC", *line))
 		{
-
 			if (!raw->map)
-			{
 				raw->map[i] = ft_strdup(line);
-				raw->map[i][ft_strlen(line)] = '\0';
-			}
 			else
-			{
 				raw->map[i] = ft_strdup(line);
-				raw->map[i][ft_strlen(line)] = '\0';
-			}
 			i++;
 		}
+		free(line);
 	}
 	raw->map[i] = ft_strdup(line);
 	if (line[0] != '\0')
@@ -146,6 +139,7 @@ void		get_raw_line(mapstr *raw, char *file, mapconfig *num)
 			perror("Error\nMap file error. Please introduce valid arguments\n");
 			exit (2);
 		}
+		free(line);
 	}
 	free(line);
 	close(fd);

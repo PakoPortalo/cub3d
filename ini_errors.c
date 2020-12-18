@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ini_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/16 17:16:38 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/18 12:05:16 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int		check_extension(char *file, char *ext)
 
 	i = ft_strlen(file) - 1;
 	j = 4;
-	fext = malloc(4);
-	fext[j] = '\0';
+	fext = ft_calloc( sizeof(char), 5);
 	j--;
 	while( j > 0)
 	{
@@ -53,7 +52,11 @@ int		check_extension(char *file, char *ext)
 	fext[j] = file[i];
 
 	if (ft_strncmp(fext, ext, 4) != 0)
+	{
+		free(fext);
 		return(-1);
+	}
+	free(fext);
 	return (1);
 }
 

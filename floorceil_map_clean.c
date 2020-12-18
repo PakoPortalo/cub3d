@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floorceil_map_clean.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/16 18:48:45 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/18 12:41:05 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,11 @@ void		check_ceil(mapstr *raw, mapclean *map)
 	argsceil[1] = ft_strtrim(argsceil[1], " ");
 	argsceil[2] = ft_strtrim(argsceil[2], " ");
 	check_number(argsceil, map->ceil);
-	map->floor[0] = ft_atoi(checkargceil[1]);
-	map->floor[1] = ft_atoi(argsceil[1]);
-	map->floor[2] = ft_atoi(argsceil[2]);
+	map->ceil[0] = ft_atoi(checkargceil[1]);
+	map->ceil[1] = ft_atoi(argsceil[1]);
+	map->ceil[2] = ft_atoi(argsceil[2]);
+	ft_freearray(checkargceil);
+	ft_freearray(argsceil);
 }
 void		check_floor(mapstr *raw, mapclean *map)
 {
@@ -121,6 +123,8 @@ void		check_floor(mapstr *raw, mapclean *map)
 	map->floor[0] = ft_atoi(checkargfloor[1]);
 	map->floor[1] = ft_atoi(argsfloor[1]);
 	map->floor[2] = ft_atoi(argsfloor[2]);
+	ft_freearray(checkargfloor);
+	ft_freearray(argsfloor);
 }
 
 char		*floor_ceil_spaces(char *rgb)

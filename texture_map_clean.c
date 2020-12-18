@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_map_clean.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/16 19:01:42 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/18 12:26:24 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,31 +70,36 @@ void		get_texture(mapstr *raw, mapclean *map)
 	texture = ft_split(raw->north, ' ');
 	number_textures(texture);
 	texture[1] = check_spaces(texture[1]);
-	map->north = texture[1];
+	map->north = ft_strdup(texture[1]);
+	ft_freearray(texture);
 	
 	raw->south = check_spaces(raw->south);
 	texture = ft_split(raw->south, ' ');
 	number_textures(texture);
 	texture[1] = check_spaces(texture[1]);
-	map->south = texture[1];
+	map->south = ft_strdup(texture[1]);
+	ft_freearray(texture);
 
 	raw->west = check_spaces(raw->west);
 	texture = ft_split(raw->west, ' ');
 	number_textures(texture);
 	texture[1] = check_spaces(texture[1]);
-	map->west = texture[1];
+	map->west = ft_strdup(texture[1]);
+	ft_freearray(texture);
 
 	raw->east = check_spaces(raw->east);
 	texture = ft_split(raw->east, ' ');
 	number_textures(texture);
 	texture[1] = check_spaces(texture[1]);
-	map->east = texture[1];
+	map->east = ft_strdup(texture[1]);
+	ft_freearray(texture);
 
 	raw->sprite = check_spaces(raw->sprite);
 	texture = ft_split(raw->sprite, ' ');
 	number_textures(texture);
 	texture[1] = check_spaces(texture[1]);
-	map->sprite = texture[1];
+	map->sprite = ft_strdup(texture[1]);
+		ft_freearray(texture);
 }
 
 void		check_texture(mapstr *raw, mapclean *map)

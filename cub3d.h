@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/17 13:28:05 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/18 08:56:45 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		check_floor_ceil(mapstr *raw, mapclean *map);
 void		check_map(mapstr *raw, mapclean *map);
 
 
-int		printer_cub3d(void);
+int		printer_cub3d(mapclean *map);
 
 
 #endif
