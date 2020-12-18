@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/18 12:41:05 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/18 13:19:13 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,7 @@ void		check_ceil(mapstr *raw, mapclean *map)
 	checkargceil = ft_split(argsceil[0], ' ');
 	check_number_variables(checkargceil, 2);
 	argsceil[0] = ft_strtrim(checkargceil[1], " ");
-	argsceil[1] = ft_strtrim(argsceil[1], " ");
-	argsceil[2] = ft_strtrim(argsceil[2], " ");
 	check_number(argsceil, map->ceil);
-	map->ceil[0] = ft_atoi(checkargceil[1]);
-	map->ceil[1] = ft_atoi(argsceil[1]);
-	map->ceil[2] = ft_atoi(argsceil[2]);
 	ft_freearray(checkargceil);
 	ft_freearray(argsceil);
 }
@@ -117,12 +112,7 @@ void		check_floor(mapstr *raw, mapclean *map)
 	checkargfloor = ft_split(argsfloor[0], ' ');
 	check_number_variables(checkargfloor, 2);
 	argsfloor[0] = ft_strtrim(checkargfloor[1], " ");
-	argsfloor[1] = ft_strtrim(argsfloor[1], " ");
-	argsfloor[2] = ft_strtrim(argsfloor[2], " ");
 	check_number(argsfloor, map->floor);
-	map->floor[0] = ft_atoi(checkargfloor[1]);
-	map->floor[1] = ft_atoi(argsfloor[1]);
-	map->floor[2] = ft_atoi(argsfloor[2]);
 	ft_freearray(checkargfloor);
 	ft_freearray(argsfloor);
 }
