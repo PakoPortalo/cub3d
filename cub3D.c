@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:04:24 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/18 11:47:53 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:41:37 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		cub3d(int argc, char **argv)
 	raw_info(argv[1], &raw);
 	save_map_info(&raw, &map);
 	map.map = raw.map;
-	// printer_cub3d(&map);
-	system("leaks cub3D");
+	printer_cub3d(&map);
 	return (0);
 }

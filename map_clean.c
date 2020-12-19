@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 13:06:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/18 11:59:39 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:24:17 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	free_raw(mapstr *raw)
 {
-	int i;
 
-	i = 0;
 	free(raw->res);
 	free(raw->north);
 	free(raw->south);

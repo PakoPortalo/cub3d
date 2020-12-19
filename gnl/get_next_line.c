@@ -3,81 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pako <pako@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/04 18:04:00 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/01/14 19:26:48 by fgata-va         ###   ########.fr       */
+/*   Created: 2020/03/25 10:19:11 by pako              #+#    #+#             */
+/*   Updated: 2020/04/23 18:38:16 by pako             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char				*ft_clean_line(char *save, char **line, int r)
+char	*ft_get_line(char **files, char *buffer, int fd)
 {
-	unsigned int	i;
-	char			*tmp;
+	char		*temp;
 
-	i = 0;
-	while (save[i])
-	{
-		if (save[i] == '\n')
-			break ;
-		i++;
-	}
-	if (i < ft_strlen(save))
-	{
-		*line = ft_substr(save, 0, i);
-		tmp = ft_substr(save, i + 1, ft_strlen(save));
-		free(save);
-		save = ft_strdup(tmp);
-		free(tmp);
-	}
-	else if (r == 0)
-	{
-		*line = save;
-		save = NULL;
-	}
-	return (save);
+	temp = ft_strdup(files[fd]);
+	free(files[fd]);
+	files[fd] = ft_strjoin(temp, buffer);
+	free(temp);
+	return (files[fd]);
 }
 
-char				*ft_save(char *buffer, char *save)
+int		ft_last_line(char **line, char **files, int fd)
 {
-	char			*tmp;
-
-	if (save)
-	{
-		tmp = ft_strjoin(save, buffer);
-		free(save);
-		save = ft_strdup(tmp);
-		free(tmp);
-	}
-	else
-		save = ft_strdup(buffer);
-	return (save);
+	*line = ft_strdup(files[fd]);
+	free(files[fd]);
+	files[fd] = NULL;
+	return (0);
 }
 
-int					get_next_line(int fd, char **line)
+int		ft_chop_chop(int fd, char **line, char **files, int bytes_readed)
 {
-	static char		*save[4096];
-	char			buffer[BUFFER_SIZE + 1];
-	int				r;
+	char		*temp;
+	char		*jump;
 
-	while ((r = read(fd, buffer, BUFFER_SIZE)))
+	if (bytes_readed <= 0 && !files[fd])
 	{
-		if (r == -1)
-			return (-1);
-		buffer[r] = '\0';
-		save[fd] = ft_save(buffer, save[fd]);
+		*line = ft_strdup("");
+		return (bytes_readed);
+	}
+	temp = ft_strdup(files[fd]);
+	if (!ft_strchr(files[fd], '\n'))
+	{
+		free(temp);
+		temp = NULL;
+		return (ft_last_line(line, files, fd));
+	}
+	jump = ft_strchr(temp, '\n');
+	*line = ft_substr(temp, 0, (ft_strlen(temp) - ft_strlen(jump)));
+	free(files[fd]);
+	files[fd] = ft_strdup(jump + 1);
+	free(temp);
+	return (1);
+}
+
+int		get_next_line(int fd, char **line)
+{
+	static char	*files[4096];
+	char		*buffer;
+	int			bytes_readed;
+
+	if (fd == -1 || !line
+	|| !(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))
+	|| read(fd, buffer, 0) == -1 || BUFFER_SIZE <= 0)
+		return (-1);
+	while ((bytes_readed = read(fd, buffer, (BUFFER_SIZE))) > 0)
+	{
+		buffer[bytes_readed] = '\0';
+		if (!files[fd])
+			files[fd] = ft_strdup(buffer);
+		else
+			files[fd] = ft_get_line(files, buffer, fd);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	if (r <= 0 && !save[fd])
-	{
-		*line = ft_strdup("");
-		return (r);
-	}
-	save[fd] = ft_clean_line(save[fd], line, r);
-	if (r <= 0 && !save[fd])
-		return (r);
-	return (1);
+	free(buffer);
+	return (ft_chop_chop(fd, line, files, bytes_readed));
 }

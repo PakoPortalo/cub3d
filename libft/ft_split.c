@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:24:02 by fportalo          #+#    #+#             */
-/*   Updated: 2019/12/16 16:38:35 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:40:42 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		ft_del_matrix(char **matrix)
 	int		i;
 
 	i = 0;
-	while (matrix[i] != '\0')
+	while (*matrix[i] != '\0')
 	{
 		free(matrix[i]);
 		i++;
