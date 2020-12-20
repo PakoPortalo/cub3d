@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/19 19:00:41 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/20 12:43:35 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		check_floor_ceil(mapstr *raw, mapclean *map);
 void		check_map(mapstr *raw, mapclean *map);
 
 
-int		printer_cub3d(mapclean *map);
+// int		printer_cub3d(mapclean *map);
 
 
 #endif

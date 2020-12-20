@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floorceil_map_clean.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/18 13:19:13 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/20 13:10:27 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void		check_ceil(mapstr *raw, mapclean *map)
 	check_number_variables(argsceil, 3);
 	checkargceil = ft_split(argsceil[0], ' ');
 	check_number_variables(checkargceil, 2);
+	free(argsceil[0]);
 	argsceil[0] = ft_strtrim(checkargceil[1], " ");
 	check_number(argsceil, map->ceil);
 	ft_freearray(checkargceil);
@@ -111,6 +112,7 @@ void		check_floor(mapstr *raw, mapclean *map)
 	check_number_variables(argsfloor, 3);
 	checkargfloor = ft_split(argsfloor[0], ' ');
 	check_number_variables(checkargfloor, 2);
+	free(argsfloor[0]);
 	argsfloor[0] = ft_strtrim(checkargfloor[1], " ");
 	check_number(argsfloor, map->floor);
 	ft_freearray(checkargfloor);
