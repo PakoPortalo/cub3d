@@ -6,54 +6,13 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:56:58 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 10:44:00 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		check_number_variables(char **rgb, int i)
-{
-	int		j;
-
-	j = 0;
-	while (j < i)
-	{
-		if (!rgb[j])
-		{
-			perror("Error\nNumber of floor/ceil arguments wrong\n");
-			exit(5);
-		}
-		j++;
-	}
-	if (rgb[i])
-	{
-		perror("Error\nNumber of floor/ceil arguments wrong\n");
-		exit(5);
-	}
-}
-
-void		comma_counter(char *str)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == ',')
-			count++;
-		i++;
-	}
-	if (count != 2)
-	{
-		perror("Error\nNumber of floor/ceil arguments wrong\n");
-		exit(5);
-	}
-}
-
-void		check_number(char **args, int *rgb)
+void		alldigit(char **args)
 {
 	int		i;
 	int		j;
@@ -74,6 +33,11 @@ void		check_number(char **args, int *rgb)
 		}
 		j++;
 	}
+}
+
+void		check_number(char **args, int *rgb)
+{
+	alldigit(args);
 	rgb[0] = ft_atoi(args[0]);
 	rgb[1] = ft_atoi(args[1]);
 	rgb[2] = ft_atoi(args[2]);
@@ -115,17 +79,6 @@ void		check_floor(mapstr *raw, mapclean *map)
 	check_number(argsfloor, map->floor);
 	ft_freearray(checkargfloor);
 	ft_freearray(argsfloor);
-}
-
-char		*floor_ceil_spaces(char *rgb)
-{
-	while (rgb[0] == ' ' || rgb[0] == '\t' || \
-	rgb[ft_strlen(rgb) - 1] == ' ' || rgb[ft_strlen(rgb) - 1] == '\t')
-	{
-		rgb = ft_strtrim(rgb, " ");
-		rgb = ft_strtrim(rgb, "\t");
-	}
-	return (rgb);
 }
 
 void		check_floor_ceil(mapstr *raw, mapclean *map)

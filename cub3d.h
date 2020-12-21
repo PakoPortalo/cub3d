@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/20 12:43:35 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/21 13:42:54 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ typedef struct mapconfig
 	int ceil;
 } mapconfig;
 
+typedef	struct	s_data {
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_data;
+
 int		cub3d(int argc, char **argv);
 void	check_ini_errors(int argc, char **argv);
 int		check_extension(char *file, char *ext);
@@ -79,13 +87,26 @@ void	inimap(mapclean *map);
 void	ininum(mapconfig *num);
 int		ft_nbrdigit(int i);
 void	check_resolution(mapstr *raw, mapclean *map);
-void		check_texture(mapstr *raw, mapclean *map);
+void	check_texture(mapstr *raw, mapclean *map);
 int		check_north(mapstr *raw, mapclean *map);
-void		check_floor_ceil(mapstr *raw, mapclean *map);
-void		check_map(mapstr *raw, mapclean *map);
+void	check_floor_ceil(mapstr *raw, mapclean *map);
+void	check_map(mapstr *raw, mapclean *map);
+void	check_number_variables(char **rgb, int i);
+void	comma_counter(char *str);
+char	*floor_ceil_spaces(char *rgb);
+char	*get_map_texture(char *rawtexture, char *maptexture);
+void	get_texture(mapstr *raw, mapclean *map);
+char	*check_spaces(char *texturepath);
+void	number_textures(char **texture);
+void	check_border(mapstr *raw, int y, int x);
+void	get_coordinates(int *x, int *y, mapstr *raw);
+void	check_number_lines(mapstr *raw, mapconfig *num);
+void	get_raws(char **path, int *num, char *line);
+void	map_file_error(void);
 
 
-// int		printer_cub3d(mapclean *map);
+
+int		printer_cub3d(mapclean *map);
 
 
 #endif

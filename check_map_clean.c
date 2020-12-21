@@ -6,20 +6,11 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:52:43 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 12:48:19 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void		get_coordinates(int *x, int *y, mapstr *raw)
-{
-	if (!*x && !*y)
-	{
-		*x = raw->x;
-		*y = raw->y;
-	}
-}
 
 void		check_origin_errors(int i, int x, int y, mapstr *raw)
 {
@@ -62,16 +53,6 @@ void		find_origin(mapstr *raw)
 		raw->x = 0;
 	}
 	check_origin_errors(i, x, y, raw);
-}
-
-void		check_border(mapstr *raw, int y, int x)
-{
-	if (y <= 0 || y >= (raw->rows - 1) || x <= 0 || \
-	x >= ((int)ft_strlen(raw->map[y]) - 1))
-	{
-		perror("Error\nYou need to introduce a correct map\n");
-		exit(6);
-	}
 }
 
 void		flood_fill(mapstr *raw, int y, int x)

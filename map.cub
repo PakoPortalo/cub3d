@@ -1,10 +1,10 @@
-F 130,131,132
+R 300 300
+NO ./wolftex1/greystone.png
 SO ./wolftex1/redbrick.png
 EA ./wolftex1/wood.png
-NO ./wolftex1/greystone.png
 WE ./wolftex1/wood.png
-R 300 300
 S ./wolftex1/barrel.png
+F 130,131,132
 C 150,151,152
 
 11111111111111111

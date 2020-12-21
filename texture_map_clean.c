@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:40:32 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 12:45:01 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,63 +43,6 @@ int			check_texture_extension(mapclean *map)
 	check_extension(map->sprite, ".png") == -1)
 		return (-1);
 	return (1);
-}
-
-void		number_textures(char **texture)
-{
-	if (texture[2])
-	{
-		perror("Error\nNumber of texture arguments wrong\n");
-		exit(4);
-	}
-}
-
-char		*check_spaces(char *texturepath)
-{
-	while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
-	texturepath[ft_strlen(texturepath) - 1] == ' ' || \
-	texturepath[ft_strlen(texturepath) - 1] == '\t')
-	{
-		texturepath = ft_strtrim(texturepath, " ");
-		texturepath = ft_strtrim(texturepath, "\t");
-	}
-	return (texturepath);
-}
-
-void		get_texture(mapstr *raw, mapclean *map)
-{
-	char **texture;
-
-	raw->north = check_spaces(raw->north);
-	texture = ft_split(raw->north, ' ');
-	number_textures(texture);
-	texture[1] = check_spaces(texture[1]);
-	map->north = ft_strdup(texture[1]);
-	ft_freearray(texture);
-	raw->south = check_spaces(raw->south);
-	texture = ft_split(raw->south, ' ');
-	number_textures(texture);
-	texture[1] = check_spaces(texture[1]);
-	map->south = ft_strdup(texture[1]);
-	ft_freearray(texture);
-	raw->west = check_spaces(raw->west);
-	texture = ft_split(raw->west, ' ');
-	number_textures(texture);
-	texture[1] = check_spaces(texture[1]);
-	map->west = ft_strdup(texture[1]);
-	ft_freearray(texture);
-	raw->east = check_spaces(raw->east);
-	texture = ft_split(raw->east, ' ');
-	number_textures(texture);
-	texture[1] = check_spaces(texture[1]);
-	map->east = ft_strdup(texture[1]);
-	ft_freearray(texture);
-	raw->sprite = check_spaces(raw->sprite);
-	texture = ft_split(raw->sprite, ' ');
-	number_textures(texture);
-	texture[1] = check_spaces(texture[1]);
-	map->sprite = ft_strdup(texture[1]);
-	ft_freearray(texture);
 }
 
 void		check_texture(mapstr *raw, mapclean *map)

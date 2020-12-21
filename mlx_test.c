@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_test_true.c                                    :+:      :+:    :+:   */
+/*   mlx_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:22:10 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 10:37:33 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-typedef struct	s_data {
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_data;
-
-void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -28,11 +20,13 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void			print_square(t_data *data, int color)
+void		print_square(t_data *data, int color)
 {
-	int			x = 0;
-	int			y = 0;
+	int		x;
+	int		y;
 
+	x = 0;
+	y = 0;
 	while (x != 100)
 	{
 		y = 0;
@@ -45,7 +39,7 @@ void			print_square(t_data *data, int color)
 	}
 }
 
-int		printer_cub3d(mapclean *map)
+int			printer_cub3d(mapclean *map)
 {
 	void	*mlx;
 	void	*mlx_win;
@@ -57,7 +51,6 @@ int		printer_cub3d(mapclean *map)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	print_square(&img, 0x00FF0000);
-	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return (0);
