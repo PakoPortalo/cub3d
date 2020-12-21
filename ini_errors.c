@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/18 12:05:16 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 09:29:08 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void		check_save_flag(int argc, char **argv)
 			if (argv[2][i] != savecheck[i])
 			{
 				perror("Error\nPlease introduce \"--save\" after map's name");
-				exit (1);
+				exit(1);
 			}
 			i++;
 		}
 	}
 }
 
-int		check_extension(char *file, char *ext)
+int			check_extension(char *file, char *ext)
 {
 	int		i;
 	int		j;
@@ -41,20 +41,19 @@ int		check_extension(char *file, char *ext)
 
 	i = ft_strlen(file) - 1;
 	j = 4;
-	fext = ft_calloc( sizeof(char), 5);
+	fext = ft_calloc(sizeof(char), 5);
 	j--;
-	while( j > 0)
+	while (j > 0)
 	{
 		fext[j] = file[i];
 		i--;
 		j--;
 	}
 	fext[j] = file[i];
-
 	if (ft_strncmp(fext, ext, 4) != 0)
 	{
 		free(fext);
-		return(-1);
+		return (-1);
 	}
 	free(fext);
 	return (1);
@@ -65,7 +64,7 @@ void		check_number_arguments(int argc)
 	if (argc != 2 && argc != 3)
 	{
 		perror("Error\nPlease introduce a correct number of arguments");
-		exit (1);
+		exit(1);
 	}
 }
 
@@ -75,7 +74,7 @@ void		check_ini_errors(int argc, char **argv)
 	if (check_extension(argv[1], ".cub") == -1)
 	{
 		perror("Error\nPlease introduce a valid extension");
-		exit (1);
+		exit(1);
 	}
 	check_save_flag(argc, argv);
 }

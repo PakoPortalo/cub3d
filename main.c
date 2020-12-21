@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:23:46 by fportalo          #+#    #+#             */
-/*   Updated: 2020/11/20 11:11:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 09:23:52 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int			main(int argc, char **argv)
 {
 	cub3d(argc, argv);
-	return(0);
+	return (0);
 }

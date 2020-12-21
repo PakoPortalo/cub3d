@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floorceil_map_clean.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/20 13:10:27 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/21 09:56:58 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		check_number_variables(char **rgb, int i)
 {
-	int j;
+	int		j;
 
 	j = 0;
 	while (j < i)
@@ -22,17 +22,16 @@ void		check_number_variables(char **rgb, int i)
 		if (!rgb[j])
 		{
 			perror("Error\nNumber of floor/ceil arguments wrong\n");
-			exit (5);
+			exit(5);
 		}
 		j++;
 	}
 	if (rgb[i])
 	{
 		perror("Error\nNumber of floor/ceil arguments wrong\n");
-		exit (5);
+		exit(5);
 	}
 }
-
 
 void		comma_counter(char *str)
 {
@@ -50,26 +49,26 @@ void		comma_counter(char *str)
 	if (count != 2)
 	{
 		perror("Error\nNumber of floor/ceil arguments wrong\n");
-		exit (5);
+		exit(5);
 	}
 }
 
 void		check_number(char **args, int *rgb)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	while(args[j])
+	while (args[j])
 	{
 		i = 0;
-		while(args[j][i])
+		while (args[j][i])
 		{
 			if (!ft_isdigit(args[j][i]))
 			{
 				perror("Error\nFloor/Ceil doesn't have valid numbers.\n");
-				exit (3);
+				exit(3);
 			}
 			i++;
 		}
@@ -78,12 +77,11 @@ void		check_number(char **args, int *rgb)
 	rgb[0] = ft_atoi(args[0]);
 	rgb[1] = ft_atoi(args[1]);
 	rgb[2] = ft_atoi(args[2]);
-	//checkarg[1], args[1], args[2]
-	if ( !(rgb[0] >= 0 && rgb[0] <= 255) || !(rgb[1] >= 0 && rgb[1] <= 255) || \
+	if (!(rgb[0] >= 0 && rgb[0] <= 255) || !(rgb[1] >= 0 && rgb[1] <= 255) || \
 	!(rgb[1] >= 0 && rgb[1] <= 255) || !(rgb[2] >= 0 && rgb[2] <= 255))
 	{
 		perror("Error\nFloor and Ceil parametrers must be between 0 and 255\n");
-		exit (5);
+		exit(5);
 	}
 }
 
@@ -102,12 +100,12 @@ void		check_ceil(mapstr *raw, mapclean *map)
 	ft_freearray(checkargceil);
 	ft_freearray(argsceil);
 }
+
 void		check_floor(mapstr *raw, mapclean *map)
 {
 	char	**argsfloor;
 	char	**checkargfloor;
 
-	//First Floor Argument
 	argsfloor = ft_split(raw->floor, ',');
 	check_number_variables(argsfloor, 3);
 	checkargfloor = ft_split(argsfloor[0], ' ');
@@ -127,7 +125,7 @@ char		*floor_ceil_spaces(char *rgb)
 		rgb = ft_strtrim(rgb, " ");
 		rgb = ft_strtrim(rgb, "\t");
 	}
-	return(rgb);
+	return (rgb);
 }
 
 void		check_floor_ceil(mapstr *raw, mapclean *map)
@@ -138,5 +136,4 @@ void		check_floor_ceil(mapstr *raw, mapclean *map)
 	raw->ceil = floor_ceil_spaces(raw->ceil);
 	check_floor(raw, map);
 	check_ceil(raw, map);
-
 }

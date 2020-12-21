@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   map_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 13:06:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/20 12:47:44 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2020/12/21 09:25:54 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_raw(mapstr *raw)
+void		free_raw(mapstr *raw)
 {
-
 	free(raw->res);
 	free(raw->north);
 	free(raw->south);
 	free(raw->west);
-	free(raw->east);	
+	free(raw->east);
 	free(raw->sprite);
 	free(raw->floor);
 	free(raw->ceil);

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/10 09:51:51 by fportalo         ###   ########.fr       */
+/*   Updated: 2020/12/21 09:53:38 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void		iniraw(mapstr *raw)
 	raw->x = 0;
 	raw->y = 0;
 }
-
 
 void		inimap(mapclean *map)
 {
