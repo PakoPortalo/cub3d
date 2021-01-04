@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 13:42:54 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/04 12:14:15 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct mapclean {
 	int		floor[3];
 	int		ceil[3];
 	char	**map;
+	int		x;
+	int		y;
 } mapclean;
 
 typedef struct mapconfig
@@ -69,13 +71,47 @@ typedef struct mapconfig
 	int ceil;
 } mapconfig;
 
-typedef	struct	s_data {
+typedef struct	s_data {
+	void		*ptr;
+	void		*win;
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
 	int			line_length;
+	int			line_height;
 	int			endian;
 }				t_data;
+
+typedef struct	s_raycast {
+	double		posX;
+	double		posY;
+	double		dirX;
+	double		dirY;
+	double		planeX;
+	double		planeY;
+	double		cameraX;
+	double		rayDirX;
+	double		rayDirY;
+	int			mapX;
+	int			mapY;
+	double		sideDistX;
+	double		sideDistY;
+	double		deltaDistX;
+	double		deltaDistY;
+	double		perpWallDist;
+	double		stepX;
+	double		stepY;
+	int			hit;
+	int			side;
+	int			lineHeight;
+	int			drawStart;
+	int			drawEnd;
+	// double		frameTime;
+	// double		moveSpeed;
+	// double		rotSpeed;
+	double		oldDirX;
+	double		oldPlaneX;
+}				t_raycast;
 
 int		cub3d(int argc, char **argv);
 void	check_ini_errors(int argc, char **argv);
@@ -85,6 +121,9 @@ void	save_map_info(mapstr *raw, mapclean *map);
 void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
 void	ininum(mapconfig *num);
+
+void	iniraycast(t_raycast *rc);
+
 int		ft_nbrdigit(int i);
 void	check_resolution(mapstr *raw, mapclean *map);
 void	check_texture(mapstr *raw, mapclean *map);
@@ -99,7 +138,7 @@ void	get_texture(mapstr *raw, mapclean *map);
 char	*check_spaces(char *texturepath);
 void	number_textures(char **texture);
 void	check_border(mapstr *raw, int y, int x);
-void	get_coordinates(int *x, int *y, mapstr *raw);
+void	get_coordinates(int *x, int *y, mapstr *raw, mapclean *map);
 void	check_number_lines(mapstr *raw, mapconfig *num);
 void	get_raws(char **path, int *num, char *line);
 void	map_file_error(void);
@@ -107,6 +146,8 @@ void	map_file_error(void);
 
 
 int		printer_cub3d(mapclean *map);
+int		funky_func_keypress(int keycode);
+int		exit_win(int keycode);
 
 
 #endif

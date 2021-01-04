@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 10:37:33 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/04 10:01:27 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void		print_square(t_data *data, int color)
 
 int			printer_cub3d(mapclean *map)
 {
-	void	*mlx;
-	void	*mlx_win;
 	t_data	img;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, map->w, map->h, "Hello world!");
-	img.img = mlx_new_image(mlx, map->w, map->h);
+	img.ptr = mlx_init();
+	img.win = mlx_new_window(img.ptr, map->w, map->h, "Hello world!");
+	img.img = mlx_new_image(img.ptr, map->w, map->h);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	print_square(&img, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	mlx_hook(img.win, 2, 1L<<0, funky_func_keypress, &img);
+	mlx_hook(img.win, 17, 1L<<17, exit_win, &img);
+	mlx_put_image_to_window(img.ptr, img.win, img.img, 0, 0);
+	mlx_loop(img.ptr);
 	return (0);
 }

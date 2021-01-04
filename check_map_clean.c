@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 12:48:19 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/04 10:38:49 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		check_origin_errors(int i, int x, int y, mapstr *raw)
 	raw->y = y;
 }
 
-void		find_origin(mapstr *raw)
+void		find_origin(mapstr *raw, mapclean *map)
 {
 	int		i;
 	int		x;
@@ -44,7 +44,7 @@ void		find_origin(mapstr *raw)
 		{
 			if ((ft_strchr("NSWE", raw->map[raw->y][raw->x])))
 			{
-				get_coordinates(&x, &y, raw);
+				get_coordinates(&x, &y, raw, map);
 				i++;
 			}
 			raw->x++;
@@ -96,6 +96,6 @@ void		check_map(mapstr *raw, mapclean *map)
 		exit(6);
 	}
 	map->map = raw->map;
-	find_origin(raw);
+	find_origin(raw, map);
 	flood_fill(raw, raw->y, raw->x);
 }

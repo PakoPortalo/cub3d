@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:53:38 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/04 12:14:07 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void		inimap(mapclean *map)
 	map->ceil[1] = -1;
 	map->ceil[2] = -1;
 	map->map = NULL;
+	map->x = 0;
+	map->y = 0;
 }
 
 void		ininum(mapconfig *num)
@@ -57,4 +59,36 @@ void		ininum(mapconfig *num)
 	num->sprite = 0;
 	num->floor = 0;
 	num->ceil = 0;
+}
+
+void		iniraycast(t_raycast *rc)
+{
+	rc->posX = 0;
+	rc->posY = 0;
+	rc->dirX = -1;
+	rc->dirY = 0;
+	rc->planeX = 0;
+	rc->planeY = 0.66;
+	rc->cameraX = 0;
+	rc->rayDirX = 0;
+	rc->rayDirY = 0;
+	rc->mapX = 0;
+	rc->mapY = 0;
+	rc->sideDistX = 0;
+	rc->sideDistY = 0;
+	rc->deltaDistX = 0;
+	rc->deltaDistY = 0;
+	rc->perpWallDist = 0;
+	rc->stepX = 0;
+	rc->stepY = 0;
+	rc->hit = 0;
+	rc->side = 0;
+	rc->lineHeight = 0;
+	rc->drawStart = 0;
+	rc->drawEnd = 0;
+	// rc->frameTime = 0;
+	// rc->moveSpeed = 0;
+	// rc->rotSpeed = 0;
+	rc->oldDirX = 0;
+	rc->oldPlaneX = 0;
 }
