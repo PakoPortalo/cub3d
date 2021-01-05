@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/04 12:14:15 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/05 13:38:55 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 
 //para utilizar close
 # include <unistd.h>
+
+//para utilizar maths
+# include <math.h>
 
 //po eso'
 # include "gnl/get_next_line.h"
@@ -80,6 +83,7 @@ typedef struct	s_data {
 	int			line_length;
 	int			line_height;
 	int			endian;
+	mapclean	map;
 }				t_data;
 
 typedef struct	s_raycast {
@@ -123,6 +127,8 @@ void	inimap(mapclean *map);
 void	ininum(mapconfig *num);
 
 void	iniraycast(t_raycast *rc);
+void	map_to_img(t_data *img, mapclean *map);
+
 
 int		ft_nbrdigit(int i);
 void	check_resolution(mapstr *raw, mapclean *map);
@@ -144,10 +150,15 @@ void	get_raws(char **path, int *num, char *line);
 void	map_file_error(void);
 
 
-
+int		raycast_start(t_data *img);
+int		raycast_maths(t_data *img);
 int		printer_cub3d(mapclean *map);
 int		funky_func_keypress(int keycode);
 int		exit_win(int keycode);
+
+void		print_square(t_data *data, int color);
+
+
 
 
 #endif

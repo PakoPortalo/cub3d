@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/04 12:14:07 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/05 13:29:25 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,24 @@ void		iniraycast(t_raycast *rc)
 	// rc->rotSpeed = 0;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
+}
+
+void	map_to_img(t_data *img, mapclean *map)
+{
+	img->map.w = map->w;
+	img->map.h = map->h;
+	img->map.north = map->north;
+	img->map.south = map->south;
+	img->map.west = map->west;
+	img->map.east = map->east;
+	img->map.sprite = map->sprite;
+	img->map.floor[0] = map->floor[0];
+	img->map.floor[1] = map->floor[1];
+	img->map.floor[2] = map->floor[2];
+	img->map.ceil[0] = map->ceil[0];
+	img->map.ceil[1] = map->ceil[1];
+	img->map.ceil[2] = map->ceil[2];
+	img->map.map = map->map;
+	img->map.x = map->x;
+	img->map.y = map->y;
 }

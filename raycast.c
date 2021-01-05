@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/04 12:46:57 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/05 13:39:16 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 
 */
 
-int		raycast(mapclean *map, t_data img)
+
+int		raycast_maths(t_data *img)
 {
 	t_raycast rc;
 	int i;
@@ -39,7 +40,7 @@ int		raycast(mapclean *map, t_data img)
 	i = 1;
 	x = 0;
 	y = 0;
-	a = ft_strlen(ft_atoi(map->map[y]));
+	a = 400;
 	iniraycast(&rc);
 	while(i)
 	{
@@ -53,7 +54,7 @@ int		raycast(mapclean *map, t_data img)
 			rc.mapX = (int)rc.posX;
 			rc.mapY = (int)rc.posY;
 		
-			rc.deltaDistX =  sqrt(1 + (rc.rayDirY * rc.rayDirY) / (rc.rayDirX * rc.rayDirX));
+			rc.deltaDistX = sqrt(1 + (rc.rayDirY * rc.rayDirY) / (rc.rayDirX * rc.rayDirX));
 			rc.deltaDistY = sqrt(1 + (rc.rayDirX * rc.rayDirX) / (rc.rayDirY * rc.rayDirY));
 		
 
@@ -96,8 +97,9 @@ int		raycast(mapclean *map, t_data img)
 				rc.side = 1;
 			}
 			//Aquí determinamos la colisión contra una pared o no. Si mi mapa no tiene un 0 dentro, entonces tiene pared
-			if(map->map[rc.mapX][rc.mapY] > 0)
+			if(img->map.map[rc.mapX][rc.mapY] > 0)
 				rc.hit = 1;
+			x++;
 		}
 		//Calcula la distancia proyectada en la cámara
 		if(rc.side == 0)
@@ -171,6 +173,6 @@ int		raycast(mapclean *map, t_data img)
 	// 	double oldPlaneX = planeX;
 	// 	planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
 	// 	planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-	// }
+	}
 	return(0);
 }
