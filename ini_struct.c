@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/05 13:29:25 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/07 12:51:20 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		ininum(mapconfig *num)
 	num->ceil = 0;
 }
 
-void		iniraycast(t_raycast *rc)
+void		iniraycast(t_raycast *rc, t_data *img)
 {
 	rc->posX = 0;
 	rc->posY = 0;
@@ -91,6 +91,7 @@ void		iniraycast(t_raycast *rc)
 	// rc->rotSpeed = 0;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
+	img_to_rc(rc, img);
 }
 
 void	map_to_img(t_data *img, mapclean *map)
@@ -111,4 +112,17 @@ void	map_to_img(t_data *img, mapclean *map)
 	img->map.map = map->map;
 	img->map.x = map->x;
 	img->map.y = map->y;
+}
+
+void	img_to_rc(t_raycast *rc, t_data *img)
+{
+	rc->img.ptr = img->ptr;
+	rc->img.win = img->win;
+	rc->img.img = img->img;
+	rc->img.addr = img->addr;
+	rc->img.bits_per_pixel = img->bits_per_pixel;
+	rc->img.line_length = img->line_length;
+	rc->img.line_height = img->line_height;
+	rc->img.endian = img->endian;
+	map_to_img(&rc->img, &img->map);
 }

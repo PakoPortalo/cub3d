@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/05 13:38:55 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/07 12:51:54 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct	s_raycast {
 	// double		rotSpeed;
 	double		oldDirX;
 	double		oldPlaneX;
+	t_data		img;
 }				t_raycast;
 
 int		cub3d(int argc, char **argv);
@@ -126,8 +127,9 @@ void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
 void	ininum(mapconfig *num);
 
-void	iniraycast(t_raycast *rc);
+void	iniraycast(t_raycast *rc, t_data *img);
 void	map_to_img(t_data *img, mapclean *map);
+void	img_to_rc(t_raycast *rc, t_data *img);
 
 
 int		ft_nbrdigit(int i);
@@ -150,7 +152,7 @@ void	get_raws(char **path, int *num, char *line);
 void	map_file_error(void);
 
 
-int		raycast_start(t_data *img);
+int		raycast_start(t_data *img, t_raycast *rc);
 int		raycast_maths(t_data *img);
 int		printer_cub3d(mapclean *map);
 int		funky_func_keypress(int keycode);
