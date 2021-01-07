@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/07 12:51:20 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/07 13:44:30 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		ininum(mapconfig *num)
 	num->ceil = 0;
 }
 
-void		iniraycast(t_raycast *rc, t_data *img)
+void		iniraycast(t_raycast *rc)
 {
 	rc->posX = 0;
 	rc->posY = 0;
@@ -91,27 +91,26 @@ void		iniraycast(t_raycast *rc, t_data *img)
 	// rc->rotSpeed = 0;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
-	img_to_rc(rc, img);
 }
 
-void	map_to_img(t_data *img, mapclean *map)
+void	map_to_rc(t_raycast *rc, mapclean *map)
 {
-	img->map.w = map->w;
-	img->map.h = map->h;
-	img->map.north = map->north;
-	img->map.south = map->south;
-	img->map.west = map->west;
-	img->map.east = map->east;
-	img->map.sprite = map->sprite;
-	img->map.floor[0] = map->floor[0];
-	img->map.floor[1] = map->floor[1];
-	img->map.floor[2] = map->floor[2];
-	img->map.ceil[0] = map->ceil[0];
-	img->map.ceil[1] = map->ceil[1];
-	img->map.ceil[2] = map->ceil[2];
-	img->map.map = map->map;
-	img->map.x = map->x;
-	img->map.y = map->y;
+	rc->map.w = map->w;
+	rc->map.h = map->h;
+	rc->map.north = map->north;
+	rc->map.south = map->south;
+	rc->map.west = map->west;
+	rc->map.east = map->east;
+	rc->map.sprite = map->sprite;
+	rc->map.floor[0] = map->floor[0];
+	rc->map.floor[1] = map->floor[1];
+	rc->map.floor[2] = map->floor[2];
+	rc->map.ceil[0] = map->ceil[0];
+	rc->map.ceil[1] = map->ceil[1];
+	rc->map.ceil[2] = map->ceil[2];
+	rc->map.map = map->map;
+	rc->map.x = map->x;
+	rc->map.y = map->y;
 }
 
 void	img_to_rc(t_raycast *rc, t_data *img)
@@ -124,5 +123,4 @@ void	img_to_rc(t_raycast *rc, t_data *img)
 	rc->img.line_length = img->line_length;
 	rc->img.line_height = img->line_height;
 	rc->img.endian = img->endian;
-	map_to_img(&rc->img, &img->map);
 }

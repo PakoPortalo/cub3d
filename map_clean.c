@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 13:06:44 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:25:54 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/07 13:48:49 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ void		free_raw(mapstr *raw)
 	free(raw->sprite);
 	free(raw->floor);
 	free(raw->ceil);
-	ft_freearray(raw->map);
+	// ft_freearray(raw->map);
 }
 
 void		save_map_info(mapstr *raw, mapclean *map)
 {
-	inimap(map);
 	check_resolution(raw, map);
 	check_texture(raw, map);
 	check_floor_ceil(raw, map);

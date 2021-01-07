@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:04:24 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/07 10:34:52 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/07 13:45:58 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int				cub3d(int argc, char **argv)
 	mapstr		raw;
 	mapclean	map;
 
+	inimap(&map);
 	check_ini_errors(argc, argv);
 	raw_info(argv[1], &raw);
 	map.map = raw.map;
