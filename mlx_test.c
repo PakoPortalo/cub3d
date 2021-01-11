@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/07 14:02:42 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/11 10:53:20 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ int			printer_cub3d(mapclean *map)
 	// rc.map.map = map.map;
 	rc.map = *map;
 	rc.img = img;
+
 	iniraycast(&rc);
 	raycast_start(&rc);
 	mlx_hook(rc.img.win, 2, 1L<<0, funky_func_keypress, &rc.img);
-	mlx_hook(rc.img.win, 17, 1L<<17, exit_win, &rc.img);
+	// mlx_hook(rc.img.win, 17, 1L<<17, exit_win, &rc.img);
 	mlx_loop_hook(img.ptr, raycast_maths, &rc);
 	mlx_loop(img.ptr);
 	return (0);

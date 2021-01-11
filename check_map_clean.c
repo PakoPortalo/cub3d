@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_clean.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/04 10:38:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/11 10:51:55 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void		check_map(mapstr *raw, mapclean *map)
 		perror("Error\nYou need to introduce a correct map");
 		exit(6);
 	}
-	map->map = raw->map;
+	// map->map = raw->map;
 	find_origin(raw, map);
 	flood_fill(raw, raw->y, raw->x);
 }

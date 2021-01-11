@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/07 13:46:33 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/11 10:53:34 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int		raycast_start(t_raycast *rc);
 int		raycast_maths(t_raycast *rc);
 int		printer_cub3d(mapclean *map);
 int		funky_func_keypress(int keycode);
-int		exit_win(int keycode);
+// int		exit_win(int keycode);
 
 void		print_square(t_data *data, int color);
 

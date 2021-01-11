@@ -1,4 +1,7 @@
 destroyer/
 textures/
 wolftex1/
+mlx_mac
+mlx_linux
+.vscode
 .gitignore

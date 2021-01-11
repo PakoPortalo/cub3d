@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 09:59:41 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/04 10:01:17 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/10 19:37:02 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int				funky_func_keypress(int keycode)
 	return(1);
 }
 
-int		exit_win(int keycode)
-{
-	keycode = 0;
-	printf("Chao Pescao'\n");
-	if (1L<<17)
-		exit(0);
-	return(0);
-}
+// int		exit_win(int keycode)
+// {
+// 	keycode = 0;
+// 	printf("Chao Pescao'\n");
+// 	if (1L<<17)
+// 		exit(0);
+// 	return(0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 13:06:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/07 13:48:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/11 10:37:25 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void		save_map_info(mapstr *raw, mapclean *map)
 	check_texture(raw, map);
 	check_floor_ceil(raw, map);
 	check_map(raw, map);
-	map->map = raw->map;
+	// map->map = raw->map;
 	free_raw(raw);
 }

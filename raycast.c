@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/07 13:59:35 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/01/11 13:01:07 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int		verLine(t_raycast *rc, int x)
 	while (y < rc->map.h)
 	{
 		if(y < rc->drawStart)
-			my_mlx_pixel_put(&rc->img, x, y, 0x00FF0000); // rojo
-		if (y > rc->drawStart && y < rc->drawEnd)
-			my_mlx_pixel_put(&rc->img, x, y, 0xFF5733); // naranja
-		if (y > rc->drawEnd)
-			my_mlx_pixel_put(&rc->img, x, y, 0x33FF5E ); //verde 
+			my_mlx_pixel_put(&rc->img, x, y, 0x111d5e); // azul
+		else if (y > rc->drawStart && y < rc->drawEnd)
+			my_mlx_pixel_put(&rc->img, x, y, 0xf37121); // naranja
+		else if (y > rc->drawEnd)
+			my_mlx_pixel_put(&rc->img, x, y, 0xc0e218 ); //verde 
 		y++;
 	}
 	return (0);
@@ -60,7 +60,6 @@ int		raycast_maths(t_raycast *rc)
 	rc->img.img = mlx_new_image(rc->img.ptr, rc->map.h, rc->map.w);
 	rc->img.addr = mlx_get_data_addr(rc->img.img, &rc->img.bits_per_pixel, &rc->img.line_length,
 								&rc->img.endian);
-
 	while(x < rc->map.w) // Mientras que la X sea menor que el Width de la resolución
 	{
 		//Con esto calculamos la posición y dirección del rayo
@@ -70,7 +69,10 @@ int		raycast_maths(t_raycast *rc)
 	
 		rc->mapX = (int)rc->posX;
 		rc->mapY = (int)rc->posY;
-	
+		
+		rc->hit = 0;
+
+
 		rc->deltaDistX = (rc->rayDirY == 0) ? 0 : ((rc->rayDirX == 0) ? 1 : fabs(1 / rc->rayDirX));
 		rc->deltaDistY = (rc->rayDirX == 0) ? 0 : ((rc->rayDirY == 0) ? 1 : fabs(1 / rc->rayDirY));
 	
@@ -101,58 +103,58 @@ int		raycast_maths(t_raycast *rc)
 		//En el caso de que hit = 0, es decir, que no está chocando contra una pared
 		while (rc->hit == 0)
 		{
-		if(rc->sideDistX < rc->sideDistY)
-		{
-			rc->sideDistX += rc->deltaDistX;
-			rc->mapX += rc->stepX;
-			rc->side = 0;
-		}
-		else
-		{
-			rc->sideDistY += rc->deltaDistY;
-			rc->mapY += rc->stepY;
-			rc->side = 1;
-		}
+			if(rc->sideDistX < rc->sideDistY)
+			{
+				rc->sideDistX += rc->deltaDistX;
+				rc->mapX += rc->stepX;
+				rc->side = 0;
+			}
+			else
+			{
+				rc->sideDistY += rc->deltaDistY;
+				rc->mapY += rc->stepY;
+				rc->side = 1;
+			}
 		//Aquí determinamos la colisión contra una pared o no. Si mi mapa no tiene un 0 dentro, entonces tiene pared
-		if(rc->map.map[rc->mapX][rc->mapY] > 0)
-			rc->hit = 1;
+			if(rc->map.map[rc->mapY][rc->mapX] == '1')
+				rc->hit = 1;
+		}
+		
+		//Calcula la distancia proyectada en la cámara
+		if(rc->side == 0) // si side == 0 está mirando arriba o abajo. Si side == 1 está mirando a izq o dcha
+			rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
+		else
+			rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
+		
+		//Calculas la altura de la linea a dibujar en la pantalla
+		rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
+		
+		//Calculas el mayor y el menor pixel para rellenar del mismo color en la línea en la que te encuentras 
+		rc->drawStart = -rc->lineHeight / 2 + rc->map.h / 2;
+		if(rc->drawStart < 0)
+			rc->drawStart = 0;
+		rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
+		if(rc->drawEnd >= rc->map.h)
+			rc->drawEnd = rc->map.h - 1;
+
+		// Esto no sé muy bien wtf nosequé. Lo que tengo seguro es que es para elegir los colores
+
+		//choose wall color
+		// ColorRGB color;
+		// switch(worldMap[mapX][mapY])
+		// {
+		// case 1:  color = RGB_Red;    break; //red
+		// case 2:  color = RGB_Green;  break; //green
+		// case 3:  color = RGB_Blue;   break; //blue
+		// case 4:  color = RGB_White;  break; //white
+		// default: color = RGB_Yellow; break; //yellow
+		// }
+
+		//Esto tampoco sé muy bien para qué es, se supone que sirve para dibujar la linea
+		//pero utiliza una función externa que a saber cual es
+		//      verLine(x, drawStart, drawEnd, color);
+		verLine(rc, x);
 		x++;
-	}
-	//Calcula la distancia proyectada en la cámara
-	if(rc->side == 0) // si side == 0 está mirando arriba o abajo. Si side == 1 está mirando a izq o dcha
-		rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
-	else
-		rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
-	
-	//lo del h = 10 me lo he inventado porque en el tuto pone una 'h' que no tengo ni idea de donde declara
-	//Calculas la altura de la linea a dibujar en la pantalla
-	rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
-	rc->drawStart = -(rc->lineHeight / 2) + (rc->map.h / 2);
-	
-	//Calculas el mayor y el menor pixel para rellenar del mismo color en la línea en la que te encuentras 
-	if(rc->drawStart < 0)
-		rc->drawStart = 0;
-	if(rc->drawEnd >= rc->map.h)
-		rc->drawEnd = rc->map.h - 1;
-	
-	// Esto no sé muy bien wtf nosequé. Lo que tengo seguro es que es para elegir los colores
-
-	//choose wall color
-	// ColorRGB color;
-	// switch(worldMap[mapX][mapY])
-	// {
-	// case 1:  color = RGB_Red;    break; //red
-	// case 2:  color = RGB_Green;  break; //green
-	// case 3:  color = RGB_Blue;   break; //blue
-	// case 4:  color = RGB_White;  break; //white
-	// default: color = RGB_Yellow; break; //yellow
-	// }
-
-	//Esto tampoco sé muy bien para qué es, se supone que sirve para dibujar la linea
-	//pero utiliza una función externa que a saber cual es
-	//      verLine(x, drawStart, drawEnd, color);
-	verLine(rc, x);
-	x++;
 	}
 		//Ahora habla de cosas relacionadas con los fps que la verdad si que me gustaría
 		//implementar en el código sobre todo para el debuggeo, pero lo voy a dejar por ahora
@@ -195,6 +197,5 @@ int		raycast_maths(t_raycast *rc)
 
 	mlx_put_image_to_window(rc->img.ptr, rc->img.win, rc->img.img, 0, 0);
 	mlx_destroy_image(rc->img.ptr, rc->img.img);
-	x++;
 	return(0);
 }
