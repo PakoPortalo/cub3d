@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/11 13:01:07 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/12 12:41:10 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,17 @@ int		verLine(t_raycast *rc, int x)
 	y = 0;
 	while (y < rc->map.h)
 	{
-		if(y < rc->drawStart)
-			my_mlx_pixel_put(&rc->img, x, y, 0x111d5e); // azul
+		if(y <= rc->drawStart)
+			my_mlx_pixel_put(&rc->img, x, y, 0x111d5e); // techo azul 
 		else if (y > rc->drawStart && y < rc->drawEnd)
-			my_mlx_pixel_put(&rc->img, x, y, 0xf37121); // naranja
-		else if (y > rc->drawEnd)
-			my_mlx_pixel_put(&rc->img, x, y, 0xc0e218 ); //verde 
+		{
+			if (rc->side == 0)
+				my_mlx_pixel_put(&rc->img, x, y, 0xf37121); // muro naranja 
+			else if (rc->side == 1)
+				my_mlx_pixel_put(&rc->img, x, y, 0xC70039); // muro naranja oscuro
+		}
+		else if (y >= rc->drawEnd)
+			my_mlx_pixel_put(&rc->img, x, y, 0xc0e218 ); // suelo verde 
 		y++;
 	}
 	return (0);
@@ -62,15 +67,19 @@ int		raycast_maths(t_raycast *rc)
 								&rc->img.endian);
 	while(x < rc->map.w) // Mientras que la X sea menor que el Width de la resolución
 	{
+		rc->hit = 0;
+
 		//Con esto calculamos la posición y dirección del rayo
 		rc->cameraX = 2 * x / rc->map.w - 1;
+
 		rc->rayDirX = rc->dirX + rc->planeX * rc->cameraX;
+		
 		rc->rayDirY = rc->dirY + rc->planeY * rc->cameraX;
 	
 		rc->mapX = (int)rc->posX;
 		rc->mapY = (int)rc->posY;
 		
-		rc->hit = 0;
+		
 
 
 		rc->deltaDistX = (rc->rayDirY == 0) ? 0 : ((rc->rayDirX == 0) ? 1 : fabs(1 / rc->rayDirX));
@@ -123,7 +132,7 @@ int		raycast_maths(t_raycast *rc)
 		//Calcula la distancia proyectada en la cámara
 		if(rc->side == 0) // si side == 0 está mirando arriba o abajo. Si side == 1 está mirando a izq o dcha
 			rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
-		else
+		else if (rc->side == 1)
 			rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
 		
 		//Calculas la altura de la linea a dibujar en la pantalla
@@ -137,23 +146,9 @@ int		raycast_maths(t_raycast *rc)
 		if(rc->drawEnd >= rc->map.h)
 			rc->drawEnd = rc->map.h - 1;
 
-		// Esto no sé muy bien wtf nosequé. Lo que tengo seguro es que es para elegir los colores
 
-		//choose wall color
-		// ColorRGB color;
-		// switch(worldMap[mapX][mapY])
-		// {
-		// case 1:  color = RGB_Red;    break; //red
-		// case 2:  color = RGB_Green;  break; //green
-		// case 3:  color = RGB_Blue;   break; //blue
-		// case 4:  color = RGB_White;  break; //white
-		// default: color = RGB_Yellow; break; //yellow
-		// }
-
-		//Esto tampoco sé muy bien para qué es, se supone que sirve para dibujar la linea
-		//pero utiliza una función externa que a saber cual es
-		//      verLine(x, drawStart, drawEnd, color);
-		verLine(rc, x);
+		// Dibuja muros con la información de draw start y draw end
+ 		verLine(rc, x);
 		x++;
 	}
 		//Ahora habla de cosas relacionadas con los fps que la verdad si que me gustaría
@@ -162,39 +157,47 @@ int		raycast_maths(t_raycast *rc)
 	// Lo que viene ahora no es muy difícil, es lo de los hooks y las teclas, pero habría que plantearlo 
 	// Diferente. Creo que esto no lo voy a hacer hasta que no se me vea el mapa en pantalla
 	
-	// if(keyDown(SDLK_UP))
-	// {
-	// 	if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-	// 	if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-	// }
-	// //move backwards if no wall behind you
-	// if(keyDown(SDLK_DOWN))
-	// {
-	// 	if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-	// 	if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-	// }
-	// //rotate to the right
-	// if(keyDown(SDLK_RIGHT))
-	// {
-	// 	//both camera direction and camera plane must be rotated
-	// 	double oldDirX = dirX;
-	// 	dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-	// 	dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-	// 	double oldPlaneX = planeX;
-	// 	planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-	// 	planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-	// }
-	// //rotate to the left
-	// if(keyDown(SDLK_LEFT))
-	// {
-	// 	//both camera direction and camera plane must be rotated
-	// 	double oldDirX = dirX;
-	// 	dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-	// 	dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-	// 	double oldPlaneX = planeX;
-	// 	planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-	// 	planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+		//move forward if no wall in front of you
 
+	if(rc->keys.up == 1)
+	{
+		if(rc->map.map[(int)(rc->posX + rc->dirY * rc->moveSpeed)][(int)(rc->posY)] == '3')
+			rc->posX += rc->dirX;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + rc->dirY * rc->moveSpeed)] == '3')
+			rc->posY += rc->dirY;
+	}
+	//move backwards if no wall behind you
+	if(rc->keys.down == 1)
+	{
+		if(rc->map.map[(int)(rc->posX - rc->dirY * rc->moveSpeed)][(int)(rc->posY)] == '3')
+			rc->posX -= rc->dirX;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - rc->dirY * rc->moveSpeed)] == '3')
+			rc->posY -= rc->dirY;
+	}
+	//rotate to the right
+	if(rc->keys.right == 1)
+	{
+		//both camera direction and camera plane must be rotated
+		rc->oldDirX = rc->dirX;
+		rc->dirX = rc->dirX * cos(-rc->rotSpeed) - rc->dirY * sin(-rc->rotSpeed);
+		rc->dirY = rc->oldDirX * sin(-rc->rotSpeed) + rc->dirY * cos(-rc->rotSpeed);
+		
+		rc->oldPlaneX = rc->planeX;
+		rc->planeX = rc->planeX * cos(-rc->rotSpeed) - rc->planeY * sin(-rc->rotSpeed);
+		rc->planeY = rc->oldPlaneX * sin(-rc->rotSpeed) + rc->planeY * cos(-rc->rotSpeed);
+	}
+	//rotate to the left
+	if(rc->keys.left == 1)
+	{
+		//both camera direction and camera plane must be rotated
+		rc->oldDirX = rc->dirX;
+		rc->dirX = rc->dirX * cos(rc->rotSpeed) - rc->dirY * sin(rc->rotSpeed);
+		rc->dirY = rc->oldDirX * sin(rc->rotSpeed) + rc->dirY * cos(rc->rotSpeed);
+		rc->oldPlaneX = rc->planeX;
+		rc->planeX = rc->planeX * cos(rc->rotSpeed) - rc->planeY * sin(rc->rotSpeed);
+		rc->planeY = rc->oldPlaneX * sin(rc->rotSpeed) + rc->planeY * cos(rc->rotSpeed);
+
+	}
 	mlx_put_image_to_window(rc->img.ptr, rc->img.win, rc->img.img, 0, 0);
 	mlx_destroy_image(rc->img.ptr, rc->img.img);
 	return(0);

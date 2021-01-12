@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/11 13:03:07 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/12 12:31:41 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		inimap(mapclean *map)
 	map->map = NULL;
 	map->x = 0;
 	map->y = 0;
+	map->orientation = '0';
 }
 
 void		ininum(mapconfig *num)
@@ -65,7 +66,7 @@ void		iniraycast(t_raycast *rc)
 {
 	rc->posX = 0;
 	rc->posY = 0;
-	rc->dirX = -1;
+	rc->dirX = 0;
 	rc->dirY = 0;
 	rc->planeX = 0;
 	rc->planeY = 0.66;
@@ -87,40 +88,17 @@ void		iniraycast(t_raycast *rc)
 	rc->drawStart = 0;
 	rc->drawEnd = 0;
 	// rc->frameTime = 0;
-	// rc->moveSpeed = 0;
-	// rc->rotSpeed = 0;
+	rc->moveSpeed = 1;
+	rc->rotSpeed = 0.05;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
+
 }
 
-void	map_to_rc(t_raycast *rc, mapclean *map)
+void	inihandlekeys(t_handlekeys *keys)
 {
-	rc->map.w = map->w;
-	rc->map.h = map->h;
-	rc->map.north = map->north;
-	rc->map.south = map->south;
-	rc->map.west = map->west;
-	rc->map.east = map->east;
-	rc->map.sprite = map->sprite;
-	rc->map.floor[0] = map->floor[0];
-	rc->map.floor[1] = map->floor[1];
-	rc->map.floor[2] = map->floor[2];
-	rc->map.ceil[0] = map->ceil[0];
-	rc->map.ceil[1] = map->ceil[1];
-	rc->map.ceil[2] = map->ceil[2];
-	rc->map.map = map->map;
-	rc->map.x = map->x;
-	rc->map.y = map->y;
-}
-
-void	img_to_rc(t_raycast *rc, t_data *img)
-{
-	rc->img.ptr = img->ptr;
-	rc->img.win = img->win;
-	rc->img.img = img->img;
-	rc->img.addr = img->addr;
-	rc->img.bits_per_pixel = img->bits_per_pixel;
-	rc->img.line_length = img->line_length;
-	rc->img.line_height = img->line_height;
-	rc->img.endian = img->endian;
+	keys->left = 0;
+	keys->up = 0;
+	keys->right = 0;
+	keys->down = 0;
 }

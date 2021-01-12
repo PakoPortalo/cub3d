@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/11 10:51:55 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/12 10:04:30 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		find_origin(mapstr *raw, mapclean *map)
 		{
 			if ((ft_strchr("NSWE", raw->map[raw->y][raw->x])))
 			{
+				map->orientation = raw->map[raw->y][raw->x];
 				get_coordinates(&x, &y, raw, map);
 				i++;
 			}

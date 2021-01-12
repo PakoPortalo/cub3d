@@ -6,7 +6,7 @@
 #    By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2021/01/11 10:14:10 by tamagotchi       ###   ########.fr        #
+#    Updated: 2021/01/12 11:41:07 by tamagotchi       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ FLAGS = -Werror -Wextra -Wall -I.
 
 FILES = cub3D.c ini_errors.c ini_struct.c map_clean.c resolution_map_clean.c \
 		floorceil_map_clean.c check_map_clean.c texture_map_clean.c raw_map.c main.c \
-		map_clean_utils1.c map_clean_utils2.c raw_map_utils.c mlx_test.c  raycast.c
+		map_clean_utils1.c map_clean_utils2.c raw_map_utils.c paint.c  raycast.c
 
 FILESMAC = hooks_mac.c
 
@@ -43,11 +43,11 @@ endif
 
 ifeq ($(UNAME), Darwin)
 all:
-	@$(CC)  $(FLAGS) -g $(FILES) $(FILESMAC) $(GNL) $(LIBFT) $(MLX) $(NAME) $(INI)
+	@$(CC)  $(FLAGS) -g $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
 endif
 ifeq ($(UNAME), Linux)
 all:
-	@$(CC)  $(FLAGS) -g $(FILES) $(FILESLINUX) $(GNL) $(LIBFT) $(MLX) $(NAME) $(INI)
+	@$(CC)  $(FLAGS) -g $(FILES) $(FILESLINUX) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
 endif
 
 

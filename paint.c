@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_test.c                                         :+:      :+:    :+:   */
+/*   paint.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/11 10:53:20 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/12 11:16:49 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,26 @@ int		raycast_start(t_raycast *rc)
 	rc->posX = rc->map.x;
 	rc->posY = rc->map.y;
 	
-	rc->dirX = -1;
-	rc->dirY = 0;
+	if (rc->map.orientation == 'N')
+	{
+		rc->dirX = 0;
+		rc->dirY = -1;
+	}
+	if (rc->map.orientation == 'S')
+	{
+		rc->dirX = 0;
+		rc->dirY = 1;
+	}
+		if (rc->map.orientation == 'W')
+	{
+		rc->dirX = -1;
+		rc->dirY = 0;
+	}
+	if (rc->map.orientation == 'E')
+	{
+		rc->dirX = 1;
+		rc->dirY = 0;
+	}
 	rc->planeX = 0;
 	rc->planeY = 0.66;
 
@@ -64,7 +82,8 @@ int			printer_cub3d(mapclean *map)
 {
 	t_data	img;
 	t_raycast rc;
-
+	t_handlekeys keys;
+	
 	img.ptr = mlx_init();
 	img.win = mlx_new_window(img.ptr, map->w, map->h, "Hello world!");
 
@@ -73,10 +92,13 @@ int			printer_cub3d(mapclean *map)
 	// rc.map.map = map.map;
 	rc.map = *map;
 	rc.img = img;
-
+	
+	inihandlekeys(&keys);
+	rc.keys = keys;
 	iniraycast(&rc);
 	raycast_start(&rc);
-	mlx_hook(rc.img.win, 2, 1L<<0, funky_func_keypress, &rc.img);
+	mlx_hook(rc.img.win, 2, 1L << 0, funky_func_keypress, &rc);
+	mlx_hook(rc.img.win, 3, 1L << 1, funky_func_keyrelease, &rc);
 	// mlx_hook(rc.img.win, 17, 1L<<17, exit_win, &rc.img);
 	mlx_loop_hook(img.ptr, raycast_maths, &rc);
 	mlx_loop(img.ptr);
