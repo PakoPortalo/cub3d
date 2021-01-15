@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/12 11:33:49 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/15 11:40:01 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct s_handlekeys {
 	int	up;
 	int	right;
 	int	down;
+	int rotLeft;
+	int rotRight;
 }		t_handlekeys;
 
 typedef struct	s_raycast {
@@ -168,7 +170,7 @@ int		raycast_maths(t_raycast *rc);
 int		printer_cub3d(mapclean *map);
 int		funky_func_keypress(int keycode, t_raycast *rc);
 int		funky_func_keyrelease(int keycode, t_raycast *rc);
-// int		exit_win(int keycode);
+int		exit_win(int keycode);
 
 void		print_square(t_data *data, int color);
 

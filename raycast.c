@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/12 12:41:10 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/15 11:44:18 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		verLine(t_raycast *rc, int x)
 	int		y;
 
 	y = 0;
-	while (y < rc->map.h)
+	while (y < rc->map.w)
 	{
 		if(y <= rc->drawStart)
 			my_mlx_pixel_put(&rc->img, x, y, 0x111d5e); // techo azul 
@@ -60,32 +60,34 @@ int		verLine(t_raycast *rc, int x)
 int		raycast_maths(t_raycast *rc)
 {
 	int x;
-	
+	double moveX;
+	double moveY;
+
+
 	x = 0;
 	rc->img.img = mlx_new_image(rc->img.ptr, rc->map.h, rc->map.w);
 	rc->img.addr = mlx_get_data_addr(rc->img.img, &rc->img.bits_per_pixel, &rc->img.line_length,
 								&rc->img.endian);
 	while(x < rc->map.w) // Mientras que la X sea menor que el Width de la resolución
 	{
-		rc->hit = 0;
 
 		//Con esto calculamos la posición y dirección del rayo
-		rc->cameraX = 2 * x / rc->map.w - 1;
+		rc->cameraX = 2 * x / (double)rc->map.w - 1;
 
 		rc->rayDirX = rc->dirX + rc->planeX * rc->cameraX;
-		
 		rc->rayDirY = rc->dirY + rc->planeY * rc->cameraX;
 	
 		rc->mapX = (int)rc->posX;
 		rc->mapY = (int)rc->posY;
 		
 		
-
+		// rc->deltaDistX = fabs(1 / rc->rayDirX);
+		// rc->deltaDistY = fabs(1 / rc->rayDirY);
 
 		rc->deltaDistX = (rc->rayDirY == 0) ? 0 : ((rc->rayDirX == 0) ? 1 : fabs(1 / rc->rayDirX));
 		rc->deltaDistY = (rc->rayDirX == 0) ? 0 : ((rc->rayDirY == 0) ? 1 : fabs(1 / rc->rayDirY));
 	
-
+		rc->hit = 0;
 		// Con esto calculamos las coordenadas de la nueva posición
 		if (rc->rayDirX < 0)
 		{
@@ -112,6 +114,24 @@ int		raycast_maths(t_raycast *rc)
 		//En el caso de que hit = 0, es decir, que no está chocando contra una pared
 		while (rc->hit == 0)
 		{
+			// if(rc->sideDistX < rc->sideDistY)
+			// {
+			// 	rc->sideDistX += rc->deltaDistX;
+			// 	rc->mapX += rc->stepX;
+			// 	if (rc->stepX == 1)
+			// 		rc->side = 0;
+			// 	else if (rc->stepX == -1)
+			// 		rc->side = 1;
+			// }
+			// else
+			// {
+			// 	rc->sideDistY += rc->deltaDistY;
+			// 	rc->mapY += rc->stepY;
+			// 	if (rc->stepY == 1)
+			// 		rc->side = 2;
+			// 	else if (rc->stepY == -1)
+			// 		rc->side = 3;
+			// }
 			if(rc->sideDistX < rc->sideDistY)
 			{
 				rc->sideDistX += rc->deltaDistX;
@@ -132,16 +152,17 @@ int		raycast_maths(t_raycast *rc)
 		//Calcula la distancia proyectada en la cámara
 		if(rc->side == 0) // si side == 0 está mirando arriba o abajo. Si side == 1 está mirando a izq o dcha
 			rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
-		else if (rc->side == 1)
+		else
 			rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
 		
 		//Calculas la altura de la linea a dibujar en la pantalla
 		rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
 		
 		//Calculas el mayor y el menor pixel para rellenar del mismo color en la línea en la que te encuentras 
-		rc->drawStart = -rc->lineHeight / 2 + rc->map.h / 2;
+		rc->drawStart = -(rc->lineHeight) / 2 + rc->map.h / 2;
 		if(rc->drawStart < 0)
 			rc->drawStart = 0;
+			
 		rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
 		if(rc->drawEnd >= rc->map.h)
 			rc->drawEnd = rc->map.h - 1;
@@ -159,23 +180,41 @@ int		raycast_maths(t_raycast *rc)
 	
 		//move forward if no wall in front of you
 
+	moveX = rc->dirX * rc->moveSpeed;
+	moveY = rc->dirY * rc->moveSpeed;
 	if(rc->keys.up == 1)
 	{
-		if(rc->map.map[(int)(rc->posX + rc->dirY * rc->moveSpeed)][(int)(rc->posY)] == '3')
-			rc->posX += rc->dirX;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + rc->dirY * rc->moveSpeed)] == '3')
-			rc->posY += rc->dirY;
+		if(rc->map.map[(int)(rc->posX + moveX)][(int)(rc->posY)] != '1')
+			rc->posX += moveX;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveY)] != '1')
+			rc->posY += moveY;
 	}
 	//move backwards if no wall behind you
 	if(rc->keys.down == 1)
 	{
-		if(rc->map.map[(int)(rc->posX - rc->dirY * rc->moveSpeed)][(int)(rc->posY)] == '3')
-			rc->posX -= rc->dirX;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - rc->dirY * rc->moveSpeed)] == '3')
-			rc->posY -= rc->dirY;
+		if(rc->map.map[(int)(rc->posX - moveX)][(int)(rc->posY)] != '1')
+			rc->posX -= moveX;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveY)] != '1')
+			rc->posY -= moveY;
 	}
-	//rotate to the right
+	//move right if no wall behind you
 	if(rc->keys.right == 1)
+	{
+		if(rc->map.map[(int)(rc->posX - moveY)][(int)(rc->posY)] != '1')
+			rc->posX += moveY;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveX)] != '1')
+			rc->posY += moveX;
+	}
+	//move left if no wall behind you
+	if(rc->keys.left == 1)
+	{
+		if(rc->map.map[(int)(rc->posX + moveY)][(int)(rc->posY)] != '1')
+			rc->posX -= moveY;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveX)] != '1')
+			rc->posY -= moveX;
+	}
+	// rotate to the right
+	if(rc->keys.rotRight == 1)
 	{
 		//both camera direction and camera plane must be rotated
 		rc->oldDirX = rc->dirX;
@@ -187,7 +226,7 @@ int		raycast_maths(t_raycast *rc)
 		rc->planeY = rc->oldPlaneX * sin(-rc->rotSpeed) + rc->planeY * cos(-rc->rotSpeed);
 	}
 	//rotate to the left
-	if(rc->keys.left == 1)
+	if(rc->keys.rotLeft == 1)
 	{
 		//both camera direction and camera plane must be rotated
 		rc->oldDirX = rc->dirX;

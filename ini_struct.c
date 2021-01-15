@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/12 12:31:41 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/15 11:42:37 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		iniraycast(t_raycast *rc)
 	rc->dirX = 0;
 	rc->dirY = 0;
 	rc->planeX = 0;
-	rc->planeY = 0.66;
+	rc->planeY = 0;
 	rc->cameraX = 0;
 	rc->rayDirX = 0;
 	rc->rayDirY = 0;
@@ -88,7 +88,7 @@ void		iniraycast(t_raycast *rc)
 	rc->drawStart = 0;
 	rc->drawEnd = 0;
 	// rc->frameTime = 0;
-	rc->moveSpeed = 1;
+	rc->moveSpeed = 0.1;
 	rc->rotSpeed = 0.05;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
@@ -101,4 +101,6 @@ void	inihandlekeys(t_handlekeys *keys)
 	keys->up = 0;
 	keys->right = 0;
 	keys->down = 0;
+	keys->rotLeft = 0;
+	keys->rotRight = 0;
 }
