@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/14 15:59:58 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/21 12:58:02 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int		raycast_start(t_raycast *rc)
 	
 	if (rc->map.orientation == 'N')
 	{
-		rc->planeX = -0.66;
+		rc->planeX = 0.66;
 		rc->planeY = 0;
 		rc->dirX = 0;
 		rc->dirY = -1;
 	}
 	if (rc->map.orientation == 'S')
 	{
-		rc->planeX = 0.66;
+		rc->planeX = -0.66;
 		rc->planeY = 0;
 		rc->dirX = 0;
 		rc->dirY = 1;

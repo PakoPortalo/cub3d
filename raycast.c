@@ -6,7 +6,7 @@
 /*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/15 11:44:18 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/21 13:39:47 by tamagotchi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,101 @@ int		verLine(t_raycast *rc, int x)
 	int		y;
 
 	y = 0;
-	while (y < rc->map.w)
+	while (y < rc->map.h)
 	{
 		if(y <= rc->drawStart)
-			my_mlx_pixel_put(&rc->img, x, y, 0x111d5e); // techo azul 
+			my_mlx_pixel_put(&rc->img, x, y, 0xe6d3a7); // techo amarillo 
 		else if (y > rc->drawStart && y < rc->drawEnd)
 		{
 			if (rc->side == 0)
-				my_mlx_pixel_put(&rc->img, x, y, 0xf37121); // muro naranja 
+				my_mlx_pixel_put(&rc->img, x, y, 0x59a985); // muro verde 
 			else if (rc->side == 1)
-				my_mlx_pixel_put(&rc->img, x, y, 0xC70039); // muro naranja oscuro
+				my_mlx_pixel_put(&rc->img, x, y, 0x3a7563); // muro verde oscuro
 		}
 		else if (y >= rc->drawEnd)
-			my_mlx_pixel_put(&rc->img, x, y, 0xc0e218 ); // suelo verde 
+			my_mlx_pixel_put(&rc->img, x, y, 0x392f2f ); // suelo marron 
 		y++;
 	}
 	return (0);
 }
 
-int		raycast_maths(t_raycast *rc)
+int		move_player(t_raycast *rc, double moveX, double moveY)
 {
-	int x;
+	if(rc->keys.up == 1)
+	{
+		if(rc->map.map[(int)(rc->posX + moveX)][(int)(rc->posY)] != '1')
+			rc->posX += moveX;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveY)] != '1')
+			rc->posY += moveY;
+	}
+	if(rc->keys.down == 1)
+	{
+		if(rc->map.map[(int)(rc->posX - moveX)][(int)(rc->posY)] != '1')
+			rc->posX -= moveX;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveY)] != '1')
+			rc->posY -= moveY;
+	}
+	if(rc->keys.left == 1)
+	{
+		if(rc->map.map[(int)(rc->posX - moveY)][(int)(rc->posY)] != '1')
+			rc->posX += moveY;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveX)] != '1')
+			rc->posY -= moveX;
+	}
+	if(rc->keys.right == 1)
+	{
+		if(rc->map.map[(int)(rc->posX + moveY)][(int)(rc->posY)] != '1')
+			rc->posX -= moveY;
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveX)] != '1')
+			rc->posY += moveX;
+	}
+	return (1);
+}
+
+int		rotate_player(t_raycast *rc)
+{
+	if(rc->keys.rotLeft == 1)
+	{
+		//both camera direction and camera plane must be rotated
+		rc->oldDirX = rc->dirX;
+		rc->dirX = rc->dirX * cos(-rc->rotSpeed) - rc->dirY * sin(-rc->rotSpeed);
+		rc->dirY = rc->oldDirX * sin(-rc->rotSpeed) + rc->dirY * cos(-rc->rotSpeed);
+		
+		rc->oldPlaneX = rc->planeX;
+		rc->planeX = rc->planeX * cos(-rc->rotSpeed) - rc->planeY * sin(-rc->rotSpeed);
+		rc->planeY = rc->oldPlaneX * sin(-rc->rotSpeed) + rc->planeY * cos(-rc->rotSpeed);
+	}
+	//rotate to the left
+	if(rc->keys.rotRight == 1)
+	{
+		//both camera direction and camera plane must be rotated
+		rc->oldDirX = rc->dirX;
+		rc->dirX = rc->dirX * cos(rc->rotSpeed) - rc->dirY * sin(rc->rotSpeed);
+		rc->dirY = rc->oldDirX * sin(rc->rotSpeed) + rc->dirY * cos(rc->rotSpeed);
+		rc->oldPlaneX = rc->planeX;
+		rc->planeX = rc->planeX * cos(rc->rotSpeed) - rc->planeY * sin(rc->rotSpeed);
+		rc->planeY = rc->oldPlaneX * sin(rc->rotSpeed) + rc->planeY * cos(rc->rotSpeed);
+	}
+	return(1);
+}
+
+int		player_movement(t_raycast *rc)
+{
 	double moveX;
 	double moveY;
 
+	moveX = 0;
+	moveY = 0;
+	moveX = rc->dirX * rc->moveSpeed;
+	moveY = rc->dirY * rc->moveSpeed;
+	move_player(rc, moveX, moveY);
+	rotate_player(rc);
+	return(1);
+}
+
+int		raycast_maths(t_raycast *rc)
+{
+	int x;
 
 	x = 0;
 	rc->img.img = mlx_new_image(rc->img.ptr, rc->map.h, rc->map.w);
@@ -80,10 +151,6 @@ int		raycast_maths(t_raycast *rc)
 		rc->mapX = (int)rc->posX;
 		rc->mapY = (int)rc->posY;
 		
-		
-		// rc->deltaDistX = fabs(1 / rc->rayDirX);
-		// rc->deltaDistY = fabs(1 / rc->rayDirY);
-
 		rc->deltaDistX = (rc->rayDirY == 0) ? 0 : ((rc->rayDirX == 0) ? 1 : fabs(1 / rc->rayDirX));
 		rc->deltaDistY = (rc->rayDirX == 0) ? 0 : ((rc->rayDirY == 0) ? 1 : fabs(1 / rc->rayDirY));
 	
@@ -114,24 +181,6 @@ int		raycast_maths(t_raycast *rc)
 		//En el caso de que hit = 0, es decir, que no está chocando contra una pared
 		while (rc->hit == 0)
 		{
-			// if(rc->sideDistX < rc->sideDistY)
-			// {
-			// 	rc->sideDistX += rc->deltaDistX;
-			// 	rc->mapX += rc->stepX;
-			// 	if (rc->stepX == 1)
-			// 		rc->side = 0;
-			// 	else if (rc->stepX == -1)
-			// 		rc->side = 1;
-			// }
-			// else
-			// {
-			// 	rc->sideDistY += rc->deltaDistY;
-			// 	rc->mapY += rc->stepY;
-			// 	if (rc->stepY == 1)
-			// 		rc->side = 2;
-			// 	else if (rc->stepY == -1)
-			// 		rc->side = 3;
-			// }
 			if(rc->sideDistX < rc->sideDistY)
 			{
 				rc->sideDistX += rc->deltaDistX;
@@ -172,71 +221,7 @@ int		raycast_maths(t_raycast *rc)
  		verLine(rc, x);
 		x++;
 	}
-		//Ahora habla de cosas relacionadas con los fps que la verdad si que me gustaría
-		//implementar en el código sobre todo para el debuggeo, pero lo voy a dejar por ahora
-
-	// Lo que viene ahora no es muy difícil, es lo de los hooks y las teclas, pero habría que plantearlo 
-	// Diferente. Creo que esto no lo voy a hacer hasta que no se me vea el mapa en pantalla
-	
-		//move forward if no wall in front of you
-
-	moveX = rc->dirX * rc->moveSpeed;
-	moveY = rc->dirY * rc->moveSpeed;
-	if(rc->keys.up == 1)
-	{
-		if(rc->map.map[(int)(rc->posX + moveX)][(int)(rc->posY)] != '1')
-			rc->posX += moveX;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveY)] != '1')
-			rc->posY += moveY;
-	}
-	//move backwards if no wall behind you
-	if(rc->keys.down == 1)
-	{
-		if(rc->map.map[(int)(rc->posX - moveX)][(int)(rc->posY)] != '1')
-			rc->posX -= moveX;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveY)] != '1')
-			rc->posY -= moveY;
-	}
-	//move right if no wall behind you
-	if(rc->keys.right == 1)
-	{
-		if(rc->map.map[(int)(rc->posX - moveY)][(int)(rc->posY)] != '1')
-			rc->posX += moveY;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveX)] != '1')
-			rc->posY += moveX;
-	}
-	//move left if no wall behind you
-	if(rc->keys.left == 1)
-	{
-		if(rc->map.map[(int)(rc->posX + moveY)][(int)(rc->posY)] != '1')
-			rc->posX -= moveY;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveX)] != '1')
-			rc->posY -= moveX;
-	}
-	// rotate to the right
-	if(rc->keys.rotRight == 1)
-	{
-		//both camera direction and camera plane must be rotated
-		rc->oldDirX = rc->dirX;
-		rc->dirX = rc->dirX * cos(-rc->rotSpeed) - rc->dirY * sin(-rc->rotSpeed);
-		rc->dirY = rc->oldDirX * sin(-rc->rotSpeed) + rc->dirY * cos(-rc->rotSpeed);
-		
-		rc->oldPlaneX = rc->planeX;
-		rc->planeX = rc->planeX * cos(-rc->rotSpeed) - rc->planeY * sin(-rc->rotSpeed);
-		rc->planeY = rc->oldPlaneX * sin(-rc->rotSpeed) + rc->planeY * cos(-rc->rotSpeed);
-	}
-	//rotate to the left
-	if(rc->keys.rotLeft == 1)
-	{
-		//both camera direction and camera plane must be rotated
-		rc->oldDirX = rc->dirX;
-		rc->dirX = rc->dirX * cos(rc->rotSpeed) - rc->dirY * sin(rc->rotSpeed);
-		rc->dirY = rc->oldDirX * sin(rc->rotSpeed) + rc->dirY * cos(rc->rotSpeed);
-		rc->oldPlaneX = rc->planeX;
-		rc->planeX = rc->planeX * cos(rc->rotSpeed) - rc->planeY * sin(rc->rotSpeed);
-		rc->planeY = rc->oldPlaneX * sin(rc->rotSpeed) + rc->planeY * cos(rc->rotSpeed);
-
-	}
+	player_movement(rc);
 	mlx_put_image_to_window(rc->img.ptr, rc->img.win, rc->img.img, 0, 0);
 	mlx_destroy_image(rc->img.ptr, rc->img.img);
 	return(0);
