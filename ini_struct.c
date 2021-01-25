@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ini_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/15 11:42:37 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/24 19:17:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		iniraycast(t_raycast *rc)
 	rc->drawStart = 0;
 	rc->drawEnd = 0;
 	// rc->frameTime = 0;
-	rc->moveSpeed = 0.1;
+	rc->moveSpeed = 0.03;
 	rc->rotSpeed = 0.05;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
