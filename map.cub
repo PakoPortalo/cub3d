@@ -1,4 +1,4 @@
-R 400 600
+R 800 600
 NO ./wolftex1/greystone.png
 SO ./wolftex1/redbrick.png
 EA ./wolftex1/wood.png

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/15 11:40:01 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/01/26 11:49:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+# define TXT_WIDTH 64
+# define TXT_HEIGHT 64
 # include <stdio.h>
 
 //para utilizar open
