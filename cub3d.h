@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/26 11:49:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/02 12:43:25 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# define TXT_WIDTH 64
-# define TXT_HEIGHT 64
 # include <stdio.h>
 
 //para utilizar open
@@ -97,6 +95,18 @@ typedef struct s_handlekeys {
 	int rotRight;
 }		t_handlekeys;
 
+typedef	struct s_text_img {
+	t_data	img;
+	int		height;
+	int		width;
+	int		coordX;
+	int		coordY;
+}			t_text_img;
+
+typedef struct s_text {
+	t_text_img	textures[5];
+}				t_text;
+
 typedef struct	s_raycast {
 	double		posX;
 	double		posY;
@@ -167,7 +177,7 @@ void	get_raws(char **path, int *num, char *line);
 void	map_file_error(void);
 
 
-int		raycast_start(t_raycast *rc);
+int		raycast_start(t_raycast *rc, t_text *texture);
 int		raycast_maths(t_raycast *rc);
 int		printer_cub3d(mapclean *map);
 int		funky_func_keypress(int keycode, t_raycast *rc);

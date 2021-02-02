@@ -3,20 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   paint.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/25 11:50:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/02 12:49:33 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		raycast_start(t_raycast *rc)
+void	load_texture(t_data *img, t_text_img *texture, char *path)
+{
+	texture->img.img = mlx_xpm_file_to_image(img->ptr, path, \
+											&texture->width, &texture->height);
+	texture->img.addr = mlx_get_data_addr(texture->img.img, &texture->img.bits_per_pixel, \
+							&texture->img.line_length, &texture->img.endian);
+}
+
+void	load_all_textures(t_raycast *rc, t_text *tex)
+{
+	// tex->n_texture = rc->map.north;
+	// tex->s_texture = rc->map.north;
+	// tex->e_texture = rc->map.north;
+	// tex->w_texture = rc->map.north;
+	load_texture(&rc->img, &tex->textures[0], rc->map.north);
+	load_texture(&rc->img, &tex->textures[1], rc->map.south);
+	load_texture(&rc->img, &tex->textures[2], rc->map.east);
+	load_texture(&rc->img, &tex->textures[3], rc->map.west);
+}
+
+int		raycast_start(t_raycast *rc, t_text *texture)
 {
 	rc->posX = (double)rc->map.x + 0.5f;
 	rc->posY = (double)rc->map.y + 0.5f;
 
+	load_all_textures(rc, texture);
 	if (rc->map.orientation == 'N')
 	{
 		rc->planeX = 0.66;
@@ -53,6 +74,7 @@ int			printer_cub3d(mapclean *map)
 	t_data	img;
 	t_raycast rc;
 	t_handlekeys keys;
+	t_text	texture;
 
 	img.ptr = mlx_init();
 	img.win = mlx_new_window(img.ptr, map->w, map->h, "Hello world!");
@@ -63,7 +85,7 @@ int			printer_cub3d(mapclean *map)
 	inihandlekeys(&keys);
 	rc.keys = keys;
 	iniraycast(&rc);
-	raycast_start(&rc);
+	raycast_start(&rc, &texture);
 	mlx_hook(rc.img.win, 2, 1L << 0, funky_func_keypress, &rc);
 	mlx_hook(rc.img.win, 3, 1L << 1, funky_func_keyrelease, &rc);
 	mlx_hook(rc.img.win, 17, 1L<<17, exit_win, &rc.img);
