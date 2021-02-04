@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arraydup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 11:29:28 by user42            #+#    #+#             */
-/*   Updated: 2021/01/28 11:44:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/04 13:29:32 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		**ft_arraydup(char **array)
+char			**ft_arraydup(char **array, int rows)
 {
-	int x;
-	char **arraydup;
+	int		i;
+	char	**matrix;
 
-	x = 0;
-	arraydup = NULL;
-
+	i = 0;
+	matrix = malloc(sizeof(char) * (rows));
 	if (!array)
 		return(NULL);
-	while (array[x] != NULL)
+	while (i < rows)
 	{
-		arraydup[x] = ft_strdup(array[x]);
-		x++;
+		matrix[i] = ft_strdup(array[i]);
+		i++;
 	}
-	return(arraydup);
+	// matrix[i] = ft_strdup(array[i]);
+	return(matrix);
 }

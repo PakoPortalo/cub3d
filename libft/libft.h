@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 21:03:16 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/28 11:32:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/04 13:27:03 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr(int n);
 void	ft_putnbr_fd(int n, int fd);
 int		ft_freearray(char **array);
-char	**ft_arraydup(char **array);
+char	**ft_arraydup(char **array, int rows);
 
 
 #endif
