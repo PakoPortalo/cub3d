@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/25 12:44:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/08 10:01:23 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-
-	posX, poxY. Posiciones para empezar. Yo uso map->x, map->y
-	dirX, dirY. Pongo las que vienen en raycaster_flt.cpp pero imagino que dependerá de NSWE
-	planeX, planeY. Camera plane, lo que se ve
-	cameraX representa la coordenada X del plano de cámara,yendo de -1 (borde izquierda)
-			hasta 1 (borde derecha), siendo el centro de la pantalla el 0
-
-	mapX, mapY	son las coordenaadas del cuadrado, son int para que solo contengan
-				los bordes
-	deltaDistX, deltaDistY son las distancias en donde corta con los ejes x e y respectivamente
-
-*/
 
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -130,6 +116,95 @@ int		player_movement(t_raycast *rc)
 	return(1);
 }
 
+void	ft_raydir(t_raycast *rc, int x)
+{
+		rc->cameraX = 2 * x / (double)rc->map.w - 1;
+		rc->rayDirX = rc->dirX + rc->planeX * rc->cameraX;
+		rc->rayDirY = rc->dirY + rc->planeY * rc->cameraX;
+}
+
+void	ft_deltadist(t_raycast *rc)
+{
+		if (rc->rayDirX == 0)
+	{
+		rc->deltaDistX = 1;
+		rc->deltaDistY = 0;
+	}
+	else if (rc->rayDirY == 0)
+	{
+		rc->deltaDistX = 0;
+		rc->deltaDistY = 1;
+	}
+	else
+	{
+		rc->deltaDistX = fabs(1 / rc->rayDirX);
+		rc->deltaDistY = fabs(1 / rc->rayDirY);
+	}
+}
+
+void	ft_sidedist(t_raycast *rc)
+{
+	rc->hit = 0;
+	if (rc->rayDirX < 0)
+	{
+		rc->stepX = -1;
+		rc->sideDistX = (rc->posX - rc->mapX) * rc->deltaDistX;
+	}
+	else
+	{
+		rc->stepX = 1;
+		rc->sideDistX = (rc->mapX + 1.0 - rc->posX) * rc->deltaDistX;
+	}
+	if(rc->rayDirY < 0)
+	{
+		rc->stepY = -1;
+		rc->sideDistY = (rc->posY - rc->mapY) * rc->deltaDistY;
+	}
+	else
+	{
+		rc->stepY = 1;
+		rc->sideDistY = (rc->mapY + 1.0 - rc->posY) * rc->deltaDistY;
+	}
+}
+
+void	ft_rayhit(t_raycast *rc)
+{
+	while (rc->hit == 0)
+	{
+		if(rc->sideDistX < rc->sideDistY)
+		{
+			rc->sideDistX += rc->deltaDistX;
+			rc->mapX += rc->stepX;
+			rc->side = 0;
+		}
+		else
+		{
+			rc->sideDistY += rc->deltaDistY;
+			rc->mapY += rc->stepY;
+			rc->side = 1;
+		}
+		if(rc->map.map[rc->mapY][rc->mapX] == '1' || rc->map.map[rc->mapY][rc->mapX] == '2')
+			rc->hit = 1;
+	}
+}
+
+void	ft_walldist(t_raycast *rc)
+{
+	if(rc->side == 0)
+		rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
+	else
+		rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
+	rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
+
+	rc->drawStart = -(rc->lineHeight) / 2 + rc->map.h / 2;
+	if(rc->drawStart < 0)
+		rc->drawStart = 0;
+
+	rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
+	if(rc->drawEnd >= rc->map.h)
+		rc->drawEnd = rc->map.h - 1;
+}
+
 int		raycast_maths(t_raycast *rc)
 {
 	int x;
@@ -138,86 +213,18 @@ int		raycast_maths(t_raycast *rc)
 	rc->img.img = mlx_new_image(rc->img.ptr, rc->map.w, rc->map.h);
 	rc->img.addr = mlx_get_data_addr(rc->img.img, &rc->img.bits_per_pixel, &rc->img.line_length,
 								&rc->img.endian);
-	while(x < rc->map.w) // Mientras que la X sea menor que el Width de la resolución
+	while(x < rc->map.w)
 	{
-
-		//Con esto calculamos la posición y dirección del rayo
-		rc->cameraX = 2 * x / (double)rc->map.w - 1;
-
-		rc->rayDirX = rc->dirX + rc->planeX * rc->cameraX;
-		rc->rayDirY = rc->dirY + rc->planeY * rc->cameraX;
-
 		rc->mapX = rc->posX;
 		rc->mapY = rc->posY;
-
-		rc->deltaDistX = (rc->rayDirY == 0) ? 0 : ((rc->rayDirX == 0) ? 1 : fabs(1 / rc->rayDirX));
-		rc->deltaDistY = (rc->rayDirX == 0) ? 0 : ((rc->rayDirY == 0) ? 1 : fabs(1 / rc->rayDirY));
-
-		rc->hit = 0;
-		// Con esto calculamos las coordenadas de la nueva posición
-		if (rc->rayDirX < 0)
-		{
-			rc->stepX = -1;
-			rc->sideDistX = (rc->posX - rc->mapX) * rc->deltaDistX;
-		}
-		else
-		{
-			rc->stepX = 1;
-			rc->sideDistX = (rc->mapX + 1.0 - rc->posX) * rc->deltaDistX;
-		}
-		if(rc->rayDirY < 0)
-		{
-			rc->stepY = -1;
-			rc->sideDistY = (rc->posY - rc->mapY) * rc->deltaDistY;
-		}
-		else
-		{
-			rc->stepY = 1;
-			rc->sideDistY = (rc->mapY + 1.0 - rc->posY) * rc->deltaDistY;
-		}
-
-		//Con esto aplicamos las coordenadas recogidas en los anteriores if/else
-		//En el caso de que hit = 0, es decir, que no está chocando contra una pared
-		while (rc->hit == 0)
-		{
-			if(rc->sideDistX < rc->sideDistY)
-			{
-				rc->sideDistX += rc->deltaDistX;
-				rc->mapX += rc->stepX;
-				rc->side = 0;
-			}
-			else
-			{
-				rc->sideDistY += rc->deltaDistY;
-				rc->mapY += rc->stepY;
-				rc->side = 1;
-			}
-		//Aquí determinamos la colisión contra una pared o no. Si mi mapa no tiene un 0 dentro, entonces tiene pared
-				if(rc->map.map[rc->mapY][rc->mapX] == '1')
-					rc->hit = 1;
-		}
-
-		//Calcula la distancia proyectada en la cámara
-		if(rc->side == 0) // si side == 0 está mirando arriba o abajo. Si side == 1 está mirando a izq o dcha
-			rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
-		else
-			rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
-
-		//Calculas la altura de la linea a dibujar en la pantalla
-		rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
-
-		//Calculas el mayor y el menor pixel para rellenar del mismo color en la línea en la que te encuentras
-		rc->drawStart = -(rc->lineHeight) / 2 + rc->map.h / 2;
-		if(rc->drawStart < 0)
-			rc->drawStart = 0;
-
-		rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
-		if(rc->drawEnd >= rc->map.h)
-			rc->drawEnd = rc->map.h - 1;
-
-
-		// Dibuja muros con la información de draw start y draw end
- 		verLine(rc, x);
+		ft_raydir(rc, x);
+		ft_deltadist(rc);
+		ft_sidedist(rc);
+		ft_rayhit(rc);
+		ft_walldist(rc);
+		
+		// // Dibuja muros con la información de draw start y draw end
+ 		// verLine(rc, x);
 		x++;
 	}
 	player_movement(rc);
