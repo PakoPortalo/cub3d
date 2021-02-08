@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/08 10:01:23 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/08 10:34:44 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ int		raycast_maths(t_raycast *rc)
 		ft_walldist(rc);
 		
 		// // Dibuja muros con la información de draw start y draw end
- 		// verLine(rc, x);
+ 		verLine(rc, x);
 		x++;
 	}
 	player_movement(rc);

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/02 12:43:25 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/08 10:36:14 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,17 @@ typedef struct s_handlekeys {
 	int rotRight;
 }		t_handlekeys;
 
-typedef	struct s_text_img {
+typedef	struct s_tex_img {
 	t_data	img;
 	int		height;
 	int		width;
 	int		coordX;
 	int		coordY;
-}			t_text_img;
+}			t_tex_img;
 
 typedef struct s_text {
-	t_text_img	textures[5];
-}				t_text;
+	t_tex_img	textures[5];
+}				t_tex;
 
 typedef struct	s_raycast {
 	double		posX;
@@ -136,11 +136,12 @@ typedef struct	s_raycast {
 	// double		frameTime;
 	// double		moveSpeed;
 	// double		rotSpeed;
-	double		oldDirX;
-	double		oldPlaneX;
-	t_data		img;
-	mapclean	map;
-	t_handlekeys keys;
+	double			oldDirX;
+	double			oldPlaneX;
+	t_data			img;
+	mapclean		map;
+	t_handlekeys	keys;
+	t_tex			tex;
 }				t_raycast;
 
 int		cub3d(int argc, char **argv);
@@ -177,7 +178,7 @@ void	get_raws(char **path, int *num, char *line);
 void	map_file_error(void);
 
 
-int		raycast_start(t_raycast *rc, t_text *texture);
+int		raycast_start(t_raycast *rc);
 int		raycast_maths(t_raycast *rc);
 int		printer_cub3d(mapclean *map);
 int		funky_func_keypress(int keycode, t_raycast *rc);
