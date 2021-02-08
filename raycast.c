@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/08 10:34:44 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/08 12:22:08 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ void		my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+int			get_pixel(t_data *frame, int x, int y)
+{
+	char	*dst;
+
+	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
+	return (*(unsigned int*)dst);
+}
+
+int			rgb_to_hex(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
 int		verLine(t_raycast *rc, int x)
@@ -196,13 +209,85 @@ void	ft_walldist(t_raycast *rc)
 		rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
 	rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
 
-	rc->drawStart = -(rc->lineHeight) / 2 + rc->map.h / 2;
+	// rc->drawStart = -(rc->lineHeight) / 2 + rc->map.h / 2;
+	// if(rc->drawStart < 0)
+	// 	rc->drawStart = 0;
+
+	// rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
+	// if(rc->drawEnd >= rc->map.h)
+	// 	rc->drawEnd = rc->map.h - 1;
+}
+
+void	buffer_line(t_raycast *rc, t_tex_img *tex, int x, int line_height)
+{
+	int	i;
+	double	step;
+	double	tex_pos;
+
+	i = 0;
+	step = 1.0 *  tex->height / line_height;
+	tex_pos = (rc->drawStart - rc->map.h / 2 + line_height / 2) * step;
+	while (i < rc->map.h)
+	{
+		if (i < rc->drawStart)
+			my_mlx_pixel_put(&rc->img, x, i, rgb_to_hex(0, rc->map.ceil[0], rc->map.ceil[1], rc->map.ceil[2]));
+		else if ( i >= rc->drawEnd)
+			my_mlx_pixel_put(&rc->img, x, i, rgb_to_hex(0, rc->map.floor[0], rc->map.floor[1], rc->map.floor[2]));
+		else if ( i > rc->drawStart && i  < rc->drawEnd)
+		{
+			if ((tex->coordY = (int)tex_pos) < 0)
+				tex->coordY = 0;
+			tex_pos += step;
+			my_mlx_pixel_put(&rc->img, x, i, get_pixel(&tex->img, tex->coordX, tex->coordY));
+
+		}
+		i++;
+	}
+}
+
+void	ft_buffer(t_raycast *rc, int x)
+{
+	int			line_height;
+	t_tex_img	*texture;
+
+	texture = NULL;
+	line_height = (int)(rc->map.h / rc->perpWallDist);
+	rc->drawStart = -line_height / 2  + rc->map.h / 2;
 	if(rc->drawStart < 0)
 		rc->drawStart = 0;
-
-	rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
-	if(rc->drawEnd >= rc->map.h)
+	rc->drawEnd = line_height / 2 + rc->map.h / 2;
+	if (rc->drawEnd >= rc->map.h)
 		rc->drawEnd = rc->map.h - 1;
+
+	//getting texture
+	if(rc->side == 0) 
+	{
+		if (rc->stepX < 0)
+			texture = &rc->tex.textures[0];
+		else
+			texture = &rc->tex.textures[1];
+	}
+	else
+	{
+		if (rc->stepY < 0)
+			texture = &rc->tex.textures[2];
+		else
+			texture = &rc->tex.textures[3];
+	}
+
+
+	//cord X texture
+	if (rc->side == 0)
+		rc->wallX = rc->posY + rc->perpWallDist * rc->dirY;
+	else
+		rc->wallX = rc->posX + rc->perpWallDist * rc->dirX;
+	rc->wallX -= (int)rc->wallX;
+	texture->coordX = texture->width - (int)(rc->wallX * (double)texture->width) - 1;
+
+	//paint lines
+	buffer_line(rc, texture, x, line_height);
+
+
 }
 
 int		raycast_maths(t_raycast *rc)
@@ -222,9 +307,10 @@ int		raycast_maths(t_raycast *rc)
 		ft_sidedist(rc);
 		ft_rayhit(rc);
 		ft_walldist(rc);
-		
+		ft_buffer(rc, x);
+
 		// // Dibuja muros con la información de draw start y draw end
- 		verLine(rc, x);
+ 		// verLine(rc, x);
 		x++;
 	}
 	player_movement(rc);
