@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/08 12:00:16 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:49:49 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ typedef struct	s_raycast {
 	int				texNum;
 	double			wallX;
 	int				texX;
-	// double			step;
-	// double			texPos;
-	// int				texY;
+	double			step;
+	double			texPos;
+	int				texY;
 }				t_raycast;
 
 int		cub3d(int argc, char **argv);

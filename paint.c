@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/08 10:46:26 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:48:52 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	load_texture(t_data *img, t_tex_img *texture, char *path)
 											&texture->width, &texture->height);
 	texture->img.addr = mlx_get_data_addr(texture->img.img, &texture->img.bits_per_pixel, \
 							&texture->img.line_length, &texture->img.endian);
+	printf("bits per pixel: %d\n", texture->img.bits_per_pixel);
 }
 
 void	load_all_textures(t_raycast *rc)
@@ -32,40 +33,28 @@ void	load_all_textures(t_raycast *rc)
 	load_texture(&rc->img, &rc->tex.textures[3], rc->map.west);
 }
 
+void	orientation_input(double dirX, double dirY, double plX, double plY, t_raycast *rc)
+{
+	rc->dirX = dirX;
+	rc->dirY = dirY;
+	rc->planeX = plX;
+	rc->planeY = plY;
+}
+
 int		raycast_start(t_raycast *rc)
 {
-	rc->posX = (double)rc->map.x + 0.5f;
-	rc->posY = (double)rc->map.y + 0.5f;
+	rc->posX = (double)rc->map.y + 0.5f;
+	rc->posY = (double)rc->map.x + 0.5f;
 
 	load_all_textures(rc);
 	if (rc->map.orientation == 'N')
-	{
-		rc->planeX = 0.66;
-		rc->planeY = 0;
-		rc->dirX = 0;
-		rc->dirY = -1;
-	}
+		orientation_input(-1, 0, 0, 0.66, rc);
 	if (rc->map.orientation == 'S')
-	{
-		rc->planeX = -0.66;
-		rc->planeY = 0;
-		rc->dirX = 0;
-		rc->dirY = 1;
-	}
-		if (rc->map.orientation == 'E')
-	{
-		rc->planeX = 0;
-		rc->planeY = 0.66;
-		rc->dirX = 1;
-		rc->dirY = 0;
-	}
+		orientation_input(1, 0, 0, -0.66, rc);
+	if (rc->map.orientation == 'E')
+		orientation_input(0, 1, 0.66, 0, rc);
 	if (rc->map.orientation == 'W')
-	{
-		rc->planeX = 0;
-		rc->planeY = -0.66;
-		rc->dirX = -1;
-		rc->dirY = 0;
-	}
+		orientation_input(0, -1, -0.66, 0, rc);
 	return(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/08 12:20:15 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:37:21 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		iniraycast(t_raycast *rc)
 	rc->texX = 0;
 	// rc->step = 0;
 	// rc->texPos = 0;
-	// rc->texY = 0;
+	rc->texY = 0;
 }
 
 void	inihandlekeys(t_handlekeys *keys)

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/08 12:22:08 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/09 16:13:39 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,38 +61,38 @@ int		move_player(t_raycast *rc, double moveX, double moveY)
 {
 	if(rc->keys.up == 1)
 	{
-		if(rc->map.map[(int)(rc->posY)][(int)(rc->posX + moveX)] != '1')
+		if(rc->map.map[(int)(rc->posX + moveX)][(int)(rc->posY)] != '1')
 			rc->posX += moveX;
-		if(rc->map.map[(int)(rc->posY + moveY)][(int)(rc->posX)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveY)] != '1')
 			rc->posY += moveY;
 	}
 	if(rc->keys.down == 1)
 	{
-		if(rc->map.map[(int)(rc->posY)][(int)(rc->posX - moveX)] != '1')
+		if(rc->map.map[(int)(rc->posX - moveX)][(int)(rc->posY)] != '1')
 			rc->posX -= moveX;
-		if(rc->map.map[(int)(rc->posY - moveY)][(int)(rc->posX)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveY)] != '1')
 			rc->posY -= moveY;
-	}
-	if(rc->keys.right == 1)
-	{
-		if(rc->map.map[(int)(rc->posY)][(int)(rc->posX - moveY)] != '1')
-			rc->posX -= moveY;
-		if(rc->map.map[(int)(rc->posY + moveX)][(int)(rc->posX)] != '1')
-			rc->posY += moveX;
 	}
 	if(rc->keys.left == 1)
 	{
-		if(rc->map.map[(int)(rc->posY)][(int)(rc->posX + moveY)] != '1')
-			rc->posX += moveY;
-		if(rc->map.map[(int)(rc->posY - moveX)][(int)(rc->posX)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveX)] != '1')
+			rc->posY += moveX;
+		if(rc->map.map[(int)(rc->posX - moveY)][(int)(rc->posY)] != '1')
+			rc->posX -= moveY;
+	}
+	if(rc->keys.right == 1)
+	{
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveX)] != '1')
 			rc->posY -= moveX;
+		if(rc->map.map[(int)(rc->posX + moveY)][(int)(rc->posY)] != '1')
+			rc->posX += moveY;
 	}
 	return (1);
 }
 
 int		rotate_player(t_raycast *rc)
 {
-	if(rc->keys.rotLeft == 1)
+	if(rc->keys.rotRight == 1)
 	{
 		//both camera direction and camera plane must be rotated
 		rc->oldDirX = rc->dirX;
@@ -104,7 +104,7 @@ int		rotate_player(t_raycast *rc)
 		rc->planeY = rc->oldPlaneX * sin(-rc->rotSpeed) + rc->planeY * cos(-rc->rotSpeed);
 	}
 	//rotate to the left
-	if(rc->keys.rotRight == 1)
+	if(rc->keys.rotLeft == 1)
 	{
 		//both camera direction and camera plane must be rotated
 		rc->oldDirX = rc->dirX;
@@ -138,21 +138,23 @@ void	ft_raydir(t_raycast *rc, int x)
 
 void	ft_deltadist(t_raycast *rc)
 {
-		if (rc->rayDirX == 0)
-	{
-		rc->deltaDistX = 1;
-		rc->deltaDistY = 0;
-	}
-	else if (rc->rayDirY == 0)
-	{
-		rc->deltaDistX = 0;
-		rc->deltaDistY = 1;
-	}
-	else
-	{
-		rc->deltaDistX = fabs(1 / rc->rayDirX);
-		rc->deltaDistY = fabs(1 / rc->rayDirY);
-	}
+	// if (rc->rayDirX == 0)
+	// {
+	// 	rc->deltaDistX = 1;
+	// 	rc->deltaDistY = 0;
+	// }
+	// else if (rc->rayDirY == 0)
+	// {
+	// 	rc->deltaDistX = 0;
+	// 	rc->deltaDistY = 1;
+	// }
+	// else
+	// {
+		// rc->deltaDistX = fabs(1 / rc->rayDirX);
+		// rc->deltaDistY = fabs(1 / rc->rayDirY);
+	// }
+	rc->deltaDistX = sqrt(1 + (rc->rayDirY * rc->rayDirY) / (rc->rayDirX * rc->rayDirX));
+	rc->deltaDistY = sqrt(1 + (rc->rayDirX * rc->rayDirX) / (rc->rayDirY * rc->rayDirY));
 }
 
 void	ft_sidedist(t_raycast *rc)
@@ -196,7 +198,7 @@ void	ft_rayhit(t_raycast *rc)
 			rc->mapY += rc->stepY;
 			rc->side = 1;
 		}
-		if(rc->map.map[rc->mapY][rc->mapX] == '1' || rc->map.map[rc->mapY][rc->mapX] == '2')
+		if(rc->map.map[rc->mapX][rc->mapY] == '1' || rc->map.map[rc->mapX][rc->mapY] == '2')
 			rc->hit = 1;
 	}
 }
@@ -235,11 +237,10 @@ void	buffer_line(t_raycast *rc, t_tex_img *tex, int x, int line_height)
 			my_mlx_pixel_put(&rc->img, x, i, rgb_to_hex(0, rc->map.floor[0], rc->map.floor[1], rc->map.floor[2]));
 		else if ( i > rc->drawStart && i  < rc->drawEnd)
 		{
-			if ((tex->coordY = (int)tex_pos) < 0)
-				tex->coordY = 0;
+			if ((rc->texY = (int)tex_pos) < 0)
+				rc->texY = 0;
 			tex_pos += step;
-			my_mlx_pixel_put(&rc->img, x, i, get_pixel(&tex->img, tex->coordX, tex->coordY));
-
+			my_mlx_pixel_put(&rc->img, x, i, get_pixel(&tex->img, rc->texX, rc->texY));
 		}
 		i++;
 	}
@@ -255,6 +256,7 @@ void	ft_buffer(t_raycast *rc, int x)
 	rc->drawStart = -line_height / 2  + rc->map.h / 2;
 	if(rc->drawStart < 0)
 		rc->drawStart = 0;
+		
 	rc->drawEnd = line_height / 2 + rc->map.h / 2;
 	if (rc->drawEnd >= rc->map.h)
 		rc->drawEnd = rc->map.h - 1;
@@ -269,7 +271,7 @@ void	ft_buffer(t_raycast *rc, int x)
 	}
 	else
 	{
-		if (rc->stepY < 0)
+		if (rc->stepY > 0)
 			texture = &rc->tex.textures[2];
 		else
 			texture = &rc->tex.textures[3];
@@ -278,11 +280,16 @@ void	ft_buffer(t_raycast *rc, int x)
 
 	//cord X texture
 	if (rc->side == 0)
-		rc->wallX = rc->posY + rc->perpWallDist * rc->dirY;
+		rc->wallX = rc->posY + rc->perpWallDist * rc->rayDirY;
 	else
-		rc->wallX = rc->posX + rc->perpWallDist * rc->dirX;
-	rc->wallX -= (int)rc->wallX;
-	texture->coordX = texture->width - (int)(rc->wallX * (double)texture->width) - 1;
+		rc->wallX = rc->posX + rc->perpWallDist * rc->rayDirX;
+	rc->wallX -= floor(rc->wallX);
+	rc->texX = texture->width - (int)(rc->wallX * (double)texture->width) - 1;
+
+	if (rc->side == 0 && rc->rayDirX > 0)
+		rc->texX = texture->width - rc->texX - 1;
+	if (rc->side == 1 && rc->rayDirY < 0)
+		rc->texX = texture->width - rc->texX - 1;
 
 	//paint lines
 	buffer_line(rc, texture, x, line_height);
@@ -300,21 +307,28 @@ int		raycast_maths(t_raycast *rc)
 								&rc->img.endian);
 	while(x < rc->map.w)
 	{
-		rc->mapX = rc->posX;
-		rc->mapY = rc->posY;
+		rc->mapX = (int)rc->posX;
+		rc->mapY = (int)rc->posY;
 		ft_raydir(rc, x);
 		ft_deltadist(rc);
 		ft_sidedist(rc);
 		ft_rayhit(rc);
 		ft_walldist(rc);
 		ft_buffer(rc, x);
-
-		// // Dibuja muros con la información de draw start y draw end
- 		// verLine(rc, x);
+	// rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
+	// rc->drawStart = -rc->lineHeight / 2  + rc->map.h / 2;
+	// if(rc->drawStart < 0)
+	// 	rc->drawStart = 0;
+		
+	// rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
+	// if (rc->drawEnd >= rc->map.h)
+	// 	rc->drawEnd = rc->map.h - 1;
+	// 	// // Dibuja muros con la información de draw start y draw end
+ 	// 	verLine(rc, x);
 		x++;
 	}
-	player_movement(rc);
 	mlx_put_image_to_window(rc->img.ptr, rc->img.win, rc->img.img, 0, 0);
 	mlx_destroy_image(rc->img.ptr, rc->img.img);
+	player_movement(rc);
 	return(0);
 }
