@@ -1,11 +1,11 @@
-R 800 600
-NO ./wolftex1/greystone.png
-SO ./wolftex1/redbrick.png
-EA ./wolftex1/wood.png
-WE ./wolftex1/wood.png
-S ./wolftex1/barrel.png
-F 130,131,132
-C 150,151,152
+R 1920 1080
+NO ./textures/bluestone.xpm
+SO ./textures/redbrick.xpm
+EA ./textures/wood.xpm
+WE ./textures/mossy.xpm
+S ./textures/pillar.xpm
+F 192,64,64
+C 86,167,220
 
 11111111111111
 10000000000001
