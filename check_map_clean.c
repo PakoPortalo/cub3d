@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_clean.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2021/01/12 10:04:30 by tamagotchi       ###   ########.fr       */
+/*   Updated: 2021/02/11 13:49:21 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,27 @@ void		find_origin(mapstr *raw, mapclean *map)
 void		flood_fill(mapstr *raw, int y, int x)
 {
 	check_border(raw, y, x);
+	if (raw->map[y][x] == '2')
+		raw->sprite_count++;
 	if (ft_strchr("NSWE0 ", raw->map[y][x]))
 		raw->map[y][x] = '3';
-	if (raw->map[y - 1][x] != '1' && raw->map[y - 1][x] != '3')
+	if (raw->map[y][x] == '2')
+		raw->map[y][x] = '4';
+	if (raw->map[y - 1][x] != '1' && raw->map[y - 1][x] != '3' && raw->map[y - 1][x] != '4')
 		flood_fill(raw, y - 1, x);
-	if (raw->map[y][x + 1] != '1' && raw->map[y][x + 1] != '3')
+	if (raw->map[y][x + 1] != '1' && raw->map[y][x + 1] != '3' && raw->map[y][x + 1] != '4')
 		flood_fill(raw, y, x + 1);
-	if (raw->map[y + 1][x] != '1' && raw->map[y + 1][x] != '3')
+	if (raw->map[y + 1][x] != '1' && raw->map[y + 1][x] != '3' && raw->map[y + 1][x] != '4')
 		flood_fill(raw, y + 1, x);
-	if (raw->map[y][x - 1] != '1' && raw->map[y][x - 1] != '3')
+	if (raw->map[y][x - 1] != '1' && raw->map[y][x - 1] != '3' && raw->map[y][x - 1] != '4')
 		flood_fill(raw, y, x - 1);
-	if (raw->map[y + 1][x + 1] != '1' && raw->map[y + 1][x + 1] != '3')
+	if (raw->map[y + 1][x + 1] != '1' && raw->map[y + 1][x + 1] != '3' && raw->map[y + 1][x + 1] != '4')
 		flood_fill(raw, y + 1, x + 1);
-	if (raw->map[y - 1][x + 1] != '1' && raw->map[y - 1][x + 1] != '3')
+	if (raw->map[y - 1][x + 1] != '1' && raw->map[y - 1][x + 1] != '3' && raw->map[y - 1][x + 1] != '4')
 		flood_fill(raw, y - 1, x + 1);
-	if (raw->map[y - 1][x - 1] != '1' && raw->map[y - 1][x - 1] != '3')
+	if (raw->map[y - 1][x - 1] != '1' && raw->map[y - 1][x - 1] != '3' && raw->map[y - 1][x - 1] != '4')
 		flood_fill(raw, y - 1, x - 1);
-	if (raw->map[y + 1][x - 1] != '1' && raw->map[y + 1][x - 1] != '3')
+	if (raw->map[y + 1][x - 1] != '1' && raw->map[y + 1][x - 1] != '3' && raw->map[y + 1][x - 1] != '4')
 		flood_fill(raw, y + 1, x - 1);
 	if (raw->map[y][x] == '\0')
 	{
@@ -96,7 +100,7 @@ void		check_map(mapstr *raw, mapclean *map)
 		perror("Error\nYou need to introduce a correct map");
 		exit(6);
 	}
-	// map->map = raw->map;
 	find_origin(raw, map);
 	flood_fill(raw, raw->y, raw->x);
+	map->sprite_count = raw->sprite_count;
 }

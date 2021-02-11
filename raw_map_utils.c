@@ -6,17 +6,18 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 13:41:55 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 13:42:59 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:28:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void			check_number_lines(mapstr *raw, mapconfig *num)
+void			check_number_lines(mapstr *raw, mapconfig *num, mapclean *map)
 {
 	int			i;
 
 	i = 0;
+	map->rows = raw->rows;
 	if (!raw->res || !raw->north || !raw->south || !raw->west || !raw->east || \
 	!raw->sprite || !raw->floor || !raw->ceil || !raw->map || !raw->rows || \
 	num->res != 1 || num->north != 1 || num->south != 1 || num->west != 1 || \

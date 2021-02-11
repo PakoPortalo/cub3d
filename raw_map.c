@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 13:43:27 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:27:38 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,12 @@ void			get_raw_line(mapstr *raw, char *file, mapconfig *num)
 	get_map(raw, line, file);
 }
 
-void			raw_info(char *file, mapstr *raw)
+void			raw_info(char *file, mapstr *raw, mapclean *map)
 {
 	mapconfig	num;
 
 	iniraw(raw);
 	ininum(&num);
 	get_raw_line(raw, file, &num);
-	check_number_lines(raw, &num);
+	check_number_lines(raw, &num, map);
 }

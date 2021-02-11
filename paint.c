@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/09 15:48:52 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/11 17:12:59 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	load_texture(t_data *img, t_tex_img *texture, char *path)
 											&texture->width, &texture->height);
 	texture->img.addr = mlx_get_data_addr(texture->img.img, &texture->img.bits_per_pixel, \
 							&texture->img.line_length, &texture->img.endian);
-	printf("bits per pixel: %d\n", texture->img.bits_per_pixel);
 }
 
 void	load_all_textures(t_raycast *rc)
@@ -41,6 +40,61 @@ void	orientation_input(double dirX, double dirY, double plX, double plY, t_rayca
 	rc->planeY = plY;
 }
 
+void	swap_swap(t_sprite *ptr1, t_sprite *ptr2)
+{
+	t_sprite	aux;
+
+	aux = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = aux;
+}
+
+void	sort_sprites(t_raycast *rc)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < rc->map.sprite_count)
+	{
+		j = 0;
+		while (j < rc->map.sprite_count - i - 1)
+		{
+			if (rc->sprite[j].perpdist < rc->sprite[j + 1].perpdist)
+				swap_swap(rc->sprite + j, rc->sprite + j + 1);
+			j++; 
+		}
+		i++;
+	}
+}
+
+void	save_sprites(t_raycast *rc)
+{
+	int i;
+	int j;
+	int sprite;
+
+	i = 0;
+	sprite = 0;
+	while (i < rc->map.rows && sprite < rc->map.sprite_count)
+	{
+		j = 0;
+		while(rc->map.map[i][j])
+		{
+			if (rc->map.map[i][j] == '4')
+			{
+				rc->sprite[sprite].x = i;
+				rc->sprite[sprite].y = j;
+				rc->sprite[sprite].perpdist = pow(rc->posX - i, 2.0) + pow(rc->posY - j, 2.0);
+				sprite++;
+			}
+			j++;
+		}
+		i++;
+	}
+	sort_sprites(rc);
+}
+
 int		raycast_start(t_raycast *rc)
 {
 	rc->posX = (double)rc->map.y + 0.5f;
@@ -55,6 +109,12 @@ int		raycast_start(t_raycast *rc)
 		orientation_input(0, 1, 0.66, 0, rc);
 	if (rc->map.orientation == 'W')
 		orientation_input(0, -1, -0.66, 0, rc);
+	if(rc->map.sprite_count > 0)
+	{
+		rc->sprite = (t_sprite *)malloc(sizeof(t_sprite) * rc->map.sprite_count);
+		save_sprites(rc);
+	}
+
 	return(1);
 }
 
@@ -69,7 +129,6 @@ int			printer_cub3d(mapclean *map)
 
 	rc.map = *map;
 	rc.img = img;
-
 	inihandlekeys(&keys);
 	rc.keys = keys;
 	iniraycast(&rc);

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/09 15:37:21 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:29:11 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void		iniraw(mapstr *raw)
 	raw->varnum = 0;
 	raw->x = 0;
 	raw->y = 0;
+	raw->sprite_count = 0;
 }
 
 void		inimap(mapclean *map)
@@ -48,6 +49,8 @@ void		inimap(mapclean *map)
 	map->x = 0;
 	map->y = 0;
 	map->orientation = '0';
+	map->sprite_count = 0;
+	map->rows = 0;
 }
 
 void		ininum(mapconfig *num)
@@ -88,8 +91,8 @@ void		iniraycast(t_raycast *rc)
 	rc->drawStart = 0;
 	rc->drawEnd = 0;
 	// rc->frameTime = 0;
-	rc->moveSpeed = 0.05;
-	rc->rotSpeed = 0.06;
+	rc->moveSpeed = 0.08;
+	rc->rotSpeed = 0.08;
 	rc->oldDirX = 0;
 	rc->oldPlaneX = 0;
 	

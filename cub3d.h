@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/09 15:49:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:49:29 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ typedef struct mapstr {
 	char	**map;
 	int		rows;
 	int		varnum;
-	int x;
-	int y;
+	int		x;
+	int		y;
+	int		sprite_count;
 } mapstr;
 
 
@@ -61,6 +62,8 @@ typedef struct mapclean {
 	int		x;
 	int		y;
 	char	orientation;
+	int		sprite_count;
+	int		rows;
 } mapclean;
 
 typedef struct mapconfig
@@ -74,6 +77,19 @@ typedef struct mapconfig
 	int floor;
 	int ceil;
 } mapconfig;
+
+typedef struct	s_sprite
+{
+	int			x;
+	int			y;
+	int			width;
+	int			height;
+	double		perpdist;
+	int			draw_x[2];
+	int			draw_y[2];
+	int			print_x;
+	int			tex[2];
+}				t_sprite;
 
 typedef struct	s_data {
 	void		*ptr;
@@ -148,12 +164,13 @@ typedef struct	s_raycast {
 	double			step;
 	double			texPos;
 	int				texY;
+	t_sprite		*sprite;
 }				t_raycast;
 
 int		cub3d(int argc, char **argv);
 void	check_ini_errors(int argc, char **argv);
 int		check_extension(char *file, char *ext);
-void	raw_info(char *file, mapstr *raw);
+void	raw_info(char *file, mapstr *raw, mapclean *map);
 void	save_map_info(mapstr *raw, mapclean *map);
 void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
@@ -179,7 +196,7 @@ char	*check_spaces(char *texturepath);
 void	number_textures(char **texture);
 void	check_border(mapstr *raw, int y, int x);
 void	get_coordinates(int *x, int *y, mapstr *raw, mapclean *map);
-void	check_number_lines(mapstr *raw, mapconfig *num);
+void	check_number_lines(mapstr *raw, mapconfig *num, mapclean *map);
 void	get_raws(char **path, int *num, char *line);
 void	map_file_error(void);
 

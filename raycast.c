@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/09 16:13:39 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:16:42 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,23 +138,23 @@ void	ft_raydir(t_raycast *rc, int x)
 
 void	ft_deltadist(t_raycast *rc)
 {
-	// if (rc->rayDirX == 0)
-	// {
-	// 	rc->deltaDistX = 1;
-	// 	rc->deltaDistY = 0;
-	// }
-	// else if (rc->rayDirY == 0)
-	// {
-	// 	rc->deltaDistX = 0;
-	// 	rc->deltaDistY = 1;
-	// }
-	// else
-	// {
-		// rc->deltaDistX = fabs(1 / rc->rayDirX);
-		// rc->deltaDistY = fabs(1 / rc->rayDirY);
-	// }
-	rc->deltaDistX = sqrt(1 + (rc->rayDirY * rc->rayDirY) / (rc->rayDirX * rc->rayDirX));
-	rc->deltaDistY = sqrt(1 + (rc->rayDirX * rc->rayDirX) / (rc->rayDirY * rc->rayDirY));
+	if (rc->rayDirX == 0)
+	{
+		rc->deltaDistX = 1;
+		rc->deltaDistY = 0;
+	}
+	else if (rc->rayDirY == 0)
+	{
+		rc->deltaDistX = 0;
+		rc->deltaDistY = 1;
+	}
+	else
+	{
+		rc->deltaDistX = fabs(1 / rc->rayDirX);
+		rc->deltaDistY = fabs(1 / rc->rayDirY);
+	}
+	// rc->deltaDistX = sqrt(1 + (rc->rayDirY * rc->rayDirY) / (rc->rayDirX * rc->rayDirX));
+	// rc->deltaDistY = sqrt(1 + (rc->rayDirX * rc->rayDirX) / (rc->rayDirY * rc->rayDirY));
 }
 
 void	ft_sidedist(t_raycast *rc)
@@ -198,7 +198,7 @@ void	ft_rayhit(t_raycast *rc)
 			rc->mapY += rc->stepY;
 			rc->side = 1;
 		}
-		if(rc->map.map[rc->mapX][rc->mapY] == '1' || rc->map.map[rc->mapX][rc->mapY] == '2')
+		if(rc->map.map[rc->mapX][rc->mapY] == '1')
 			rc->hit = 1;
 	}
 }
