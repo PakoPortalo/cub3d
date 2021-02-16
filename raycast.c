@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 16:16:42 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:22:29 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,17 @@ void		my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int			get_pixel(t_data *frame, int x, int y)
+void		buffer_pixel(t_data *data, int x, int y, int color)
+{
+	*(int*)(data->addr + (y * data->line_length + x * \
+			(data->bits_per_pixel / 8))) = color;
+}
+
+int			get_pixel(t_data *data, int x, int y)
 {
 	char	*dst;
 
-	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	return (*(unsigned int*)dst);
 }
 
@@ -61,30 +67,30 @@ int		move_player(t_raycast *rc, double moveX, double moveY)
 {
 	if(rc->keys.up == 1)
 	{
-		if(rc->map.map[(int)(rc->posX + moveX)][(int)(rc->posY)] != '1')
+		if(rc->map.map[(int)(rc->posX + moveX)][(int)(rc->posY)] == '3')
 			rc->posX += moveX;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveY)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveY)] == '3')
 			rc->posY += moveY;
 	}
 	if(rc->keys.down == 1)
 	{
-		if(rc->map.map[(int)(rc->posX - moveX)][(int)(rc->posY)] != '1')
+		if(rc->map.map[(int)(rc->posX - moveX)][(int)(rc->posY)] == '3')
 			rc->posX -= moveX;
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveY)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveY)] == '3')
 			rc->posY -= moveY;
 	}
 	if(rc->keys.left == 1)
 	{
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveX)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY + moveX)] == '3')
 			rc->posY += moveX;
-		if(rc->map.map[(int)(rc->posX - moveY)][(int)(rc->posY)] != '1')
+		if(rc->map.map[(int)(rc->posX - moveY)][(int)(rc->posY)] == '3')
 			rc->posX -= moveY;
 	}
 	if(rc->keys.right == 1)
 	{
-		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveX)] != '1')
+		if(rc->map.map[(int)(rc->posX)][(int)(rc->posY - moveX)] == '3')
 			rc->posY -= moveX;
-		if(rc->map.map[(int)(rc->posX + moveY)][(int)(rc->posY)] != '1')
+		if(rc->map.map[(int)(rc->posX + moveY)][(int)(rc->posY)] == '3')
 			rc->posX += moveY;
 	}
 	return (1);
@@ -293,8 +299,87 @@ void	ft_buffer(t_raycast *rc, int x)
 
 	//paint lines
 	buffer_line(rc, texture, x, line_height);
+}
 
+void	sprite_calc(t_raycast *rc, t_sprite *sprite, int i)
+{
+	sprite->x = rc->sprite[i].x - rc->posX + 0.5;
+	sprite->y = rc->sprite[i].y - rc->posY + 0.5;
 
+	sprite->inv_det = 1.0 / ((rc->planeX * rc->dirY) - (rc->dirX * rc->planeY));
+
+	sprite->transform_x = sprite->inv_det * ((rc->dirY * sprite->x) - (rc->dirX * sprite->y));
+	sprite->transform_y = sprite->inv_det * ((-rc->planeY * sprite->x) + (rc->planeX * sprite->y));
+
+	sprite->screen_x = (int)((rc->map.w / 2) * (1 + sprite->transform_x / sprite->transform_y));
+
+	sprite->height = abs((int)(rc->map.h / sprite->transform_y));
+	sprite->draw_start_y = (-sprite->height / 2) + (rc->map.h / 2);
+	if (sprite->draw_start_y < 0)
+		sprite->draw_start_y = 0;
+	sprite->draw_end_y = (sprite->height / 2) + (rc->map.h / 2);
+	if (sprite->draw_end_y >= rc->map.h)
+		sprite->draw_end_y = rc->map.h - 1;
+
+	sprite->width = abs((int)(rc->map.h / sprite->transform_y));
+	sprite->draw_start_x = (-sprite->width / 2) + sprite->screen_x;
+	if (sprite->draw_start_x < 0)
+		sprite->draw_start_x = 0;
+	sprite->draw_end_x = (sprite->width / 2) + sprite->screen_x;
+	if (sprite->draw_end_x >= rc->map.w)
+		sprite->draw_end_x = rc->map.w - 1;	
+}
+
+void	stripe_put(t_raycast *rc, t_sprite *sprite, int x, t_tex_img *tex)
+{
+	int		d;
+	int		y;
+	int		color;
+
+	y= 0;
+	sprite->tex_x = (int)(256 * (x - (-sprite->width / 2 + sprite->screen_x)) \
+	* tex->width / sprite->width) / 256;
+	if (sprite->transform_y > 0 && x > 0 && x < rc->map.w && sprite->transform_y < rc->zBuffer[x])
+	{
+		y = sprite->draw_start_y;
+		while (y < sprite->draw_end_y)
+		{
+			d = y * 256 - (rc->map.h * 128) + (sprite->height * 128);
+			sprite->tex_y = ((d * tex->height) / sprite->height) / 256;
+			if (sprite->tex_y < 0)
+				sprite->tex_y = 0;
+			color = get_pixel(&tex->img, sprite->tex_x, sprite->tex_y);
+			if ((color & 0x00FFFFFF) != 0)
+				my_mlx_pixel_put(&rc->img, x, y, color);
+			y++;
+		}
+
+	}
+
+}
+
+void	ft_sprites(t_raycast *rc)
+{
+	int			i;
+	int			scount;
+	t_sprite	sprite;
+	t_tex_img	tex;
+
+	i = 0;
+	tex = rc->tex.textures[4];
+	inisprite(&sprite);
+	save_sprites(rc);
+	while(i < rc->map.sprite_count)
+	{
+		sprite_calc(rc, &sprite, i);
+		scount = sprite.draw_start_x;
+		while(scount < sprite.draw_end_x)
+		{
+			stripe_put(rc, &sprite, scount, &tex);
+			scount++;
+		}
+		i++;
+	}
 }
 
 int		raycast_maths(t_raycast *rc)
@@ -307,6 +392,7 @@ int		raycast_maths(t_raycast *rc)
 								&rc->img.endian);
 	while(x < rc->map.w)
 	{
+
 		rc->mapX = (int)rc->posX;
 		rc->mapY = (int)rc->posY;
 		ft_raydir(rc, x);
@@ -314,19 +400,12 @@ int		raycast_maths(t_raycast *rc)
 		ft_sidedist(rc);
 		ft_rayhit(rc);
 		ft_walldist(rc);
+		rc->zBuffer[x] = rc->perpWallDist;
 		ft_buffer(rc, x);
-	// rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
-	// rc->drawStart = -rc->lineHeight / 2  + rc->map.h / 2;
-	// if(rc->drawStart < 0)
-	// 	rc->drawStart = 0;
-		
-	// rc->drawEnd = rc->lineHeight / 2 + rc->map.h / 2;
-	// if (rc->drawEnd >= rc->map.h)
-	// 	rc->drawEnd = rc->map.h - 1;
-	// 	// // Dibuja muros con la información de draw start y draw end
- 	// 	verLine(rc, x);
 		x++;
 	}
+	if (rc->map.sprite_count)
+		ft_sprites(rc);
 	mlx_put_image_to_window(rc->img.ptr, rc->img.win, rc->img.img, 0, 0);
 	mlx_destroy_image(rc->img.ptr, rc->img.img);
 	player_movement(rc);

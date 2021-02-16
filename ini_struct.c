@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 16:29:11 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/16 16:52:27 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,24 @@ void		ininum(mapconfig *num)
 	num->ceil = 0;
 }
 
+void		inisprite(t_sprite *s)
+{
+	s->x = 0;
+	s->y = 0;
+	s->inv_det = 0;
+	s->transform_x = 0;
+	s->transform_y = 0;
+	s->screen_x = 0;
+	s->screen_y = 0;
+	s->height = 0;
+	s->width = 0;
+	s->draw_start_x = 0;
+	s->draw_end_x = 0;
+	s->draw_start_y = 0;
+	s->draw_end_y = 0;
+	s->tex_x = 0;
+	s->tex_y = 0;
+}
 void		iniraycast(t_raycast *rc)
 {
 	rc->posX = 0;
@@ -102,6 +120,11 @@ void		iniraycast(t_raycast *rc)
 	// rc->step = 0;
 	// rc->texPos = 0;
 	rc->texY = 0;
+
+
+	// rc->width = 0;
+	// rc->height = 0;
+	// rc->zBuffer = 0;
 }
 
 void	inihandlekeys(t_handlekeys *keys)
@@ -113,3 +136,21 @@ void	inihandlekeys(t_handlekeys *keys)
 	keys->rotLeft = 0;
 	keys->rotRight = 0;
 }
+
+// void	inisprite(t_sprite *sprite)
+// {
+// 	sprite->x = 0;
+// 	sprite->y = 0;
+// 	sprite->xRel = 0;		//spriteX
+// 	sprite->yRel = 0;		//spriteY
+// 	sprite->invDet = 0;
+// 	sprite->transformX = 0;
+// 	sprite->transformY = 0;
+// 	sprite->spriteScreenX = 0;
+// 	sprite->spriteHeight = 0;
+// 	sprite->drawStartY = 0;
+// 	sprite->drawEndX = 0;
+// 	sprite->width = 0;
+// 	sprite->height = 0;
+// 	sprite->perpdist = 0;
+// }

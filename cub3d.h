@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 16:49:29 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:21:59 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,23 @@ typedef struct mapconfig
 
 typedef struct	s_sprite
 {
-	int			x;
-	int			y;
-	int			width;
+	double		x;
+	double		y;
+	double		inv_det;
+	double 		transform_x;
+	double 		transform_y;
+	int			screen_x;
+	int			screen_y;
 	int			height;
+	int			width;
+	int			draw_start_x;
+	int			draw_end_x;
+	int			draw_start_y;
+	int			draw_end_y;
+	int			tex_x;
+	int			tex_y;
+
 	double		perpdist;
-	int			draw_x[2];
-	int			draw_y[2];
-	int			print_x;
-	int			tex[2];
 }				t_sprite;
 
 typedef struct	s_data {
@@ -164,8 +172,22 @@ typedef struct	s_raycast {
 	double			step;
 	double			texPos;
 	int				texY;
+	
 	t_sprite		*sprite;
-}				t_raycast;
+	// double			spriteX;
+	// double			spriteY;
+	// double			invDet;
+	// double			transformX;
+	// double			transformY;
+	// int				spriteScreenX;
+	// int				spriteHeight;
+	// int				drawStartY;
+	// int				drawEndY;
+	// int				drawStartX;
+	// int				drawEndX;
+	// int				spriteWidth;
+	double	*zBuffer;
+}					t_raycast;
 
 int		cub3d(int argc, char **argv);
 void	check_ini_errors(int argc, char **argv);
@@ -209,8 +231,12 @@ int		funky_func_keyrelease(int keycode, t_raycast *rc);
 int		exit_win(int keycode);
 
 void		print_square(t_data *data, int color);
-
+void		inisprite(t_sprite *sprite);
 void		inihandlekeys(t_handlekeys *keys);
+void		sort_sprites(t_raycast *rc);
+void		inisprite(t_sprite *s);
+void		save_sprites(t_raycast *rc);
+
 
 
 #endif

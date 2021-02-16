@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 17:12:59 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:21:11 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	load_all_textures(t_raycast *rc)
 	load_texture(&rc->img, &rc->tex.textures[1], rc->map.south);
 	load_texture(&rc->img, &rc->tex.textures[2], rc->map.east);
 	load_texture(&rc->img, &rc->tex.textures[3], rc->map.west);
+	load_texture(&rc->img, &rc->tex.textures[4], rc->map.sprite);
 }
 
 void	orientation_input(double dirX, double dirY, double plX, double plY, t_raycast *rc)
@@ -101,6 +102,7 @@ int		raycast_start(t_raycast *rc)
 	rc->posY = (double)rc->map.x + 0.5f;
 
 	load_all_textures(rc);
+	rc->zBuffer = malloc(sizeof(double) * rc->map.w);
 	if (rc->map.orientation == 'N')
 		orientation_input(-1, 0, 0, 0.66, rc);
 	if (rc->map.orientation == 'S')
