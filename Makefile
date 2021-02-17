@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tamagotchi <tamagotchi@student.42.fr>      +#+  +:+       +#+         #
+#    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2021/01/12 11:41:07 by tamagotchi       ###   ########.fr        #
+#    Updated: 2021/02/17 17:43:04 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ FLAGS = -Werror -Wextra -Wall -I.
 
 FILES = cub3D.c ini_errors.c ini_struct.c map_clean.c resolution_map_clean.c \
 		floorceil_map_clean.c check_map_clean.c texture_map_clean.c raw_map.c main.c \
-		map_clean_utils1.c map_clean_utils2.c raw_map_utils.c paint.c  raycast.c
+		map_clean_utils1.c map_clean_utils2.c raw_map_utils.c paint.c raycast.c \
+		raycast_calcs.c paint_tools.c paint_textures.c paint_sprites.c
 
 FILESMAC = hooks_mac.c
 
@@ -31,6 +32,8 @@ LIBFT = -L ./libft/ -lft
 INI = && ./cub3D map.cub
 
 UNAME := $(shell uname)
+
+NORMI = norminette
 
 ifeq ($(UNAME), Darwin)
 	MLX :=  -Imlx_mac -Lmlx_mac -lmlx -framework OpenGL -framework AppKit
@@ -50,7 +53,8 @@ all:
 	@$(CC)  $(FLAGS) -g $(FILES) $(FILESLINUX) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
 endif
 
-
+normi:
+	@$(NORMI) $(FILES) $(FILESMAC) $(FILESLINUX)
 
 
 debug:

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/16 17:21:59 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:47:48 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,22 @@ void		inihandlekeys(t_handlekeys *keys);
 void		sort_sprites(t_raycast *rc);
 void		inisprite(t_sprite *s);
 void		save_sprites(t_raycast *rc);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		buffer_pixel(t_data *data, int x, int y, int color);
+int			get_pixel(t_data *data, int x, int y);
+int			rgb_to_hex(int t, int r, int g, int b);
+void		ft_buffer(t_raycast *rc, int x);
+void		buffer_line(t_raycast *rc, t_tex_img *tex, int x, int line_height);
+void		sprite_calc(t_raycast *rc, t_sprite *sprite, int i);
+void		stripe_put(t_raycast *rc, t_sprite *sprite, int x, t_tex_img *tex);
+void		ft_sprites(t_raycast *rc);
+void	ft_raydir(t_raycast *rc, int x);
+void	ft_deltadist(t_raycast *rc);
+void	ft_sidedist(t_raycast *rc);
+void	ft_rayhit(t_raycast *rc);
+void	ft_walldist(t_raycast *rc);
+
+
 
 
 
