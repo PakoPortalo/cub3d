@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ini_struct.c                                       :+:      :+:    :+:   */
+/*   ini_struct_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/16 16:52:27 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/17 19:33:57 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		iniraw(mapstr *raw)
+void	iniraw(mapstr *raw)
 {
 	raw->res = NULL;
 	raw->north = NULL;
@@ -30,7 +30,7 @@ void		iniraw(mapstr *raw)
 	raw->sprite_count = 0;
 }
 
-void		inimap(mapclean *map)
+void	inimap(mapclean *map)
 {
 	map->w = 0;
 	map->h = 0;
@@ -53,7 +53,7 @@ void		inimap(mapclean *map)
 	map->rows = 0;
 }
 
-void		ininum(mapconfig *num)
+void	ininum(mapconfig *num)
 {
 	num->res = 0;
 	num->north = 0;
@@ -65,7 +65,7 @@ void		ininum(mapconfig *num)
 	num->ceil = 0;
 }
 
-void		inisprite(t_sprite *s)
+void	inisprite(t_sprite *s)
 {
 	s->x = 0;
 	s->y = 0;
@@ -83,49 +83,6 @@ void		inisprite(t_sprite *s)
 	s->tex_x = 0;
 	s->tex_y = 0;
 }
-void		iniraycast(t_raycast *rc)
-{
-	rc->posX = 0;
-	rc->posY = 0;
-	rc->dirX = 0;
-	rc->dirY = 0;
-	rc->planeX = 0;
-	rc->planeY = 0;
-	rc->cameraX = 0;
-	rc->rayDirX = 0;
-	rc->rayDirY = 0;
-	rc->mapX = 0;
-	rc->mapY = 0;
-	rc->sideDistX = 0;
-	rc->sideDistY = 0;
-	rc->deltaDistX = 0;
-	rc->deltaDistY = 0;
-	rc->perpWallDist = 0;
-	rc->stepX = 0;
-	rc->stepY = 0;
-	rc->hit = 0;
-	rc->side = 0;
-	rc->lineHeight = 0;
-	rc->drawStart = 0;
-	rc->drawEnd = 0;
-	// rc->frameTime = 0;
-	rc->moveSpeed = 0.08;
-	rc->rotSpeed = 0.08;
-	rc->oldDirX = 0;
-	rc->oldPlaneX = 0;
-	
-	rc->texNum = 0;
-	rc->wallX = 0;
-	rc->texX = 0;
-	// rc->step = 0;
-	// rc->texPos = 0;
-	rc->texY = 0;
-
-
-	// rc->width = 0;
-	// rc->height = 0;
-	// rc->zBuffer = 0;
-}
 
 void	inihandlekeys(t_handlekeys *keys)
 {
@@ -136,21 +93,3 @@ void	inihandlekeys(t_handlekeys *keys)
 	keys->rotLeft = 0;
 	keys->rotRight = 0;
 }
-
-// void	inisprite(t_sprite *sprite)
-// {
-// 	sprite->x = 0;
-// 	sprite->y = 0;
-// 	sprite->xRel = 0;		//spriteX
-// 	sprite->yRel = 0;		//spriteY
-// 	sprite->invDet = 0;
-// 	sprite->transformX = 0;
-// 	sprite->transformY = 0;
-// 	sprite->spriteScreenX = 0;
-// 	sprite->spriteHeight = 0;
-// 	sprite->drawStartY = 0;
-// 	sprite->drawEndX = 0;
-// 	sprite->width = 0;
-// 	sprite->height = 0;
-// 	sprite->perpdist = 0;
-// }

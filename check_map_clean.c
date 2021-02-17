@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 13:49:21 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/17 19:16:29 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,40 @@ void		flood_fill(mapstr *raw, int y, int x)
 		raw->map[y][x] = '3';
 	if (raw->map[y][x] == '2')
 		raw->map[y][x] = '4';
-	if (raw->map[y - 1][x] != '1' && raw->map[y - 1][x] != '3' && raw->map[y - 1][x] != '4')
-		flood_fill(raw, y - 1, x);
-	if (raw->map[y][x + 1] != '1' && raw->map[y][x + 1] != '3' && raw->map[y][x + 1] != '4')
-		flood_fill(raw, y, x + 1);
-	if (raw->map[y + 1][x] != '1' && raw->map[y + 1][x] != '3' && raw->map[y + 1][x] != '4')
-		flood_fill(raw, y + 1, x);
-	if (raw->map[y][x - 1] != '1' && raw->map[y][x - 1] != '3' && raw->map[y][x - 1] != '4')
-		flood_fill(raw, y, x - 1);
-	if (raw->map[y + 1][x + 1] != '1' && raw->map[y + 1][x + 1] != '3' && raw->map[y + 1][x + 1] != '4')
-		flood_fill(raw, y + 1, x + 1);
-	if (raw->map[y - 1][x + 1] != '1' && raw->map[y - 1][x + 1] != '3' && raw->map[y - 1][x + 1] != '4')
-		flood_fill(raw, y - 1, x + 1);
-	if (raw->map[y - 1][x - 1] != '1' && raw->map[y - 1][x - 1] != '3' && raw->map[y - 1][x - 1] != '4')
-		flood_fill(raw, y - 1, x - 1);
-	if (raw->map[y + 1][x - 1] != '1' && raw->map[y + 1][x - 1] != '3' && raw->map[y + 1][x - 1] != '4')
-		flood_fill(raw, y + 1, x - 1);
+	flood_fill_sub(raw, y, x);
 	if (raw->map[y][x] == '\0')
 	{
 		perror("Error\nYou need to introduce a correct map");
 		exit(6);
 	}
+}
+
+void		flood_fill_sub(mapstr *raw, int y, int x)
+{
+	if (raw->map[y - 1][x] != '1' && raw->map[y - 1][x] != '3' \
+	&& raw->map[y - 1][x] != '4')
+		flood_fill(raw, y - 1, x);
+	if (raw->map[y][x + 1] != '1' && raw->map[y][x + 1] != '3' \
+	&& raw->map[y][x + 1] != '4')
+		flood_fill(raw, y, x + 1);
+	if (raw->map[y + 1][x] != '1' && raw->map[y + 1][x] != '3' \
+	&& raw->map[y + 1][x] != '4')
+		flood_fill(raw, y + 1, x);
+	if (raw->map[y][x - 1] != '1' && raw->map[y][x - 1] != '3' \
+	&& raw->map[y][x - 1] != '4')
+		flood_fill(raw, y, x - 1);
+	if (raw->map[y + 1][x + 1] != '1' && raw->map[y + 1][x + 1] != '3' \
+	&& raw->map[y + 1][x + 1] != '4')
+		flood_fill(raw, y + 1, x + 1);
+	if (raw->map[y - 1][x + 1] != '1' && raw->map[y - 1][x + 1] != '3' \
+	&& raw->map[y - 1][x + 1] != '4')
+		flood_fill(raw, y - 1, x + 1);
+	if (raw->map[y - 1][x - 1] != '1' && raw->map[y - 1][x - 1] != '3' \
+	&& raw->map[y - 1][x - 1] != '4')
+		flood_fill(raw, y - 1, x - 1);
+	if (raw->map[y + 1][x - 1] != '1' && raw->map[y + 1][x - 1] != '3' \
+	&& raw->map[y + 1][x - 1] != '4')
+		flood_fill(raw, y + 1, x - 1);
 }
 
 void		check_map(mapstr *raw, mapclean *map)

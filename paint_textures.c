@@ -6,12 +6,11 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:36:53 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 18:49:03 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:53:39 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 void		buffer_line(t_raycast *rc, t_tex_img *tex, int x, int line_height)
 {
@@ -25,13 +24,11 @@ void		buffer_line(t_raycast *rc, t_tex_img *tex, int x, int line_height)
 	while (i < rc->map.h)
 	{
 		if (i < rc->drawStart)
-			my_mlx_pixel_put(&rc->img, x, i, \
-				rgb_to_hex(0, rc->map.ceil[0], \
-				rc->map.ceil[1], rc->map.ceil[2]));
+			my_mlx_pixel_put(&rc->img, x, i, rgb_to_hex(0, \
+				rc->map.ceil[0], rc->map.ceil[1], rc->map.ceil[2]));
 		else if (i >= rc->drawEnd)
-			my_mlx_pixel_put(&rc->img, x, i, \
-				rgb_to_hex(0, rc->map.floor[0], \
-				rc->map.floor[1], rc->map.floor[2]));
+			my_mlx_pixel_put(&rc->img, x, i, rgb_to_hex(0, \
+				rc->map.floor[0], rc->map.floor[1], rc->map.floor[2]));
 		else if (i > rc->drawStart && i < rc->drawEnd)
 		{
 			if ((rc->texY = (int)tex_pos) < 0)
@@ -44,23 +41,23 @@ void		buffer_line(t_raycast *rc, t_tex_img *tex, int x, int line_height)
 	}
 }
 
-// void		get_wall_texture(t_raycast *rc, t_tex_img *texture)
-// {
-// 	if (rc->side == 0)
-// 	{
-// 		if (rc->stepX < 0)
-// 			texture = &rc->tex.textures[0];
-// 		else
-// 			texture = &rc->tex.textures[1];
-// 	}
-// 	else
-// 	{
-// 		if (rc->stepY > 0)
-// 			texture = &rc->tex.textures[2];
-// 		else
-// 			texture = &rc->tex.textures[3];
-// 	}
-// }
+void		get_wall_texture(t_raycast *rc, t_tex_img **texture)
+{
+	if (rc->side == 0)
+	{
+		if (rc->stepX < 0)
+			*texture = &rc->tex.textures[0];
+		else
+			*texture = &rc->tex.textures[1];
+	}
+	else
+	{
+		if (rc->stepY > 0)
+			*texture = &rc->tex.textures[2];
+		else
+			*texture = &rc->tex.textures[3];
+	}
+}
 
 void		ft_buffer(t_raycast *rc, int x)
 {
@@ -75,21 +72,7 @@ void		ft_buffer(t_raycast *rc, int x)
 	rc->drawEnd = line_height / 2 + rc->map.h / 2;
 	if (rc->drawEnd >= rc->map.h)
 		rc->drawEnd = rc->map.h - 1;
-	// get_wall_texture(rc, &texture);
-	if (rc->side == 0)
-	{
-		if (rc->stepX < 0)
-			texture = &rc->tex.textures[0];
-		else
-			texture = &rc->tex.textures[1];
-	}
-	else
-	{
-		if (rc->stepY > 0)
-			texture = &rc->tex.textures[2];
-		else
-			texture = &rc->tex.textures[3];
-	}
+	get_wall_texture(rc, &texture);
 	if (rc->side == 0)
 		rc->wallX = rc->posY + rc->perpWallDist * rc->rayDirY;
 	else

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 18:47:48 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/17 19:34:34 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,8 @@ void	iniraw(mapstr *raw);
 void	inimap(mapclean *map);
 void	ininum(mapconfig *num);
 
-void	iniraycast(t_raycast *rc);
+void	iniraycast_1(t_raycast *rc);
+void	iniraycast_2(t_raycast *rc);
 void	map_to_rc(t_raycast *rc, mapclean *map);
 void	img_to_rc(t_raycast *rc, t_data *img);
 
@@ -209,6 +210,7 @@ void	check_texture(mapstr *raw, mapclean *map);
 int		check_north(mapstr *raw, mapclean *map);
 void	check_floor_ceil(mapstr *raw, mapclean *map);
 void	check_map(mapstr *raw, mapclean *map);
+void	flood_fill_sub(mapstr *raw, int y, int x);
 void	check_number_variables(char **rgb, int i);
 void	comma_counter(char *str);
 char	*floor_ceil_spaces(char *rgb);
@@ -250,6 +252,10 @@ void	ft_deltadist(t_raycast *rc);
 void	ft_sidedist(t_raycast *rc);
 void	ft_rayhit(t_raycast *rc);
 void	ft_walldist(t_raycast *rc);
+void	swap_swap(t_sprite *ptr1, t_sprite *ptr2);
+void	sort_sprites(t_raycast *rc);
+void	save_sprites(t_raycast *rc);
+void	load_all_textures(t_raycast *rc);
 
 
 

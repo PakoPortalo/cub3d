@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:42:31 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 17:42:48 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:59:32 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_raydir(t_raycast *rc, int x)
 {
-		rc->cameraX = 2 * x / (double)rc->map.w - 1;
-		rc->rayDirX = rc->dirX + rc->planeX * rc->cameraX;
-		rc->rayDirY = rc->dirY + rc->planeY * rc->cameraX;
+	rc->cameraX = 2 * x / (double)rc->map.w - 1;
+	rc->rayDirX = rc->dirX + rc->planeX * rc->cameraX;
+	rc->rayDirY = rc->dirY + rc->planeY * rc->cameraX;
 }
 
 void	ft_deltadist(t_raycast *rc)
@@ -51,7 +51,7 @@ void	ft_sidedist(t_raycast *rc)
 		rc->stepX = 1;
 		rc->sideDistX = (rc->mapX + 1.0 - rc->posX) * rc->deltaDistX;
 	}
-	if(rc->rayDirY < 0)
+	if (rc->rayDirY < 0)
 	{
 		rc->stepY = -1;
 		rc->sideDistY = (rc->posY - rc->mapY) * rc->deltaDistY;
@@ -67,7 +67,7 @@ void	ft_rayhit(t_raycast *rc)
 {
 	while (rc->hit == 0)
 	{
-		if(rc->sideDistX < rc->sideDistY)
+		if (rc->sideDistX < rc->sideDistY)
 		{
 			rc->sideDistX += rc->deltaDistX;
 			rc->mapX += rc->stepX;
@@ -79,16 +79,18 @@ void	ft_rayhit(t_raycast *rc)
 			rc->mapY += rc->stepY;
 			rc->side = 1;
 		}
-		if(rc->map.map[rc->mapX][rc->mapY] == '1')
+		if (rc->map.map[rc->mapX][rc->mapY] == '1')
 			rc->hit = 1;
 	}
 }
 
 void	ft_walldist(t_raycast *rc)
 {
-	if(rc->side == 0)
-		rc->perpWallDist = (rc->mapX - rc->posX + (1 - rc->stepX) / 2) / rc->rayDirX;
+	if (rc->side == 0)
+		rc->perpWallDist = (rc->mapX - rc->posX + \
+		(1 - rc->stepX) / 2) / rc->rayDirX;
 	else
-		rc->perpWallDist = (rc->mapY - rc->posY + (1 - rc->stepY) / 2) / rc->rayDirY;
+		rc->perpWallDist = (rc->mapY - rc->posY + \
+		(1 - rc->stepY) / 2) / rc->rayDirY;
 	rc->lineHeight = (int)(rc->map.h / rc->perpWallDist);
 }
