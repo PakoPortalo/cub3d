@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 19:35:05 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:46:49 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,12 @@ int		printer_cub3d(mapclean *map)
 	t_handlekeys	keys;
 
 	img.ptr = mlx_init();
-	img.win = mlx_new_window(img.ptr, map->w, map->h, "Hello world!");
+	mlx_get_screen_size(rc.img.ptr, &(map->max_w), &(map->max_h));
+	if (map->max_w < map->w)
+		map->w = map->max_w;
+	if (map->max_h < map->h)	
+		map->h = map->max_h;
+	img.win = mlx_new_window(img.ptr, map->w, map->h, "Pako Portalo's Cub3d");
 	rc.map = *map;
 	rc.img = img;
 	inihandlekeys(&keys);

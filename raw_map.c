@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 14:09:56 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:16:13 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void			get_map(mapstr *raw, char *line, char *file)
 {
 	int			fd;
 	int			i;
+	int			gnl_check;
 
 	i = 0;
 	raw->map = (char **)ft_calloc(sizeof(char *), (raw->rows + 2));
 	fd = open(file, O_RDONLY);
-	while ((get_next_line(fd, &line)) > 0)
+	while (((gnl_check = get_next_line(fd, &line)) > 0))
 	{
-		// line = handle_spaces(line);
 		if (!ft_strchr("RNSWESFC", *line))
 		{
 			if (!raw->map)
@@ -51,8 +51,6 @@ void			get_map(mapstr *raw, char *line, char *file)
 		free(line);
 	}
 	raw->map[i] = ft_strdup(line);
-	// if (line[0] != '\0')
-	// 	raw->rows++;
 	free(line);
 	close(fd);
 }

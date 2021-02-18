@@ -6,11 +6,26 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 13:05:12 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:28:30 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+char			*handle_resolution_spaces(char *line)
+{
+	char		*temp;
+
+	temp = line;
+	while (temp[0] == ' ' || temp[0] == '\t')
+	{
+		if (temp[0] == ' ')
+			temp = ft_strtrim(temp, " ");
+		if (temp[0] == '\t')
+			temp = ft_strtrim(temp, "\t");
+	}
+	return (temp);
+}
 
 void		check_res_arguments(char **resolution)
 {
@@ -56,6 +71,8 @@ void		check_resolution(mapstr *raw, mapclean *map)
 
 	resolution = ft_split(raw->res, ' ');
 	check_res_arguments(resolution);
+	resolution[1] = handle_resolution_spaces(resolution[1]);
+	resolution[2] = handle_resolution_spaces(resolution[2]);
 	check_res_isdigit(resolution);
 	map->w = ft_atoi(resolution[1]);
 	map->h = ft_atoi(resolution[2]);
