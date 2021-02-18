@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:44:28 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 12:28:22 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 13:10:57 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void		get_coordinates(int *x, int *y, mapstr *raw, mapclean *map)
 	}
 }
 
-// void		check_border(mapstr *raw, int y, int x)
-// {
-// 	if (y <= 0 || y >= (raw->rows - 1) || x <= 0 || x >= ((int)ft_strlen(raw->map[y]) - 1))
-// 	{
-// 		perror("Error\nYou need to introduce a correct map\n");
-// 		exit(6);
-// 	}
-// }
+void		check_border(mapstr *raw, int y, int x)
+{
+	if (y <= 0 || y >= (raw->rows - 1) || x <= 0 || x >= ((int)ft_strlen(raw->map[y]) - 1))
+	{
+		perror("Error\nYou need to introduce a correct map\n");
+		exit(6);
+	}
+}

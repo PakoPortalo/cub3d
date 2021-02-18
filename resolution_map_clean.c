@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 10:41:31 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 13:05:12 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void		check_res_arguments(char **resolution)
 		perror("Error\nIntroduced bad resolution.\n");
 		exit(3);
 	}
-	if (ft_atoi(resolution[1]) <= 0 || ft_atoi(resolution[2]) <= 0)
+	if (ft_atoi(resolution[1]) <= 0 || ft_atoi(resolution[2]) <= 0
+		|| ft_atoi(resolution[1]) > INT32_MAX || ft_atoi(resolution[2]) > INT32_MAX)
 	{
-		perror("Error\nResolution can't be negative, zero or massive.\n");
+		perror("Error\nResolution can't be negative, zero or too big\n");
 		exit(3);
 	}
 }

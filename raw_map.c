@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 16:27:38 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 14:09:56 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char			*handle_spaces(char *line)
 		if (temp[0] == '\t')
 			temp = ft_strtrim(temp, "\t");
 	}
-	if ((temp[0] == '0' || temp[0] == '1'))
+	if (temp[0] == '1')
 		return (line);
 	return (temp);
 }
@@ -39,7 +39,7 @@ void			get_map(mapstr *raw, char *line, char *file)
 	fd = open(file, O_RDONLY);
 	while ((get_next_line(fd, &line)) > 0)
 	{
-		line = handle_spaces(line);
+		// line = handle_spaces(line);
 		if (!ft_strchr("RNSWESFC", *line))
 		{
 			if (!raw->map)
@@ -51,8 +51,8 @@ void			get_map(mapstr *raw, char *line, char *file)
 		free(line);
 	}
 	raw->map[i] = ft_strdup(line);
-	if (line[0] != '\0')
-		raw->rows++;
+	// if (line[0] != '\0')
+	// 	raw->rows++;
 	free(line);
 	close(fd);
 }
@@ -94,7 +94,8 @@ void			get_raw_line(mapstr *raw, char *file, mapconfig *num)
 	line = NULL;
 	while ((get_next_line(fd, &line)) > 0)
 		raw_stuff(raw, num, line);
-	free(line);
+	raw_stuff(raw, num, line);
+	//free(line);
 	close(fd);
 	get_map(raw, line, file);
 }

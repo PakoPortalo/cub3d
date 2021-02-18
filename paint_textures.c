@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:36:53 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 18:53:39 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 13:43:20 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ void		get_wall_texture(t_raycast *rc, t_tex_img **texture)
 	if (rc->side == 0)
 	{
 		if (rc->stepX < 0)
-			*texture = &rc->tex.textures[0];
-		else
 			*texture = &rc->tex.textures[1];
+		else
+			*texture = &rc->tex.textures[0];
 	}
 	else
 	{
 		if (rc->stepY > 0)
-			*texture = &rc->tex.textures[2];
-		else
 			*texture = &rc->tex.textures[3];
+		else
+			*texture = &rc->tex.textures[2];
 	}
 }
 
