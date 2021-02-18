@@ -6,13 +6,13 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 09:29:08 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 10:59:28 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		check_save_flag(int argc, char **argv)
+void		check_save_flag(int argc, char **argv, mapclean *map)
 {
 	char	*savecheck;
 	int		i;
@@ -30,6 +30,7 @@ void		check_save_flag(int argc, char **argv)
 			}
 			i++;
 		}
+		map->savecheck = 1;
 	}
 }
 
@@ -68,7 +69,7 @@ void		check_number_arguments(int argc)
 	}
 }
 
-void		check_ini_errors(int argc, char **argv)
+void		check_ini_errors(int argc, char **argv, mapclean *map)
 {
 	check_number_arguments(argc);
 	if (check_extension(argv[1], ".cub") == -1)
@@ -76,5 +77,5 @@ void		check_ini_errors(int argc, char **argv)
 		perror("Error\nPlease introduce a valid extension");
 		exit(1);
 	}
-	check_save_flag(argc, argv);
+	check_save_flag(argc, argv, map);
 }

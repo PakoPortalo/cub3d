@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 19:16:29 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 12:26:40 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		find_origin(mapstr *raw, mapclean *map)
 
 void		flood_fill(mapstr *raw, int y, int x)
 {
-	check_border(raw, y, x);
+	// check_border(raw, y, x);
 	if (raw->map[y][x] == '2')
 		raw->sprite_count++;
 	if (ft_strchr("NSWE0 ", raw->map[y][x]))

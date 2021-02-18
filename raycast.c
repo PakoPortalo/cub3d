@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 18:54:50 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 11:12:32 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ int		raycast_maths(t_raycast *rc)
 	}
 	if (rc->map.sprite_count)
 		ft_sprites(rc);
+	if (rc->map.savecheck == 1)
+	{
+		screenshot(rc);
+		exit(0);
+	}
 	mlx_put_image_to_window(rc->img.ptr, rc->img.win, rc->img.img, 0, 0);
 	mlx_destroy_image(rc->img.ptr, rc->img.img);
 	player_movement(rc);

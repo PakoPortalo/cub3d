@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 19:33:57 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 11:00:43 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	inimap(mapclean *map)
 	map->orientation = '0';
 	map->sprite_count = 0;
 	map->rows = 0;
+	map->savecheck = 0;
 }
 
 void	ininum(mapconfig *num)

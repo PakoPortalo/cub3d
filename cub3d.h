@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 19:34:34 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 11:13:03 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct mapclean {
 	char	orientation;
 	int		sprite_count;
 	int		rows;
+	int		savecheck;
 } mapclean;
 
 typedef struct mapconfig
@@ -190,7 +191,7 @@ typedef struct	s_raycast {
 }					t_raycast;
 
 int		cub3d(int argc, char **argv);
-void	check_ini_errors(int argc, char **argv);
+void	check_ini_errors(int argc, char **argv, mapclean *map);
 int		check_extension(char *file, char *ext);
 void	raw_info(char *file, mapstr *raw, mapclean *map);
 void	save_map_info(mapstr *raw, mapclean *map);
@@ -256,6 +257,7 @@ void	swap_swap(t_sprite *ptr1, t_sprite *ptr2);
 void	sort_sprites(t_raycast *rc);
 void	save_sprites(t_raycast *rc);
 void	load_all_textures(t_raycast *rc);
+void				screenshot(t_raycast *rc);
 
 
 
