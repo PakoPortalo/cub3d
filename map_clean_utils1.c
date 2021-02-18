@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 10:39:38 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 12:48:55 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char		*get_map_texture(char *rawtexture, char *maptexture)
 	return (maptexture);
 }
 
-void		get_texture(mapstr *raw, mapclean *map)
+void		get_texture(t_mapstr *raw, t_mapclean *map)
 {
 	map->north = get_map_texture(raw->north, map->north);
 	map->south = get_map_texture(raw->south, map->south);

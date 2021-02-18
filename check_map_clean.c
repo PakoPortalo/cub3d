@@ -6,13 +6,13 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 10:18:04 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 13:10:13 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 18:54:09 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		check_origin_errors(int i, int x, int y, mapstr *raw)
+void		check_origin_errors(int i, int x, int y, t_mapstr *raw)
 {
 	if (i == 0)
 	{
@@ -22,13 +22,13 @@ void		check_origin_errors(int i, int x, int y, mapstr *raw)
 	if (i > 1)
 	{
 		perror("Error\nThere is more than one Origin Point \n");
-		exit(-1);
+		exit(6);
 	}
 	raw->x = x;
 	raw->y = y;
 }
 
-void		find_origin(mapstr *raw, mapclean *map)
+void		find_origin(t_mapstr *raw, t_mapclean *map)
 {
 	int		i;
 	int		x;
@@ -56,7 +56,7 @@ void		find_origin(mapstr *raw, mapclean *map)
 	check_origin_errors(i, x, y, raw);
 }
 
-void		flood_fill(mapstr *raw, int y, int x)
+void		flood_fill(t_mapstr *raw, int y, int x)
 {
 	check_border(raw, y, x);
 	if (raw->map[y][x] == '2')
@@ -73,7 +73,7 @@ void		flood_fill(mapstr *raw, int y, int x)
 	}
 }
 
-void		flood_fill_sub(mapstr *raw, int y, int x)
+void		flood_fill_sub(t_mapstr *raw, int y, int x)
 {
 	if (raw->map[y - 1][x] != '1' && raw->map[y - 1][x] != '3' \
 	&& raw->map[y - 1][x] != '4')
@@ -101,7 +101,7 @@ void		flood_fill_sub(mapstr *raw, int y, int x)
 		flood_fill(raw, y + 1, x - 1);
 }
 
-void		check_map(mapstr *raw, mapclean *map)
+void		check_map(t_mapstr *raw, t_mapclean *map)
 {
 	if (raw->map[0][0] == '0' || raw->map[0][0] == '2' || \
 	raw->map[0][ft_strlen(raw->map[0]) - 1] == '0' || \

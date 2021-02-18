@@ -6,13 +6,13 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:11:59 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 16:36:20 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:34:00 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	iniraw(mapstr *raw)
+void	iniraw(t_mapstr *raw)
 {
 	raw->res = NULL;
 	raw->north = NULL;
@@ -30,7 +30,7 @@ void	iniraw(mapstr *raw)
 	raw->sprite_count = 0;
 }
 
-void	inimap(mapclean *map)
+void	inimap(t_mapclean *map)
 {
 	map->w = 0;
 	map->h = 0;
@@ -54,7 +54,7 @@ void	inimap(mapclean *map)
 	map->savecheck = 0;
 }
 
-void	ininum(mapconfig *num)
+void	ininum(t_mapconfig *num)
 {
 	num->res = 0;
 	num->north = 0;
@@ -91,6 +91,6 @@ void	inihandlekeys(t_handlekeys *keys)
 	keys->up = 0;
 	keys->right = 0;
 	keys->down = 0;
-	keys->rotLeft = 0;
-	keys->rotRight = 0;
+	keys->rot_left = 0;
+	keys->rot_right = 0;
 }

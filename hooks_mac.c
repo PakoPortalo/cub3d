@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 09:59:41 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 18:56:54 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:23:13 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int		funky_func_keypress(int keycode, t_raycast *rc)
 	if (keycode == 1)
 		rc->keys.down = 1;
 	if (keycode == 123)
-		rc->keys.rotLeft = 1;
+		rc->keys.rot_left = 1;
 	if (keycode == 124)
-		rc->keys.rotRight = 1;
+		rc->keys.rot_right = 1;
 	if (keycode == 53)
 		exit(0);
 	return (1);
@@ -42,9 +42,9 @@ int		funky_func_keyrelease(int keycode, t_raycast *rc)
 	if (keycode == 1)
 		rc->keys.down = 0;
 	if (keycode == 123)
-		rc->keys.rotLeft = 0;
+		rc->keys.rot_left = 0;
 	if (keycode == 124)
-		rc->keys.rotRight = 0;
+		rc->keys.rot_right = 0;
 	return (1);
 }
 

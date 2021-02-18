@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:44:28 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 13:10:57 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char		*check_spaces(char *texturepath)
 	return (texturepath);
 }
 
-void		get_coordinates(int *x, int *y, mapstr *raw, mapclean *map)
+void		get_coordinates(int *x, int *y, t_mapstr *raw, t_mapclean *map)
 {
 	if (!*x && !*y)
 	{
@@ -44,7 +44,7 @@ void		get_coordinates(int *x, int *y, mapstr *raw, mapclean *map)
 	}
 }
 
-void		check_border(mapstr *raw, int y, int x)
+void		check_border(t_mapstr *raw, int y, int x)
 {
 	if (y <= 0 || y >= (raw->rows - 1) || x <= 0 || x >= ((int)ft_strlen(raw->map[y]) - 1))
 	{

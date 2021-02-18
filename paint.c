@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 09:31:12 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 16:46:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ void	orientation_northsouth(t_raycast *rc)
 {
 	if (rc->map.orientation == 'N')
 	{
-		rc->dirX = -1;
-		rc->dirY = 0;
-		rc->planeX = 0;
-		rc->planeY = 0.66;
+		rc->dir_x = -1;
+		rc->dir_y = 0;
+		rc->plane_x = 0;
+		rc->plane_y = 0.66;
 	}
 	if (rc->map.orientation == 'S')
 	{
-		rc->dirX = 1;
-		rc->dirY = 0;
-		rc->planeX = 0;
-		rc->planeY = -0.66;
+		rc->dir_x = 1;
+		rc->dir_y = 0;
+		rc->plane_x = 0;
+		rc->plane_y = -0.66;
 	}
 }
 
@@ -34,26 +34,26 @@ void	orientation_eastwest(t_raycast *rc)
 {
 	if (rc->map.orientation == 'E')
 	{
-		rc->dirX = 0;
-		rc->dirY = 1;
-		rc->planeX = 0.66;
-		rc->planeY = 0;
+		rc->dir_x = 0;
+		rc->dir_y = 1;
+		rc->plane_x = 0.66;
+		rc->plane_y = 0;
 	}
 	if (rc->map.orientation == 'W')
 	{
-		rc->dirX = 0;
-		rc->dirY = -1;
-		rc->planeX = -0.66;
-		rc->planeY = 0;
+		rc->dir_x = 0;
+		rc->dir_y = -1;
+		rc->plane_x = -0.66;
+		rc->plane_y = 0;
 	}
 }
 
 int		raycast_start(t_raycast *rc)
 {
-	rc->posX = (double)rc->map.y + 0.5f;
-	rc->posY = (double)rc->map.x + 0.5f;
+	rc->pos_x = (double)rc->map.y + 0.5f;
+	rc->pos_y = (double)rc->map.x + 0.5f;
 	load_all_textures(rc);
-	rc->zBuffer = malloc(sizeof(double) * rc->map.w);
+	rc->z_buffer = malloc(sizeof(double) * rc->map.w);
 	orientation_northsouth(rc);
 	orientation_eastwest(rc);
 	if (rc->map.sprite_count > 0)
@@ -65,7 +65,7 @@ int		raycast_start(t_raycast *rc)
 	return (1);
 }
 
-int		printer_cub3d(mapclean *map)
+int		printer_cub3d(t_mapclean *map)
 {
 	t_data			img;
 	t_raycast		rc;

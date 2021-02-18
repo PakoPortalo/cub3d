@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 12:11:02 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 16:28:30 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:35:41 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void		check_res_arguments(char **resolution)
 		exit(3);
 	}
 	if (ft_atoi(resolution[1]) <= 0 || ft_atoi(resolution[2]) <= 0
-		|| ft_atoi(resolution[1]) > INT32_MAX || ft_atoi(resolution[2]) > INT32_MAX)
+		|| ft_atoi(resolution[1]) > INT32_MAX || \
+		ft_atoi(resolution[2]) > INT32_MAX)
 	{
 		perror("Error\nResolution can't be negative, zero or too big\n");
 		exit(3);
@@ -44,8 +45,8 @@ void		check_res_arguments(char **resolution)
 
 void		check_res_isdigit(char **resolution)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 1;
 	j = 0;
@@ -65,7 +66,7 @@ void		check_res_isdigit(char **resolution)
 	}
 }
 
-void		check_resolution(mapstr *raw, mapclean *map)
+void		check_resolution(t_mapstr *raw, t_mapclean *map)
 {
 	char	**resolution;
 

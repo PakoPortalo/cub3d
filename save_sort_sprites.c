@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 19:01:00 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 19:03:10 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:22:47 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	save_sprites(t_raycast *rc)
 			{
 				rc->sprite[sprite].x = i;
 				rc->sprite[sprite].y = j;
-				rc->sprite[sprite].perpdist = pow(rc->posX - i, 2.0) \
-				+ pow(rc->posY - j, 2.0);
+				rc->sprite[sprite].perpdist = pow(rc->pos_x - i, 2.0) \
+				+ pow(rc->pos_y - j, 2.0);
 				sprite++;
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 10:33:18 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 16:45:02 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:15:34 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ void	move_player_updown(t_raycast *rc, double move_x, double move_y)
 {
 	if (rc->keys.up == 1)
 	{
-		if (rc->map.map[(int)(rc->posX + move_x)][(int)(rc->posY)] == '3')
-			rc->posX += move_x;
-		if (rc->map.map[(int)(rc->posX)][(int)(rc->posY + move_y)] == '3')
-			rc->posY += move_y;
+		if (rc->map.map[(int)(rc->pos_x + move_x)][(int)(rc->pos_y)] == '3')
+			rc->pos_x += move_x;
+		if (rc->map.map[(int)(rc->pos_x)][(int)(rc->pos_y + move_y)] == '3')
+			rc->pos_y += move_y;
 	}
 	if (rc->keys.down == 1)
 	{
-		if (rc->map.map[(int)(rc->posX - move_x)][(int)(rc->posY)] == '3')
-			rc->posX -= move_x;
-		if (rc->map.map[(int)(rc->posX)][(int)(rc->posY - move_y)] == '3')
-			rc->posY -= move_y;
+		if (rc->map.map[(int)(rc->pos_x - move_x)][(int)(rc->pos_y)] == '3')
+			rc->pos_x -= move_x;
+		if (rc->map.map[(int)(rc->pos_x)][(int)(rc->pos_y - move_y)] == '3')
+			rc->pos_y -= move_y;
 	}
 }
 
@@ -34,46 +34,46 @@ void	move_player_leftright(t_raycast *rc, double move_x, double move_y)
 {
 	if (rc->keys.left == 1)
 	{
-		if (rc->map.map[(int)(rc->posX)][(int)(rc->posY + move_x)] == '3')
-			rc->posY += move_x;
-		if (rc->map.map[(int)(rc->posX - move_y)][(int)(rc->posY)] == '3')
-			rc->posX -= move_y;
+		if (rc->map.map[(int)(rc->pos_x)][(int)(rc->pos_y + move_x)] == '3')
+			rc->pos_y += move_x;
+		if (rc->map.map[(int)(rc->pos_x - move_y)][(int)(rc->pos_y)] == '3')
+			rc->pos_x -= move_y;
 	}
 	if (rc->keys.right == 1)
 	{
-		if (rc->map.map[(int)(rc->posX)][(int)(rc->posY - move_x)] == '3')
-			rc->posY -= move_x;
-		if (rc->map.map[(int)(rc->posX + move_y)][(int)(rc->posY)] == '3')
-			rc->posX += move_y;
+		if (rc->map.map[(int)(rc->pos_x)][(int)(rc->pos_y - move_x)] == '3')
+			rc->pos_y -= move_x;
+		if (rc->map.map[(int)(rc->pos_x + move_y)][(int)(rc->pos_y)] == '3')
+			rc->pos_x += move_y;
 	}
 }
 
 void	rotate_player(t_raycast *rc)
 {
-	rc->oldDirX = rc->dirX;
-	if (rc->keys.rotRight == 1)
+	rc->old_dir_x = rc->dir_x;
+	if (rc->keys.rot_right == 1)
 	{
-		rc->dirX = rc->dirX * cos(-rc->rotSpeed) \
-		- rc->dirY * sin(-rc->rotSpeed);
-		rc->dirY = rc->oldDirX * sin(-rc->rotSpeed) \
-		+ rc->dirY * cos(-rc->rotSpeed);
-		rc->oldPlaneX = rc->planeX;
-		rc->planeX = rc->planeX * cos(-rc->rotSpeed) \
-		- rc->planeY * sin(-rc->rotSpeed);
-		rc->planeY = rc->oldPlaneX * sin(-rc->rotSpeed) \
-		+ rc->planeY * cos(-rc->rotSpeed);
+		rc->dir_x = rc->dir_x * cos(-rc->rot_speed) \
+		- rc->dir_y * sin(-rc->rot_speed);
+		rc->dir_y = rc->old_dir_x * sin(-rc->rot_speed) \
+		+ rc->dir_y * cos(-rc->rot_speed);
+		rc->old_plane_x = rc->plane_x;
+		rc->plane_x = rc->plane_x * cos(-rc->rot_speed) \
+		- rc->plane_y * sin(-rc->rot_speed);
+		rc->plane_y = rc->old_plane_x * sin(-rc->rot_speed) \
+		+ rc->plane_y * cos(-rc->rot_speed);
 	}
-	if (rc->keys.rotLeft == 1)
+	if (rc->keys.rot_left == 1)
 	{
-		rc->dirX = rc->dirX * cos(rc->rotSpeed) \
-		- rc->dirY * sin(rc->rotSpeed);
-		rc->dirY = rc->oldDirX * sin(rc->rotSpeed) \
-		+ rc->dirY * cos(rc->rotSpeed);
-		rc->oldPlaneX = rc->planeX;
-		rc->planeX = rc->planeX * cos(rc->rotSpeed) \
-		- rc->planeY * sin(rc->rotSpeed);
-		rc->planeY = rc->oldPlaneX * sin(rc->rotSpeed) \
-		+ rc->planeY * cos(rc->rotSpeed);
+		rc->dir_x = rc->dir_x * cos(rc->rot_speed) \
+		- rc->dir_y * sin(rc->rot_speed);
+		rc->dir_y = rc->old_dir_x * sin(rc->rot_speed) \
+		+ rc->dir_y * cos(rc->rot_speed);
+		rc->old_plane_x = rc->plane_x;
+		rc->plane_x = rc->plane_x * cos(rc->rot_speed) \
+		- rc->plane_y * sin(rc->rot_speed);
+		rc->plane_y = rc->old_plane_x * sin(rc->rot_speed) \
+		+ rc->plane_y * cos(rc->rot_speed);
 	}
 }
 
@@ -82,8 +82,8 @@ void	player_movement(t_raycast *rc)
 	double move_x;
 	double move_y;
 
-	move_x = rc->dirX * rc->moveSpeed;
-	move_y = rc->dirY * rc->moveSpeed;
+	move_x = rc->dir_x * rc->move_speed;
+	move_y = rc->dir_y * rc->move_speed;
 	move_player_updown(rc, move_x, move_y);
 	move_player_leftright(rc, move_x, move_y);
 	rotate_player(rc);
@@ -99,14 +99,14 @@ int		raycast_maths(t_raycast *rc)
 	&rc->img.line_length, &rc->img.endian);
 	while (x < rc->map.w)
 	{
-		rc->mapX = (int)rc->posX;
-		rc->mapY = (int)rc->posY;
+		rc->map_x = (int)rc->pos_x;
+		rc->map_y = (int)rc->pos_y;
 		ft_raydir(rc, x);
 		ft_deltadist(rc);
 		ft_sidedist(rc);
 		ft_rayhit(rc);
 		ft_walldist(rc);
-		rc->zBuffer[x] = rc->perpWallDist;
+		rc->z_buffer[x] = rc->perp_wall_dist;
 		ft_buffer(rc, x);
 		x++;
 	}

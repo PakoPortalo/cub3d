@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 13:09:21 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 12:45:01 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		check_texture_path(char *texturepath)
 	close(fd);
 }
 
-int			check_texture_extension(mapclean *map)
+int			check_texture_extension(t_mapclean *map)
 {
 	if (check_extension(map->north, ".xpm") == -1 && \
 	check_extension(map->north, ".png") == -1)
@@ -45,7 +45,7 @@ int			check_texture_extension(mapclean *map)
 	return (1);
 }
 
-void		check_texture(mapstr *raw, mapclean *map)
+void		check_texture(t_mapstr *raw, t_mapclean *map)
 {
 	get_texture(raw, map);
 	if (check_texture_extension(map) == -1)

@@ -6,13 +6,13 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 13:06:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/17 19:36:12 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		free_raw(mapstr *raw)
+void		free_raw(t_mapstr *raw)
 {
 	free(raw->res);
 	free(raw->north);
@@ -24,7 +24,7 @@ void		free_raw(mapstr *raw)
 	free(raw->ceil);
 }
 
-void		save_map_info(mapstr *raw, mapclean *map)
+void		save_map_info(t_mapstr *raw, t_mapclean *map)
 {
 	check_resolution(raw, map);
 	check_texture(raw, map);

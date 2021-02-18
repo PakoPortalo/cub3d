@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 08:47:56 by fportalo          #+#    #+#             */
-/*   Updated: 2020/12/21 10:44:00 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		check_number(char **args, int *rgb)
 	}
 }
 
-void		check_ceil(mapstr *raw, mapclean *map)
+void		check_ceil(t_mapstr *raw, t_mapclean *map)
 {
 	char	**argsceil;
 	char	**checkargceil;
@@ -65,7 +65,7 @@ void		check_ceil(mapstr *raw, mapclean *map)
 	ft_freearray(argsceil);
 }
 
-void		check_floor(mapstr *raw, mapclean *map)
+void		check_floor(t_mapstr *raw, t_mapclean *map)
 {
 	char	**argsfloor;
 	char	**checkargfloor;
@@ -81,7 +81,7 @@ void		check_floor(mapstr *raw, mapclean *map)
 	ft_freearray(argsfloor);
 }
 
-void		check_floor_ceil(mapstr *raw, mapclean *map)
+void		check_floor_ceil(t_mapstr *raw, t_mapclean *map)
 {
 	comma_counter(raw->floor);
 	comma_counter(raw->ceil);

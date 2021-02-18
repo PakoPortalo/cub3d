@@ -6,13 +6,13 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 13:41:55 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/11 16:28:50 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 18:46:22 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void			check_number_lines(mapstr *raw, mapconfig *num, mapclean *map)
+void			check_number_lines(t_mapstr *raw, t_mapconfig *num, t_mapclean *map)
 {
 	int			i;
 
@@ -23,13 +23,7 @@ void			check_number_lines(mapstr *raw, mapconfig *num, mapclean *map)
 	num->res != 1 || num->north != 1 || num->south != 1 || num->west != 1 || \
 	num->east != 1 || num->sprite != 1 || num->floor != 1 || num->ceil != 1)
 	{
-		while (raw->rows != 0)
-		{
-			printf("%s\n", raw->map[i]);
-			i++;
-			raw->rows--;
-		}
-		perror("Error\nPlease introduce a correct number of arguments\n");
+		perror("Error\nPlease introduce arguments correctly\n");
 		exit(2);
 	}
 }

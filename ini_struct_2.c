@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 19:32:38 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 16:56:28 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:16:48 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,39 @@
 
 void	iniraycast_1(t_raycast *rc)
 {
-	rc->posX = 0;
-	rc->posY = 0;
-	rc->dirX = 0;
-	rc->dirY = 0;
-	rc->planeX = 0;
-	rc->planeY = 0;
-	rc->cameraX = 0;
-	rc->rayDirX = 0;
-	rc->rayDirY = 0;
-	rc->mapX = 0;
-	rc->mapY = 0;
-	rc->sideDistX = 0;
-	rc->sideDistY = 0;
-	rc->deltaDistX = 0;
-	rc->deltaDistY = 0;
-	rc->perpWallDist = 0;
+	rc->pos_x = 0;
+	rc->pos_y = 0;
+	rc->dir_x = 0;
+	rc->dir_y = 0;
+	rc->plane_x = 0;
+	rc->plane_y = 0;
+	rc->camera_x = 0;
+	rc->ray_dir_x = 0;
+	rc->ray_dir_y = 0;
+	rc->map_x = 0;
+	rc->map_y = 0;
+	rc->side_dist_x = 0;
+	rc->side_dist_y = 0;
+	rc->delta_dist_x = 0;
+	rc->delta_dist_y = 0;
+	rc->perp_wall_dist = 0;
 }
 
 void	iniraycast_2(t_raycast *rc)
 {
-	rc->stepX = 0;
-	rc->stepY = 0;
+	rc->step_x = 0;
+	rc->step_y = 0;
 	rc->hit = 0;
 	rc->side = 0;
-	rc->lineHeight = 0;
-	rc->drawStart = 0;
-	rc->drawEnd = 0;
-	rc->moveSpeed = 0.08;
-	rc->rotSpeed = 0.08;
-	rc->oldDirX = 0;
-	rc->oldPlaneX = 0;
-	rc->texNum = 0;
-	rc->wallX = 0;
-	rc->texX = 0;
-	rc->texY = 0;
+	rc->line_height = 0;
+	rc->draw_start = 0;
+	rc->draw_end = 0;
+	rc->move_speed = 0.08;
+	rc->rot_speed = 0.08;
+	rc->old_dir_x = 0;
+	rc->old_plane_x = 0;
+	rc->tex_num = 0;
+	rc->wall_x = 0;
+	rc->tex_x = 0;
+	rc->tex_y = 0;
 }
