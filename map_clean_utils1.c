@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 10:39:38 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 09:48:01 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,8 @@ char		*floor_ceil_spaces(char *rgb)
 
 char		*get_map_texture(char *rawtexture, char *maptexture)
 {
-	char **texture;
-
 	rawtexture = check_spaces(rawtexture);
-	texture = ft_split(rawtexture, ' ');
-	number_textures(texture);
-	texture[1] = check_spaces(texture[1]);
-	maptexture = ft_strdup(texture[1]);
-	ft_freearray(texture);
+	maptexture = ft_strdup(rawtexture);
 	return (maptexture);
 }
 

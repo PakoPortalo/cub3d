@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:44:28 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 09:42:33 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,21 @@ void		number_textures(char **texture)
 
 char		*check_spaces(char *texturepath)
 {
-	while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
-	texturepath[ft_strlen(texturepath) - 1] == ' ' || \
-	texturepath[ft_strlen(texturepath) - 1] == '\t')
-	{
-		texturepath = ft_strtrim(texturepath, " ");
-		texturepath = ft_strtrim(texturepath, "\t");
-	}
-	return (texturepath);
+	int i;
+
+	i = 0;
+	while (texturepath[i] != ' ' && (i != 1 || i != 2))
+		i++;
+	while (texturepath[i] == ' ' || texturepath[i] == '\t')
+		i++;
+	// while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
+	// texturepath[ft_strlen(texturepath) - 1] == ' ' || \
+	// texturepath[ft_strlen(texturepath) - 1] == '\t')
+	// {
+	// 	texturepath = ft_strtrim(texturepath, " ");
+	// 	texturepath = ft_strtrim(texturepath, "\t");
+	// }
+	return (texturepath + i);
 }
 
 void		get_coordinates(int *x, int *y, t_mapstr *raw, t_mapclean *map)

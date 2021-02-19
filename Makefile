@@ -6,7 +6,7 @@
 #    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2021/02/18 19:05:16 by fportalo         ###   ########.fr        #
+#    Updated: 2021/02/19 11:40:26 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,17 +54,14 @@ all:
 	@$(CC) $(FLAGS) -g $(FILES) $(FILESLINUX) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
 endif
 
+leaks:
+	@$(CC)  $(FLAGS) -g3 -fsanitize=address $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
+
 normi:
 	@$(NORMI) $(FILES) $(FILESMAC) $(FILESLINUX)
 
-debug:
-	@$(CC)  $(FLAGS) -g3 -fsanitize=address $(FILESDEBUG) $(GNL) $(LIBFT) $(NAME) $(INI)
-debug2:
-	@$(CC)  $(FLAGS) -g3 $(FILESDEBUG) $(GNL) $(LIBFT) $(NAME) $(INI)
-
 libft:
 	@$(MAKE) -C libft all clean
-
 
 ifeq ($(UNAME), Darwin)
 mlx:
@@ -75,4 +72,6 @@ mlx:
 	@$(MAKE) -C mlx_linux all
 endif
 
+clean:
+	@rm cub3D
 .PHONY: mlx libft
