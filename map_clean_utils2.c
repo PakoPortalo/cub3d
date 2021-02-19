@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:44:28 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/19 12:31:29 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 17:00:51 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,31 @@ void		check_border(t_mapstr *raw, int y, int x)
 	}
 }
 
-int			get_map_utils(t_mapstr *raw, char **line, int i, int check)
+void		get_map_utils(t_mapstr *raw, char **line, int fd, int check)
 {
-	if (*line[0] == '\0' && check == 1)
+	int		i;
+
+	i = 0;
+	while ((get_next_line(fd, line)) > 0)
 	{
-		i--;
-		*line = ft_strdup(" ");
+		if (*line[0] == '\0' && check == 1)
+		{
+			i--;
+			*line = ft_strdup(" ");
+		}
+		if (!ft_strchr("RNSWESFC", **line))
+		{
+			if (*line[0] == '1')
+				check = 1;
+			if (!raw->map)
+				raw->map[i] = ft_strdup(*line);
+			else if (raw->map)
+				raw->map[i] = ft_strdup(*line);
+			i++;
+		}
+		free(*line);
 	}
-	if (!ft_strchr("RNSWESFC", **line))
-	{
-		if (*line[0] == '1')
-			check = 1;
-		if (!raw->map)
-			raw->map[i] = ft_strdup(*line);
-		else if (raw->map)
-			raw->map[i] = ft_strdup(*line);
-		i++;
-	}
-	return (i);
+	raw->map[i] = ft_strdup(*line);
+	free(*line);
+	close(fd);
 }

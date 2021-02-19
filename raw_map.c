@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/19 12:30:49 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 16:57:18 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,7 @@ void			get_map(t_mapstr *raw, char *line, char *file)
 	i = 0;
 	raw->map = (char **)ft_calloc(sizeof(char *), (raw->rows + 2));
 	fd = open(file, O_RDONLY);
-	while ((get_next_line(fd, &line)) > 0)
-	{
-		i = get_map_utils(raw, &line, i, check);
-		free(line);
-	}
-	raw->map[i] = ft_strdup(line);
-	free(line);
-	close(fd);
+	get_map_utils(raw, &line, fd, check);
 }
 
 void			handle_num_errors(t_mapstr *raw, t_mapconfig *num)

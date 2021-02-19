@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:38:27 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 17:33:50 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 16:58:38 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		check_save_flag(int argc, char **argv, t_mapclean *map)
 	{
 		savecheck = "--save";
 		i = 0;
-		while (argv[2][i])
+		while (savecheck[i])
 		{
 			if (argv[2][i] != savecheck[i])
 			{
@@ -69,6 +69,19 @@ void		check_number_arguments(int argc)
 	}
 }
 
+void		check_map_exist(char **argv)
+{
+	int		fd;
+
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
+	{
+		perror("Error\nCannot find Map");
+		close(fd);
+		exit(4);
+	}
+	close(fd);
+}
+
 void		check_ini_errors(int argc, char **argv, t_mapclean *map)
 {
 	check_number_arguments(argc);
@@ -77,5 +90,6 @@ void		check_ini_errors(int argc, char **argv, t_mapclean *map)
 		perror("Error\nPlease introduce a valid extension");
 		exit(1);
 	}
+	check_map_exist(argv);
 	check_save_flag(argc, argv, map);
 }

@@ -6,13 +6,13 @@
 #    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2021/02/19 12:39:23 by fportalo         ###   ########.fr        #
+#    Updated: 2021/02/19 16:26:55 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-NAME = -o cub3D
+NAME = cub3D
 
 FLAGS = -Werror -Wextra -Wall -I.
 
@@ -46,15 +46,13 @@ ifeq ($(UNAME), Linux)
 endif
 
 ifeq ($(UNAME), Darwin)
-all:
-	@$(CC) $(FLAGS) $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
+all: $(NAME)
+
+$(NAME):
+	@$(CC) $(FLAGS) $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME) $(INI)
 
 mlx:
 	@$(MAKE) -C mlx_mac all
-
-fclean:
-	@rm cub3D libmlx.dylib && $(CLEANLIBFT) $(CLEANMAC)
-
 endif
 ifeq ($(UNAME), Linux)
 all:
@@ -63,6 +61,11 @@ all:
 mlx: 
 	@$(MAKE) -C mlx_linux all
 endif
+
+fclean:
+	@rm $(NAME)
+	
+re: fclean all
 
 leaks:
 	@$(CC) $(FLAGS) -g3 -fsanitize=address $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
