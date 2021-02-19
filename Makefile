@@ -6,7 +6,7 @@
 #    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2021/02/19 11:40:26 by fportalo         ###   ########.fr        #
+#    Updated: 2021/02/19 12:10:30 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,15 +47,25 @@ endif
 
 ifeq ($(UNAME), Darwin)
 all:
-	@$(CC)  $(FLAGS) -g $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
+	@$(CC) $(FLAGS) $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
+
+mlx:
+	@$(MAKE) -C mlx_mac all
+
+fclean:
+	@rm cub3D libmlx.dylib && $(CLEANLIBFT) $(CLEANMAC)
+
 endif
 ifeq ($(UNAME), Linux)
 all:
 	@$(CC) $(FLAGS) -g $(FILES) $(FILESLINUX) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
+
+mlx: 
+	@$(MAKE) -C mlx_linux all
 endif
 
 leaks:
-	@$(CC)  $(FLAGS) -g3 -fsanitize=address $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
+	@$(CC) $(FLAGS) -g3 -fsanitize=address $(FILES) $(FILESMAC) $(GNL) -lm $(LIBFT) $(MLX) $(NAME) $(INI)
 
 normi:
 	@$(NORMI) $(FILES) $(FILESMAC) $(FILESLINUX)
@@ -63,15 +73,7 @@ normi:
 libft:
 	@$(MAKE) -C libft all clean
 
-ifeq ($(UNAME), Darwin)
-mlx:
-	@$(MAKE) -C mlx_mac all
-endif
-ifeq ($(UNAME), Linux)
-mlx: 
-	@$(MAKE) -C mlx_linux all
-endif
-
 clean:
 	@rm cub3D
+
 .PHONY: mlx libft
