@@ -6,15 +6,15 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 13:41:55 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 18:46:22 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:32:20 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void			check_number_lines(t_mapstr *raw, t_mapconfig *num, t_mapclean *map)
+void	check_number_lines(t_mapstr *raw, t_mapconfig *num, t_mapclean *map)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	map->rows = raw->rows;
@@ -28,13 +28,13 @@ void			check_number_lines(t_mapstr *raw, t_mapconfig *num, t_mapclean *map)
 	}
 }
 
-void			get_raws(char **path, int *num, char *line)
+void	get_raws(char **path, int *num, char *line)
 {
 	*path = ft_strdup(line);
 	*num += 1;
 }
 
-void			map_file_error(void)
+void	map_file_error(void)
 {
 	perror("Error\nMap file error. Please introduce valid arguments\n");
 	exit(2);

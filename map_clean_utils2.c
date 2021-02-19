@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:44:28 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/19 09:42:33 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:31:29 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,6 @@ char		*check_spaces(char *texturepath)
 		i++;
 	while (texturepath[i] == ' ' || texturepath[i] == '\t')
 		i++;
-	// while (texturepath[0] == ' ' || texturepath[0] == '\t' || \
-	// texturepath[ft_strlen(texturepath) - 1] == ' ' || \
-	// texturepath[ft_strlen(texturepath) - 1] == '\t')
-	// {
-	// 	texturepath = ft_strtrim(texturepath, " ");
-	// 	texturepath = ft_strtrim(texturepath, "\t");
-	// }
 	return (texturepath + i);
 }
 
@@ -53,9 +46,30 @@ void		get_coordinates(int *x, int *y, t_mapstr *raw, t_mapclean *map)
 
 void		check_border(t_mapstr *raw, int y, int x)
 {
-	if (y <= 0 || y >= (raw->rows - 1) || x <= 0 || x >= ((int)ft_strlen(raw->map[y]) - 1))
+	if (y <= 0 || y >= (raw->rows - 1) || x <= 0 || \
+	x >= ((int)ft_strlen(raw->map[y]) - 1))
 	{
 		perror("Error\nYou need to introduce a correct map\n");
 		exit(6);
 	}
+}
+
+int			get_map_utils(t_mapstr *raw, char **line, int i, int check)
+{
+	if (*line[0] == '\0' && check == 1)
+	{
+		i--;
+		*line = ft_strdup(" ");
+	}
+	if (!ft_strchr("RNSWESFC", **line))
+	{
+		if (*line[0] == '1')
+			check = 1;
+		if (!raw->map)
+			raw->map[i] = ft_strdup(*line);
+		else if (raw->map)
+			raw->map[i] = ft_strdup(*line);
+		i++;
+	}
+	return (i);
 }

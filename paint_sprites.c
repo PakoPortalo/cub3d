@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 17:39:47 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 17:22:27 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:39:54 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	sprite_calc(t_raycast *rc, t_sprite *sprite, int i)
 {
 	sprite->x = rc->sprite[i].x - rc->pos_x + 0.5;
 	sprite->y = rc->sprite[i].y - rc->pos_y + 0.5;
-	sprite->inv_det = 1.0 / ((rc->plane_x * rc->dir_y) - (rc->dir_x * rc->plane_y));
+	sprite->inv_det = 1.0 / ((rc->plane_x * \
+	rc->dir_y) - (rc->dir_x * rc->plane_y));
 	sprite->transform_x = sprite->inv_det * \
 	((rc->dir_y * sprite->x) - (rc->dir_x * sprite->y));
 	sprite->transform_y = sprite->inv_det * \

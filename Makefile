@@ -6,7 +6,7 @@
 #    By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/13 12:22:57 by fportalo          #+#    #+#              #
-#    Updated: 2021/02/19 12:10:30 by fportalo         ###   ########.fr        #
+#    Updated: 2021/02/19 12:39:23 by fportalo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ FILES = cub3d.c ini_errors.c ini_struct_1.c ini_struct_2.c map_clean.c resolutio
 		floorceil_map_clean.c check_map_clean.c texture_map_clean.c raw_map.c main.c \
 		map_clean_utils1.c map_clean_utils2.c raw_map_utils.c paint.c load_textures.c \
 		raycast.c raycast_calcs.c paint_tools.c paint_textures.c paint_sprites.c \
-		save_sort_sprites.c screenshot.c
+		save_sort_sprites.c screenshot.c raycast_utils.c
 
 FILESMAC = hooks_mac.c
 

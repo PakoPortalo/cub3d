@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 11:24:44 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/18 17:34:17 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:30:29 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ void				check_texture(t_mapstr *raw, t_mapclean *map);
 int					check_north(t_mapstr *raw, t_mapclean *map);
 void				check_floor_ceil(t_mapstr *raw, t_mapclean *map);
 void				check_map(t_mapstr *raw, t_mapclean *map);
+int					get_map_utils(t_mapstr *raw, char **line, int i, int check);
+
 void				flood_fill_sub(t_mapstr *raw, int y, int x);
 void				check_number_variables(char **rgb, int i);
 void				comma_counter(char *str);

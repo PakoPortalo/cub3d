@@ -6,7 +6,7 @@
 /*   By: fportalo <fportalo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 12:18:41 by fportalo          #+#    #+#             */
-/*   Updated: 2021/02/19 11:34:12 by fportalo         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:30:49 by fportalo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,31 @@ void			get_map(t_mapstr *raw, char *line, char *file)
 {
 	int			fd;
 	int			i;
-	int			gnl_check;
 	int			check;
 
 	check = 0;
 	i = 0;
-	gnl_check = 0;
 	raw->map = (char **)ft_calloc(sizeof(char *), (raw->rows + 2));
 	fd = open(file, O_RDONLY);
-	while ((gnl_check = get_next_line(fd, &line)) > 0)
+	while ((get_next_line(fd, &line)) > 0)
 	{
-
-		if (line[0] == '\0' && check == 1)
-		{
-			i--;
-			line = ft_strdup(" ");
-		}
-		if (!ft_strchr("RNSWESFC", *line))
-		{
-			if (line[0] == '1')
-				check = 1;
-			if (!raw->map)
-				raw->map[i] = ft_strdup(line);
-			else if (raw->map)
-			{	
-				raw->map[i] = ft_strdup(line);
-			}
-
-			i++;
-		}
-		// if (line[0] == ' ')
-		// 	line[0] = 'a';
+		i = get_map_utils(raw, &line, i, check);
 		free(line);
 	}
 	raw->map[i] = ft_strdup(line);
 	free(line);
 	close(fd);
+}
+
+void			handle_num_errors(t_mapstr *raw, t_mapconfig *num)
+{
+	if ((num->res + num->north + num->south + num->west + \
+	num->east + num->sprite + num->floor + num->ceil) != 8)
+	{
+		perror("Error, bad values sent in your .cub");
+		exit(1);
+	}
+	raw->rows++;
 }
 
 void			raw_stuff(t_mapstr *raw, t_mapconfig *num, char *line)
@@ -93,40 +82,26 @@ void			raw_stuff(t_mapstr *raw, t_mapconfig *num, char *line)
 		get_raws(&raw->floor, &num->floor, line);
 	else if (line[0] == '0' || line[0] == '1' || \
 	line[0] == '2' || line[0] == ' ')
-	{
-		if ((num->res + num->north + num->south + num->west + \
-		num->east + num->sprite + num->floor + num->ceil) != 8)
-		{
-			perror("Error, bad values sent in your .cub");
-			exit(1);
-		}
-		raw->rows++;
-	}
+		handle_num_errors(raw, num);
 	else if (line[0] != '\0')
 		map_file_error();
 	free(line);
 }
 
-void			get_raw_line(t_mapstr *raw, char *file, t_mapconfig *num)
-{
-	char		*line;
-	int			fd;
-
-	fd = open(file, O_RDONLY);
-	line = NULL;
-	while ((get_next_line(fd, &line)) > 0)
-		raw_stuff(raw, num, line);
-	raw_stuff(raw, num, line);
-	close(fd);
-	get_map(raw, line, file);
-}
-
 void			raw_info(char *file, t_mapstr *raw, t_mapclean *map)
 {
 	t_mapconfig	num;
+	char		*line;
+	int			fd;
 
 	iniraw(raw);
 	ininum(&num);
-	get_raw_line(raw, file, &num);
+	fd = open(file, O_RDONLY);
+	line = NULL;
+	while ((get_next_line(fd, &line)) > 0)
+		raw_stuff(raw, &num, line);
+	raw_stuff(raw, &num, line);
+	close(fd);
+	get_map(raw, line, file);
 	check_number_lines(raw, &num, map);
 }
